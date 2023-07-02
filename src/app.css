@@ -1,0 +1,10 @@
+@postcss-import url('/assets/fonts/Hepta_Slab/HeptaSlab-VariableFont_wght.ttf');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-family: 'Hepta Slab', serif;
+    scroll-behavior: smooth;
+}

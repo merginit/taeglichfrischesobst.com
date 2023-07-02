@@ -1,0 +1,65 @@
+<script lang="js">
+	// @ts-nocheck
+	import { onMount } from 'svelte';
+	import PhotoSwipeLightbox from 'photoswipe/lightbox';
+	import 'photoswipe/style.css';
+	export let galleryID;
+	export let images;
+
+	onMount(() => {
+		let lightbox = new PhotoSwipeLightbox({
+			gallery: '#' + galleryID,
+			children: 'a',
+			pswpModule: () => import('photoswipe')
+		});
+		/* https://photoswipe.com/caption/ */
+		lightbox.on('uiRegister', function () {
+			lightbox.pswp.ui.registerElement({
+				name: 'custom-caption',
+				order: 9,
+				isButton: false,
+				appendTo: 'root',
+				html: 'Caption text',
+				onInit: (el, pswp) => {
+					lightbox.pswp.on('change', () => {
+						const currSlideElement = lightbox.pswp.currSlide.data.element;
+						let captionHTML = '';
+						if (currSlideElement) {
+							captionHTML =
+								'Fotograf: ' + currSlideElement.querySelector('img').getAttribute('alt');
+						}
+						el.innerHTML = captionHTML || '';
+						el.classList.add('pswp__custom-caption');
+					});
+				}
+			});
+		});
+		lightbox.init();
+	});
+</script>
+
+<div class="pswp-gallery flex flex-wrap items-center gap-2" id={galleryID}>
+	<style>
+		.pswp__custom-caption {
+			@apply bg-neutral rounded-2xl absolute bottom-6 px-1 py-4;
+			left: 50%;
+			transform: translateX(-50%);
+			max-width: calc(100% - 32px);
+		}
+
+		.hidden-caption-content {
+			display: none;
+		}
+	</style>
+	{#each images as image}
+		<a
+			href={image.URL}
+			data-pswp-width={image.width}
+			data-pswp-height={image.height}
+			target="_blank"
+			rel="noreferrer"
+		>
+			<img class="max-h-56" src={image.URL} alt={image.URL.split('©')[1].split('.')[0]} />
+		</a>
+	{/each}
+</div>
