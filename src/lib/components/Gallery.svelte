@@ -39,18 +39,6 @@
 </script>
 
 <div class="pswp-gallery flex flex-wrap items-center gap-2" id={galleryID}>
-	<style>
-		.pswp__custom-caption {
-			@apply bg-neutral rounded-2xl absolute bottom-6 px-1 py-4;
-			left: 50%;
-			transform: translateX(-50%);
-			max-width: calc(100% - 32px);
-		}
-
-		.hidden-caption-content {
-			display: none;
-		}
-	</style>
 	{#each images as image}
 		<a
 			href={image.URL}

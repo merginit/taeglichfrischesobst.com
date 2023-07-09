@@ -8,3 +8,15 @@ html {
     font-family: 'Hepta Slab', serif;
     scroll-behavior: smooth;
 }
+
+/* Copyright Caption for Photoswipe */
+.pswp__custom-caption {
+    @apply bg-neutral rounded-xl absolute bottom-6 px-2 py-1;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - 16px);
+}
+
+.hidden-caption-content {
+    display: none;
+}
