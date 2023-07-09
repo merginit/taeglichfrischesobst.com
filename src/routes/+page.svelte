@@ -7,13 +7,13 @@
 	import Gallery from '$component/Gallery.svelte';
 	import App from './App.svelte';
 
-	async function subscribeToMailList(event: Event) {
+	async function mailListAction(event: Event, endpoint: string) {
 		const form = event.target as HTMLFormElement;
 		const data = new FormData(form);
 		const email = data.get('email')?.toString();
 
 		if (email && email.trim().length > 0) {
-			const response = await fetch('/subscribe-to-maillist', {
+			const response = await fetch(`/${endpoint}`, {
 				method: 'POST',
 				body: JSON.stringify({
 					email: email
@@ -24,20 +24,25 @@
 				}
 			});
 
-			const responseObject = await response.json();
+			const res = await response.json();
+			console.log('res', res, res.success);
 
-			console.log(responseObject.response[0].statusCode);
-
-			if (
-				responseObject.response[0].statusCode === 200 ||
-				responseObject.response[0].statusCode === 201 ||
-				responseObject.response[0].statusCode === 202
-			) {
-				toast.success('Du wurdest erfolgreich zur Mailing Liste hinzugefügt!');
+			if (res.success) {
+				toast.success(res.response);
 			} else {
-				toast.error('Wir konnten dich nicht zur Mailing Liste hinzufügen!');
+				toast.error(res?.response ?? res.message);
 			}
+		} else {
+			toast.error('Bitte gib eine gültige E-Mail Adresse ein!');
 		}
+	}
+
+	async function subscribeToMailList(event: Event) {
+		mailListAction(event, 'subscribe-to-maillist');
+	}
+
+	async function unsubscribeFromMailList(event: Event) {
+		mailListAction(event, 'unsubscribe-from-maillist');
 	}
 
 	function hslToHex(h: number, s: number, l: number) {
@@ -57,7 +62,7 @@
 		// Theme Changer
 		themeChange(false);
 
-		// Colors
+		// HSL to HEX
 		const rootStyles = getComputedStyle(document.documentElement);
 		const hslColor = rootStyles.getPropertyValue('--s').split(' ');
 
@@ -65,8 +70,8 @@
 		primary_color = hexColor;
 	});
 
-	$: primary_color = '#000';
-	$: outerWidth = 0;
+	$: primary_color = '#000'; // for icons
+	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
 
 <svelte:head>
@@ -331,27 +336,55 @@
 		<div class="flex flex-wrap items-center justify-center gap-4 w-full">
 			<div id="contact-form" class="bg-neutral border-2 border-primary p-2 rounded-2xl">
 				<h3 class="text-3xl font-bold text-secondary mb-4">Schreibe uns:</h3>
-				<form class="block mx-auto">
+				<form class="flex flex-col gap-2">
 					<textarea
-						placeholder=""
-						class="textarea textarea-bordered textarea-lg w-full max-w-xs resize-none"
+						placeholder="Deine Nachricht..."
+						value="Hey Täglich Frisches Obst,"
+						class="textarea textarea-bordered textarea-lg w-full max-w-xs resize-none p-2 pt-1"
+						title="Nachricht"
+						disabled
 					/>
 					<div class="flex gap-2 flex-wrap">
-						<input type="email" name="email" class="input input-bordered" />
-						<button type="submit" class="btn btn-secondary">Absenden</button>
+						<input
+							type="email"
+							name="email"
+							class="input input-bordered"
+							title="Email"
+							placeholder="deine@email.tld"
+							disabled
+						/>
+						<button type="submit" class="btn btn-secondary btn-disabled" disabled>Absenden</button>
 					</div>
 				</form>
 			</div>
 			<div id="gig-letter" class="bg-neutral border-2 border-primary p-2 rounded-2xl">
-				<h3 class="text-3xl font-bold text-secondary mb-4">Git-Letter</h3>
+				<h3 class="text-3xl font-bold text-secondary mb-4">Gig-Letter</h3>
 				<p class="mb-2 text-secondary">
 					Erfahre als einer der Ersten, <br /> wann und wo Täglich Frisches Obst <br /> als nächstes
 					auftritt!
 				</p>
-				<form on:submit|preventDefault={subscribeToMailList} class="flex gap-2 flex-wrap">
-					<input type="email" name="email" class="input input-bordered" />
-					<button type="submit" class="btn btn-secondary">Abonnieren</button>
-				</form>
+				<div class="flex flex-col gap-2">
+					<form on:submit|preventDefault={subscribeToMailList} class="flex gap-2 flex-wrap">
+						<input
+							type="email"
+							name="email"
+							class="input input-bordered"
+							title="Email"
+							placeholder="deine@email.tld"
+						/>
+						<button type="submit" class="btn btn-secondary">Abonnieren</button>
+					</form>
+					<form on:submit|preventDefault={unsubscribeFromMailList} class="flex gap-2 flex-wrap">
+						<input
+							type="email"
+							name="email"
+							class="input input-bordered"
+							title="Email"
+							placeholder="deine@email.tld"
+						/>
+						<button type="submit" class="btn btn-secondary">Deabonnieren</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</section>

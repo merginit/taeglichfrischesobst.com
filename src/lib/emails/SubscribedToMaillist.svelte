@@ -84,7 +84,7 @@
 			}
 		</style>
 	</Head>
-	<Preview preview="Welcome to svelte-email" />
+	<Preview preview="Willkommen auf der Mailliste!" />
 	<Section style={main}>
 		<Container style={container}>
 			<Img
@@ -99,10 +99,22 @@
 				Wilkommen auf der Mailliste, {user}! <br /> Wir schicken dir ab jetzt laufend updates bezüglich
 				zukünftiger Gigs.
 			</Text>
-			<Button pX={12} pY={12} style={button} href="" target="_blank">
+			<Button
+				pX={12}
+				pY={12}
+				style={button}
+				href="https://taeglichfrischesobst.vercel.app/#contact"
+				target="_blank"
+			>
 				Aus der Liste austragen
 			</Button>
-			<Button pX={12} pY={12} style={button} href="" target="_blank">Website besuchen</Button>
+			<Button
+				pX={12}
+				pY={12}
+				style={button}
+				href="https://taeglichfrischesobst.vercel.app/"
+				target="_blank">Website besuchen</Button
+			>
 			<Hr style={hr} />
 			<Link style={footer} href="mailto:taeglichfrischesobst.business@gmail.com" target="_blank">
 				Täglich Frisches Obst

@@ -3,7 +3,7 @@ import { SENDGRID_API_KEY, REDIS_CONNECTION } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
 // Email
-import EmailTemplate from '$main/lib/emails/SubscribedToMaillist.svelte';
+import EmailTemplate from '$email/UnsubscribedFromMaillist.svelte';
 import { render } from 'svelte-email';
 import sendgrid from '@sendgrid/mail';
 
@@ -44,16 +44,16 @@ export const POST = (async ({ request }) => {
 
         if (value === null) {
             // Write to Database
-            await redisDB.set(email, String(true));
+            await redisDB.del(email);
             // Send Email
             const response = await sendEmail(email);
             const success = response[0]?.statusCode === 200 || response[0]?.statusCode === 201 || response[0]?.statusCode === 202;
 
-            await redisDB.quit();
-            return new Response(JSON.stringify({ success, response: 'Du wurdest erfolgreich hinzugefügt!', objres: response }));
+            await redisDB.disconnect();
+            return new Response(JSON.stringify({ success, response: 'Du wurdest erfolgreich entfernt!', objres: response }));
         } else {
-            await redisDB.quit();
-            return new Response(JSON.stringify({ success: false, response: 'Du bist schon auf der Liste!', objres: null }));
+            await redisDB.disconnect();
+            return new Response(JSON.stringify({ success: false, response: 'Du bist nicht auf der Liste!', objres: null }));
         }
     } else {
         return new Response(JSON.stringify({ success: false, response: 'Ungültige E-Mail Adresse!', objres: null }));
@@ -73,7 +73,7 @@ async function sendEmail(email: string) {
     const options = {
         from: 'Täglich Frisches Obst - Gig-Letter <taeglichfrischesobst.noreply@gmail.com>',
         to: email,
-        subject: 'Willkommen auf der frisch-fruchtigen Mailingliste von Täglich Frisches Obst!',
+        subject: 'Du wurdest erfolgreich aus der Mailingliste von Täglich Frisches Obst entfernt!',
         html: emailHtml,
     };
 
