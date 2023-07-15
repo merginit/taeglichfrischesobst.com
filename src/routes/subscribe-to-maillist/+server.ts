@@ -1,5 +1,5 @@
 // Variables and Types
-import { SENDGRID_API_KEY, REDIS_CONNECTION } from '$env/static/private';
+import { SENDGRID_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
 // Email
@@ -8,30 +8,7 @@ import { render } from 'svelte-email';
 import sendgrid from '@sendgrid/mail';
 
 // Redis
-import { createClient } from 'redis';
-const redisDB = createClient({
-    url: REDIS_CONNECTION,
-});
-
-redisDB.on("connect", function () {
-    console.error("Connected to Redis!");
-});
-
-redisDB.on("ready", function () {
-    console.error("Redis is ready!");
-});
-
-redisDB.on("reconnecting", function () {
-    console.error("Redis is reconnecting!");
-});
-
-redisDB.on("end", function () {
-    console.error("Redis connection has ended!");
-});
-
-redisDB.on("error", function (err) {
-    console.error(err);
-});
+import { redisDB } from '$server/redis';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const POST = (async ({ request }) => {
@@ -39,7 +16,6 @@ export const POST = (async ({ request }) => {
     const email = user?.email;
 
     if (emailRegex.test(email)) {
-        await redisDB.connect();
         const value = await redisDB.get(email);
 
         if (value === null) {
@@ -49,10 +25,8 @@ export const POST = (async ({ request }) => {
             const response = await sendEmail(email);
             const success = response[0]?.statusCode === 200 || response[0]?.statusCode === 201 || response[0]?.statusCode === 202;
 
-            await redisDB.quit();
             return new Response(JSON.stringify({ success, response: 'Du wurdest erfolgreich hinzugefügt!', objres: response }));
         } else {
-            await redisDB.quit();
             return new Response(JSON.stringify({ success: false, response: 'Du bist schon auf der Liste!', objres: null }));
         }
     } else {
