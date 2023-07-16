@@ -25,5 +25,5 @@ redisDB.on("error", function (err) {
     console.error(err);
 });
 
-await redisDB.connect();
+// await redisDB.connect();
 // await redisDB.disconnect(); await redisDB.quit();

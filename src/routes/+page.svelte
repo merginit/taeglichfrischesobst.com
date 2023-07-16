@@ -1,3 +1,6 @@
+<script lang="ts" context="module" type="module">
+</script>
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
@@ -5,7 +8,12 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 	import NavigationLinks from '$component/NavigationLinks.svelte';
 	import Gallery from '$component/Gallery.svelte';
+	import { gigs } from '$script/data';
+	import { videos } from '$script/data';
+	import { images } from '$script/data';
+	import { compareDates } from '$script/utility';
 	import App from './App.svelte';
+	// import gsap from 'gsap';
 
 	async function mailListAction(event: Event, endpoint: string) {
 		const form = event.target as HTMLFormElement;
@@ -38,39 +46,32 @@
 	}
 
 	async function subscribeToMailList(event: Event) {
-		mailListAction(event, 'subscribe-to-maillist');
+		await mailListAction(event, 'subscribe-to-maillist');
+		console.log('subscribed to mail list');
 	}
 
 	async function unsubscribeFromMailList(event: Event) {
-		mailListAction(event, 'unsubscribe-from-maillist');
-	}
-
-	function hslToHex(h: number, s: number, l: number) {
-		l /= 100;
-		const a = (s * Math.min(l, 1 - l)) / 100;
-		const f = (n: number) => {
-			const k = (n + h / 30) % 12;
-			const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-			return Math.round(255 * color)
-				.toString(16)
-				.padStart(2, '0'); // convert to Hex and prefix "0" if needed
-		};
-		return `#${f(0)}${f(8)}${f(4)}`;
+		await mailListAction(event, 'unsubscribe-from-maillist');
+		console.log('unsubscribed from mail list');
 	}
 
 	onMount(() => {
 		// Theme Changer
 		themeChange(false);
 
-		// HSL to HEX
-		const rootStyles = getComputedStyle(document.documentElement);
-		const hslColor = rootStyles.getPropertyValue('--s').split(' ');
-
-		const hexColor = hslToHex(parseInt(hslColor[0]), parseInt(hslColor[1]), parseInt(hslColor[2]));
-		primary_color = hexColor;
+		remainingIcons = document.getElementsByClassName('iconify-icon').length;
+		console.log(remainingIcons);
 	});
 
-	$: primary_color = '#000'; // for icons
+	function iconLoaded() {
+		remainingIcons -= 1;
+
+		if (remainingIcons === 0) {
+			console.log('all icons loaded');
+		}
+	}
+
+	let remainingIcons: number = -1;
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
 
@@ -83,26 +84,40 @@
 
 <Toaster />
 
-<header class="flex flex-col justify-between w-full relative">
+<header class="relative flex flex-col justify-between w-full parallax-header">
 	<!-- svelte-ignore a11y-invalid-attribute -->
-	<a class="fixed -left-4 top-0 z-50 rotate-12" href="">
-		<img class="w-14 2xl:w-28" src="/favicon.png" alt="logo" />
+	<a class="fixed top-0 z-50 -left-4 rotate-12" href="">
+		<img class="w-14 2xl:w-28 shaking" src="/favicon.png" alt="logo" />
 	</a>
 
 	<!-- prettier-ignore -->
-	<svg class="-z-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+	<svg class="-z-10 parallax-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
 	<path class="fill-neutral" fill-opacity="1" d="M0,256L26.7,224C53.3,192,107,128,160,96C213.3,64,267,64,320,85.3C373.3,107,427,149,480,165.3C533.3,181,587,171,640,154.7C693.3,139,747,117,800,133.3C853.3,149,907,203,960,229.3C1013.3,256,1067,256,1120,250.7C1173.3,245,1227,235,1280,240C1333.3,245,1387,267,1413,277.3L1440,288L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path></svg>
 
 	<!-- prettier-ignore -->
-	<div id="socials" class="fixed top-0 right-0 flex justify-center items-center m-4 gap-2 z-50">
-		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="cursor-pointer"><Icon icon="mdi:youtube" color={primary_color} width={'35px'} /></a>
-		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer"><Icon icon="ri:instagram-fill" color={primary_color} width={'25px'} /></a>
-		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="cursor-pointer"><Icon icon="ic:baseline-tiktok" color={primary_color} width={'28px'} /></a>
-		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer"><Icon icon="ri:facebook-fill" color={primary_color} width={'25px'} /></a>
+	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 m-4">
+		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
+		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
+		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
 	</div>
 
 	<!-- prettier-ignore -->
-	<div id="tfo" class="text-center w-screen max-w-7xl text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">Täglich Frisches Obst</div>
+	<h1 id="tfo" class="absolute w-screen text-2xl text-center transform -translate-x-1/2 -translate-y-1/2 max-w-7xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl top-1/2 left-1/2 parallax-text -z-50 flex justify-center">Täglich Frisches Obst</h1>
+
+	{#if outerWidth > 1775}
+		<div class="absolute top-0 left-0">
+			<App />
+		</div>
+
+		<div class="absolute transform -top-72 left-1/3 -translate-x-1/3">
+			<App />
+		</div>
+
+		<div class="absolute bottom-0 right-0">
+			<App />
+		</div>
+	{/if}
 
 	<!-- prettier-ignore -->
 	<svg class="-z-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path class="fill-neutral" fill-opacity="1" d="M0,160L34.3,176C68.6,192,137,224,206,234.7C274.3,245,343,235,411,197.3C480,160,549,96,617,85.3C685.7,75,754,117,823,154.7C891.4,192,960,224,1029,213.3C1097.1,203,1166,149,1234,117.3C1302.9,85,1371,75,1406,69.3L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
@@ -111,21 +126,24 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <nav class="sticky top-0 z-10">
-	<div class="bg-neutral relative z-20" id="navigation">
+	<div class="relative z-20 bg-neutral" id="navigation">
 		{#if outerWidth > 1135}
-			<ul class="flex gap-16 justify-center overflow-x-auto py-4 text-secondary">
+			<ul class="flex justify-center gap-16 py-4 overflow-x-auto text-secondary">
 				<NavigationLinks />
 			</ul>
 		{:else}
-			<div class="h-9 ml-12 pt-8 flex items-center">
+			<div class="flex items-center pt-8 ml-12 h-9">
 				<div class="dropdown dropdown-bottom">
-					<label tabindex="0"
-						><Icon icon="charm:menu-hamburger" color={primary_color} width={'28px'} /></label
-					>
-					<ul
-						tabindex="0"
-						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 border-2 border-primary rounded-box w-fit text-secondary"
-					>
+					<label tabindex="0" class="iconify-icon">
+						<Icon
+							on:load={() => iconLoaded()}
+							icon="charm:menu-hamburger"
+							color="hsl(var(--s))"
+							width={'28px'}
+						/>
+					</label>
+					<!-- prettier-ignore -->
+					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 border-2 border-primary rounded-box w-fit text-secondary">
 						<NavigationLinks />
 					</ul>
 				</div>
@@ -140,13 +158,11 @@
 </nav>
 
 <main>
-	<!-- <App /> -->
-	<section id="gigs" class="min-h-screen flex flex-col mt-[15%] scroll-mt-[20rem]">
+	<section id="gigs" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem]">
 		<div class="p-16">
-			<div class="overflow-x-auto bg-neutral rounded-xl text-secondary">
+			<div class="overflow-auto max-h-96 bg-neutral rounded-xl text-secondary">
 				<table class="table">
-					<!-- head -->
-					<thead class="text-lg text-secondary font-bold">
+					<thead class="text-lg font-bold text-secondary">
 						<tr>
 							<th />
 							<th>Datum</th>
@@ -156,234 +172,257 @@
 						</tr>
 					</thead>
 					<tbody class="text-lg">
-						<tr>
-							<th>1</th>
-							<td>8.7.2023</td>
-							<td>Linz</td>
-							<td>Donauinselfest</td>
-							<td>
-								<button class="btn btn-success">Tickets</button>
-							</td>
-						</tr>
-						<tr>
-							<th>1</th>
-							<td>8.7.2023</td>
-							<td>Linz</td>
-							<td>Donauinselfest</td>
-							<td>
-								<button class="btn btn-error line-through">Tickets</button>
-							</td>
-						</tr>
+						{#each gigs.sort( (eventA, eventB) => compareDates(eventA.date, eventB.date) ) as gig, index}
+							<tr>
+								<th>{index + 1}</th>
+								<td>{gig.date}{gig.time ? ' (' + gig.time + ')' : ''}</td>
+								<td>{gig.location}</td>
+								<td>{gig.event}</td>
+								<td>
+									<!-- prettier-ignore -->
+									<a class="btn {gig.tickets ? 'btn-success' : 'btn-error'}" href={gig.tickets && typeof gig.tickets === "string" ? gig.tickets : '#'}>Tickets</a>
+								</td>
+							</tr>
+						{:else}
+							<span class="loading loading-ball loading-lg" />
+						{/each}
 					</tbody>
 				</table>
 			</div>
-			<h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl font-bold">
+			<!-- prettier-ignore -->
+			<h2 class="relative -z-40 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
+				{#if outerWidth > 1535}
+					<!-- prettier-ignore -->
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="wobble absolute -z-50 top-0 left-0 w-40">
+						<path fill="hsl(var(--b2))" d="M41.8,-70C55.9,-64.1,70.5,-56.6,79.5,-44.7C88.5,-32.7,91.8,-16.4,91.2,-0.4C90.6,15.6,85.9,31.3,77.6,44.4C69.3,57.5,57.4,68.2,43.9,76.7C30.3,85.3,15.2,91.8,0.5,90.9C-14.2,90.1,-28.3,81.9,-41.1,72.8C-53.8,63.8,-65.1,53.9,-72.5,41.6C-79.9,29.4,-83.4,14.7,-83.8,-0.2C-84.2,-15.1,-81.5,-30.3,-73.5,-41.6C-65.5,-52.9,-52.3,-60.3,-39.2,-66.8C-26.1,-73.3,-13,-78.9,0.4,-79.6C13.8,-80.2,27.6,-75.9,41.8,-70Z" transform="translate(100 100)" />
+					</svg>
+				{/if}
 			</h2>
 		</div>
 	</section>
 	<!-- svelte-ignore a11y-missing-attribute -->
-	<section id="music" class="min-h-screen flex flex-col mt-[15%] scroll-mt-[20rem] z-10">
-		<div class="flex px-16 flex-wrap gap-4">
-			<div class="bg-neutral rounded-2xl p-2 overflow-auto max-h-96">
-				<h2 class="text-3xl lg:text-7xl font-bold flex items-center text-secondary">
-					<Icon icon="mdi:fire" color={primary_color} width={outerWidth > 1024 ? '80px' : '40px'} />
-					NEU:
-				</h2>
-				<div class="divider before:bg-secondary after:bg-secondary" />
-				<div class="flex flex-col gap-2">
-					<iframe
-						style="border-radius:12px"
-						src="https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator"
-						width="100%"
-						height="152"
-						frameBorder="0"
-						allowfullscreen
-						allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-						loading="lazy"
-					/>
-					<iframe
-						style="border-radius:12px"
-						src="https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator"
-						width="100%"
-						height="152"
-						frameBorder="0"
-						allowfullscreen
-						allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-						loading="lazy"
-					/>
-					<iframe
-						style="border-radius:12px"
-						src="https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator"
-						width="100%"
-						height="152"
-						frameBorder="0"
-						allowfullscreen
-						allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-						loading="lazy"
-					/>
+	<section id="music" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
+		<div class="flex flex-wrap justify-center gap-4 px-16">
+			<!-- prettier-ignore -->
+			<div class="slider-reverse">
+				<div class="slide-track-reverse">
+					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
+						<!-- prettier-ignore -->
+						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+							Socials
+						</h2>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"
+							target="_blank"
+							class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://www.instagram.com/taeglichfrischesobst/"
+							target="_blank"
+							class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+
+						<div class="slide">
+							<a href="https://www.tiktok.com/@taeglichfrischesobst"
+							target="_blank"
+							class="cursor-pointer iconify-icon"
+							><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://www.facebook.com/taeglichfrischesobst/"
+							target="_blank"
+							class="cursor-pointer iconify-icon"
+							><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+					{:else}
+						<span class="loading loading-ball loading-lg"></span>
+					{/each}
 				</div>
 			</div>
-			<div class="flex flex-col">
-				<!-- prettier-ignore -->
-				<div class="flex flex-wrap items-center gap-2">
-					<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"
-						target="_blank"
-						class="cursor-pointer"><Icon icon="mdi:youtube" color={primary_color} width={outerWidth > 1135 ? '140px' : "70px"} /></a>
-					<a href="https://www.instagram.com/taeglichfrischesobst/"
-						target="_blank"
-						class="cursor-pointer"><Icon icon="ri:instagram-fill" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-					<a href="https://www.tiktok.com/@taeglichfrischesobst"
-						target="_blank"
-						class="cursor-pointer"
-						><Icon icon="ic:baseline-tiktok" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-					<a href="https://www.facebook.com/taeglichfrischesobst/"
-						target="_blank"
-						class="cursor-pointer"
-						><Icon icon="ri:facebook-fill" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-				</div>
-				<h2
-					class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl font-bold ml-2"
-				>
-					Musik
-				</h2>
-				<!-- prettier-ignore -->
-				<div class="flex flex-wrap items-center gap-2">
-					<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer"><Icon icon="mdi:spotify" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-					<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer"><Icon icon="arcticons:amazon-music" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-					<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer"><Icon icon="simple-icons:applemusic" color={primary_color} width={outerWidth > 1135 ? '90px' : "45px"} /></a>
-					<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer"><Icon icon="simple-icons:tidal" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
-					<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer"><Icon icon="fa6-brands:deezer" color={primary_color} width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<div
+				class="p-2 overflow-auto bg-neutral rounded-2xl songs overflow-y-hidden"
+				on:wheel={(event) => {
+					event.preventDefault();
+					event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
+				}}
+				tabindex="0"
+			>
+				<iframe
+					class="song"
+					style="border-radius:12px"
+					src="https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator"
+					width="100%"
+					height="152"
+					frameBorder="0"
+					allowfullscreen
+					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+					loading="lazy"
+				/>
+				<iframe
+					class="song"
+					style="border-radius:12px"
+					src="https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator"
+					width="100%"
+					height="152"
+					frameBorder="0"
+					allowfullscreen
+					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+					loading="lazy"
+				/>
+				<iframe
+					class="song"
+					style="border-radius:12px"
+					src="https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator"
+					width="100%"
+					height="152"
+					frameBorder="0"
+					allowfullscreen
+					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+					loading="lazy"
+				/>
+			</div>
+			<!-- prettier-ignore -->
+			<div class="slider">
+				<div class="slide-track">
+					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
+						<!-- prettier-ignore -->
+						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+							Musik
+						</h2>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+						<!-- prettier-ignore -->
+						<div class="slide">
+							<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+						</div>
+					{:else}
+						<span class="loading loading-ball loading-lg"></span>
+					{/each}
 				</div>
 			</div>
 		</div>
 	</section>
-	<section id="videos" class="min-h-screen flex flex-col mt-[15%] scroll-mt-[20rem] z-10">
-		<h2
-			class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl font-bold text-center"
-		>
+	<section id="videos" class="min-h-screen flex flex-col scroll-mt-0 z-10">
+		<!-- prettier-ignore -->
+		<div class="carousel w-full h-screen">
+			{#each videos as video, index}
+			<div id="video-{index}" class="carousel-item relative w-full h-full">
+				<iframe src={video.videoUrl}
+				title="YouTube video player"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen
+				class="w-full h-full"></iframe>
+				<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+				  <a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
+				  <a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
+				</div>
+			  </div>
+			{:else}
+			  <span class="loading loading-ball loading-lg"></span>
+			{/each}
+		</div>
+
+		<!-- prettier-ignore -->
+		<h2 class="text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">
 			Videos
 		</h2>
-		<div class="flex flex-wrap justify-center gap-2">
-			<iframe
-				width="560"
-				height="315"
-				class="max-w-[90%]"
-				src="https://www.youtube-nocookie.com/embed/KpJbtTYWm5Y"
-				title="YouTube video player"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen
-			/>
-			<iframe
-				width="560"
-				height="315"
-				class="max-w-[90%]"
-				src="https://www.youtube-nocookie.com/embed/60cndafDX34"
-				title="YouTube video player"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen
-			/>
-		</div>
 	</section>
-	<section id="gallery" class="min-h-screen flex flex-col mt-[15%] scroll-mt-[20rem] z-10">
+	<section id="gallery" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
 		<div class="flex mr-2">
-			<h2
-				class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl font-bold"
-				style="writing-mode:vertical-lr; transform: rotate(-180deg);"
-			>
+			<!-- prettier-ignore -->
+			<h2 class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl"
+				style="writing-mode:vertical-lr; transform: rotate(-180deg);">
 				Fotos
 			</h2>
-			<Gallery
-				galleryID="gallery"
-				images={[
-					{
-						URL: '/assets/images/band/Alter Bauhof Ottensheim 6.1.23 01 F ©Simon Rauch.jpg',
-						width: 2048,
-						height: 1365
-					},
-					{
-						URL: '/assets/images/band/Alter Bauhof Ottensheim 6.1.23 02 F ©Simon Rauch.jpg',
-						width: 2048,
-						height: 1365
-					},
-					{
-						URL: '/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.JPG',
-						width: 1600,
-						height: 900
-					},
-					{
-						URL: '/assets/images/band/Kramladen 31.03.23 _ 01 ©Simon Rauch.jpg',
-						width: 1200,
-						height: 900
-					},
-					{
-						URL: '/assets/images/band/Kramladen 31.03.23 _ 02 ©Simon Rauch.jpg',
-						width: 2048,
-						height: 1365
-					}
-				]}
-			/>
+			<Gallery galleryID="gallery" {images} />
 		</div>
 	</section>
-	<section id="contact" class="min-h-screen flex flex-col mt-[15%] scroll-mt-[20rem] z-10 mx-4">
-		<h2
-			class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl font-bold px-4 text-center"
-		>
-			Kontakt
-		</h2>
-		<div class="flex flex-wrap items-center justify-center gap-4 w-full">
-			<div id="contact-form" class="bg-neutral border-2 border-primary p-2 rounded-2xl">
-				<h3 class="text-3xl font-bold text-secondary mb-4">Schreibe uns:</h3>
-				<form class="flex flex-col gap-2">
-					<textarea
-						placeholder="Deine Nachricht..."
-						value="Hey Täglich Frisches Obst,"
-						class="textarea textarea-bordered textarea-lg w-full max-w-xs resize-none p-2 pt-1"
-						title="Nachricht"
-						disabled
-					/>
-					<div class="flex gap-2 flex-wrap">
-						<input
-							type="email"
-							name="email"
-							class="input input-bordered"
-							title="Email"
-							placeholder="deine@email.tld"
+	<!-- prettier-ignore -->
+	<section id="contact" class="min-h-screen flex flex-col mt-[15rem] scroll-mt-[15rem] -z-10 mx-4 relative">
+		{#if outerWidth > 1535}
+			<!-- prettier-ignore -->
+			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
+		{/if}
+
+		<div class="absolute top-0 left-1/2 transform -translate-x-1/2">
+			<!-- prettier-ignore -->
+			<h2 class="px-4 text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
+				Kontakt
+			</h2>
+			<div class="flex flex-col items-center justify-center w-full gap-4">
+				<div id="contact-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
+					<form class="flex flex-col gap-2">
+						<textarea
+							placeholder="Deine Nachricht..."
+							value="Hey Täglich Frisches Obst,"
+							class="w-full max-w-xs p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
+							title="Nachricht"
 							disabled
 						/>
-						<button type="submit" class="btn btn-secondary btn-disabled" disabled>Absenden</button>
+						<div class="flex flex-wrap gap-2">
+							<input
+								type="email"
+								name="email"
+								class="input input-bordered"
+								title="Email"
+								placeholder="deine@email.tld"
+								disabled
+							/>
+							<button type="submit" class="btn btn-secondary btn-disabled" disabled>Absenden</button
+							>
+						</div>
+					</form>
+				</div>
+				<div id="gig-letter" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+					<h3 class="mb-4 text-3xl font-bold text-secondary">Gig-Letter</h3>
+					<p class="mb-2 text-secondary">
+						Erfahre als einer der Ersten, <br /> wann und wo Täglich Frisches Obst <br /> als nächstes
+						auftritt!
+					</p>
+					<div class="flex flex-col gap-2">
+						<form on:submit|preventDefault={subscribeToMailList} class="flex flex-wrap gap-2">
+							<input
+								type="email"
+								name="email"
+								class="input input-bordered"
+								title="Email"
+								placeholder="deine@email.tld"
+							/>
+							<button type="submit" class="btn btn-secondary">Abonnieren</button>
+						</form>
+						<form on:submit|preventDefault={unsubscribeFromMailList} class="flex flex-wrap gap-2">
+							<input
+								type="email"
+								name="email"
+								class="input input-bordered"
+								title="Email"
+								placeholder="deine@email.tld"
+							/>
+							<button type="submit" class="btn btn-secondary">Deabonnieren</button>
+						</form>
 					</div>
-				</form>
-			</div>
-			<div id="gig-letter" class="bg-neutral border-2 border-primary p-2 rounded-2xl">
-				<h3 class="text-3xl font-bold text-secondary mb-4">Gig-Letter</h3>
-				<p class="mb-2 text-secondary">
-					Erfahre als einer der Ersten, <br /> wann und wo Täglich Frisches Obst <br /> als nächstes
-					auftritt!
-				</p>
-				<div class="flex flex-col gap-2">
-					<form on:submit|preventDefault={subscribeToMailList} class="flex gap-2 flex-wrap">
-						<input
-							type="email"
-							name="email"
-							class="input input-bordered"
-							title="Email"
-							placeholder="deine@email.tld"
-						/>
-						<button type="submit" class="btn btn-secondary">Abonnieren</button>
-					</form>
-					<form on:submit|preventDefault={unsubscribeFromMailList} class="flex gap-2 flex-wrap">
-						<input
-							type="email"
-							name="email"
-							class="input input-bordered"
-							title="Email"
-							placeholder="deine@email.tld"
-						/>
-						<button type="submit" class="btn btn-secondary">Deabonnieren</button>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -393,32 +432,30 @@
 <div class="relative">
 	<input
 		type="checkbox"
-		class="toggle absolute bottom-0 left-0 m-2 z-50"
+		class="absolute bottom-0 {outerWidth < 1435
+			? 'left-1/2 transform -translate-x-1/2'
+			: 'left-0'} z-50 m-2 toggle"
 		data-toggle-theme="dark,light"
 		data-act-class="active-theme"
 		data-key="tfo-band"
 	/>
 
-	<!-- prettier-ignore -->
-	<div id="streaming" class="absolute bottom-0 right-0 z-40 w-full">
-		<div class="flex flex-row-reverse m-4 mb-8 gap-2">
-			<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer"><Icon icon="mdi:spotify" color={primary_color} width={'50px'} /></a>
-			<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer"><Icon icon="arcticons:amazon-music" color={primary_color} width={'50px'} /></a>
-			<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer"><Icon icon="simple-icons:applemusic" color={primary_color} width={'45px'} /></a>
-			<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer"><Icon icon="simple-icons:tidal" color={primary_color} width={'50px'} /></a>
-			<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer"><Icon icon="fa6-brands:deezer" color={primary_color} width={'50px'} /></a>
+	{#if outerWidth > 1435}
+		<!-- prettier-ignore -->
+		<div id="streaming" class="absolute bottom-0 right-0 z-40 w-full">
+			<div class="flex flex-row-reverse gap-2 m-4 mb-8">
+				<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" width={'50px'} /></a>
+				<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="arcticons:amazon-music" color="hsl(var(--s))" width={'50px'} /></a>
+				<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:applemusic" color="hsl(var(--s))" width={'45px'} /></a>
+				<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:tidal" color="hsl(var(--s))" width={'50px'} /></a>
+				<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="fa6-brands:deezer" color="hsl(var(--s))" width={'50px'} /></a>
+			</div>
 		</div>
-	</div>
+	{/if}
 
 	<!-- prettier-ignore -->
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path class="fill-neutral" fill-opacity="1" d="M0,128L60,160C120,192,240,256,360,250.7C480,245,600,171,720,165.3C840,160,960,224,1080,234.7C1200,245,1320,203,1380,181.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
 </div>
 
-<style>
-	@media only screen and (max-width: 580px) {
-		#streaming {
-			right: 50%;
-			transform: translateX(50%);
-		}
-	}
+<style lang="postcss">
 </style>
