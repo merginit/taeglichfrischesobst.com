@@ -116,29 +116,30 @@ export const gigs: Gig[] = [
 ];
 
 const band_image_path = '/assets/images/band/';
+const image_file_extension = 'webp';
 export const images = [
     {
-        URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 01 F ©Simon Rauch.jpg`,
+        URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 01 F ©Simon Rauch.${image_file_extension}`,
         width: 2048,
         height: 1365
     },
     {
-        URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 02 F ©Simon Rauch.jpg`,
+        URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 02 F ©Simon Rauch.${image_file_extension}`,
         width: 2048,
         height: 1365
     },
     {
-        URL: `${band_image_path}Josef_Jakob_Vinny_Tobi ©Niko Nopp.JPG`,
+        URL: `${band_image_path}Josef_Jakob_Vinny_Tobi ©Niko Nopp.${image_file_extension}`,
         width: 1600,
         height: 900
     },
     {
-        URL: `${band_image_path}Kramladen 31.03.23 _ 01 ©Simon Rauch.jpg`,
+        URL: `${band_image_path}Kramladen 31.03.23 _ 01 ©Simon Rauch.${image_file_extension}`,
         width: 1200,
         height: 900
     },
     {
-        URL: `${band_image_path}Kramladen 31.03.23 _ 02 ©Simon Rauch.jpg`,
+        URL: `${band_image_path}Kramladen 31.03.23 _ 02 ©Simon Rauch.${image_file_extension}`,
         width: 2048,
         height: 1365
     }

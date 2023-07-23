@@ -4,6 +4,11 @@ export const compareDates = (a: string, b: string) => {
     return dateB.getTime() - dateA.getTime();
 };
 
+export const isFutureDate = (date: string) => {
+    const currentDate = new Date();
+    return new Date(date.split('.').reverse().join('-')) > currentDate;
+}
+
 export const hslToHex = (h: number, s: number, l: number) => {
     l /= 100;
     const a = (s * Math.min(l, 1 - l)) / 100;
