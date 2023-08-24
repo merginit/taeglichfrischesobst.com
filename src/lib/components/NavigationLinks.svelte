@@ -26,16 +26,16 @@
 
 <svelte:window bind:scrollY bind:outerHeight on:scroll={() => (active = '')} />
 
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#gigs"
 		on:click={handleClick}
 		class="navigation-link link 
-		{page !== "legal" ? (active === 'gigs' || (scrollY > section_01 && scrollY <= section_02) ? '' : 'link-hover') : "link-hover"}">Gigs
+		{page !== "legal" ? (active === 'gigs' || (scrollY > section_01 / 1.25 && scrollY <= section_02) ? '' : 'link-hover') : "link-hover"}">Gigs
 	</a>
 </li>
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#music"
@@ -44,7 +44,7 @@
 		{page !== "legal" ? (active === 'music' || (scrollY > section_02 && scrollY <= section_03) ? '' : 'link-hover') : "link-hover"}">Musik
 	</a>
 </li>
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#videos"
@@ -53,7 +53,7 @@
 		{page !== "legal" ? (active === 'videos' || (scrollY > section_03 && scrollY <= section_04) ? '' : 'link-hover') : "link-hover"}">Videos
 	</a>
 </li>
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#gallery"
@@ -62,7 +62,7 @@
 		{page !== "legal" ? (active === 'gallery' || (scrollY > section_04 && scrollY <= section_05) ? '' : 'link-hover') : "link-hover"}">Galerie
 	</a>
 </li>
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#info"
@@ -71,7 +71,7 @@
 		{page !== "legal" ? (active === 'info' || (scrollY > section_05 && scrollY <= section_06) ? '' : 'link-hover') : ""}">Info
 	</a>
 </li>
-<li class="text-xl sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
+<li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#contact"

@@ -36,14 +36,14 @@
 
 	<!-- prettier-ignore -->
 	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 m-4">
-		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
-		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
-		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
-		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
+		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
+		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
 	</div>
 
 	<!-- prettier-ignore -->
-	<h1 id="tfo" class="absolute w-screen text-2xl text-center transform -translate-x-1/2 -translate-y-1/2 max-w-7xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl top-1/2 left-1/2 parallax-text -z-50 flex justify-center">Täglich Frisches Obst</h1>
+	<h1 id="tfo" class="absolute flex justify-center w-screen text-2xl text-center transform -translate-x-1/2 -translate-y-1/2 max-w-7xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl top-1/2 left-1/2 parallax-text -z-50">Täglich Frisches Obst</h1>
 
 	{#if outerWidth > 1775}
 		<div class="absolute top-0 left-0">

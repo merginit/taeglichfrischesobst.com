@@ -10,7 +10,18 @@
 	import { images } from '$script/data';
 	import { compareDates, isFutureDate } from '$script/utility';
 	import IconLoader from '$script/icons';
+	import Song from '$component/Song.svelte';
+	import { onMount } from 'svelte';
+	/* import {
+		getStoryblokApi,
+		useStoryblokBridge,
+		StoryblokComponent,
+		type ISbStoryData
+	} from '@storyblok/svelte'; */
 	// import gsap from 'gsap';
+
+	/* svelte-ignore unused-export-let */
+	export let data;
 
 	async function mailListAction(event: Event, endpoint: string) {
 		const form = event.target as HTMLFormElement;
@@ -52,8 +63,56 @@
 		console.log('unsubscribed from mail list');
 	}
 
-	const allGigs = gigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
-	const futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
+	/* let story: ISbStoryData<any> | null = null;
+	onMount(async () => {
+		const storyblokApi = getStoryblokApi();
+		const { data } = await storyblokApi.get('cdn/stories/home', {
+			version: 'draft'
+		});
+		story = data.story;
+
+		if (story) {
+			useStoryblokBridge(story.id, (newStory) => (story = newStory));
+		}
+	}); */
+
+	let gigsIncludingFetched: any[] = [];
+
+	onMount(async () => {
+		const fetchedGigs = await fetchGigs();
+		gigsIncludingFetched = gigs.concat(fetchedGigs);
+	});
+
+	async function fetchGigs() {
+		const response = await fetch('/storyblok?slug=gigs');
+		const data = await response.json();
+		const fetchedGigs = data.data;
+
+		fetchedGigs.forEach((gig: any) => {
+			// format date
+			if (gig.date) {
+				const parsedDate = new Date(gig.date);
+				const day = parsedDate.getDate().toString().padStart(2, '0');
+				const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
+				const year = parsedDate.getFullYear();
+
+				gig.date = `${day}.${month}.${year}`;
+			}
+
+			// format ticket url
+			if (gig.tickets) {
+				gig.tickets = gig.tickets.url;
+			}
+		});
+
+		return fetchedGigs;
+	}
+
+	$: allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
+		compareDates(eventA.date, eventB.date)
+	);
+	$: futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
+
 	let displayAllGigs = false;
 	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
 
@@ -75,12 +134,16 @@
 
 <svelte:window bind:outerWidth />
 
+<!-- {#if story}
+	<StoryblokComponent blok={story.content} />
+{/if} -->
+
 <Toaster />
 
 <main class="min-h-screen">
 	<section id="gigs" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem]">
-		<div class="p-16">
-			<div class="overflow-auto max-h-96 bg-neutral rounded-xl text-secondary">
+		<div class="p-6 md:p-10 lg:p-16">
+			<div class="relative overflow-auto max-h-96 bg-neutral rounded-xl text-secondary">
 				<table class="table">
 					<thead class="text-lg font-bold text-secondary">
 						<tr>
@@ -100,7 +163,11 @@
 								<td>{gig.event}</td>
 								<td>
 									<!-- prettier-ignore -->
-									<a class="btn {gig.tickets ? 'btn-success' : 'btn-error'}" href={gig.tickets && typeof gig.tickets === "string" ? gig.tickets : '#'}>Tickets</a>
+									<a href={gig.tickets && typeof gig.tickets === "string" ? gig.tickets : '#'}>
+										<button disabled={typeof gig.tickets !== "string" ? true : false}  class="btn {gig.tickets && typeof gig.tickets === "string" && gig.tickets.trim().length > 0 ? 'btn-success' : 'btn-error'}" type="button">
+											{typeof gig.tickets !== "string" ? "" : "Tickets"}
+										</button>
+									</a>
 								</td>
 							</tr>
 						{:else}
@@ -108,27 +175,29 @@
 						{/each}
 					</tbody>
 				</table>
-				<hr />
-				<div class="flex justify-center my-2">
-					<!-- prettier-ignore -->
-					<button
-						class="btn btn-primary"
-						type="button"
-						on:click={() => (displayAllGigs = !displayAllGigs)}>
-						{#if displayAllGigs}
-							Weniger
-						{:else}
-							Mehr
-						{/if}
-					</button>
+				<div class="sticky bottom-0 w-full bg-neutral">
+					<hr />
+					<div class="flex justify-center py-2">
+						<!-- prettier-ignore -->
+						<button
+							class="btn btn-primary"
+							type="button"
+							on:click={() => (displayAllGigs = !displayAllGigs)}>
+							{#if displayAllGigs}
+								Weniger
+							{:else}
+								Mehr
+							{/if}
+						</button>
+					</div>
 				</div>
 			</div>
 			<!-- prettier-ignore -->
-			<h2 class="relative -z-40 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
+			<h2 class="relative text-2xl font-bold -z-40 sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
 				{#if outerWidth > 1535}
 					<!-- prettier-ignore -->
-					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="wobble absolute -z-50 top-0 left-0 w-40">
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="absolute top-0 left-0 w-40 wobble -z-50">
 						<path fill="hsl(var(--b2))" d="M41.8,-70C55.9,-64.1,70.5,-56.6,79.5,-44.7C88.5,-32.7,91.8,-16.4,91.2,-0.4C90.6,15.6,85.9,31.3,77.6,44.4C69.3,57.5,57.4,68.2,43.9,76.7C30.3,85.3,15.2,91.8,0.5,90.9C-14.2,90.1,-28.3,81.9,-41.1,72.8C-53.8,63.8,-65.1,53.9,-72.5,41.6C-79.9,29.4,-83.4,14.7,-83.8,-0.2C-84.2,-15.1,-81.5,-30.3,-73.5,-41.6C-65.5,-52.9,-52.3,-60.3,-39.2,-66.8C-26.1,-73.3,-13,-78.9,0.4,-79.6C13.8,-80.2,27.6,-75.9,41.8,-70Z" transform="translate(100 100)" />
 					</svg>
 				{/if}
@@ -137,7 +206,7 @@
 	</section>
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<section id="music" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
-		<div class="flex flex-wrap justify-center gap-4 px-16">
+		<div class="flex flex-wrap justify-center gap-4 px-6 md:px-10 lg:px-16">
 			<!-- prettier-ignore -->
 			<div class="slider-reverse">
 				<div class="slide-track-reverse">
@@ -180,51 +249,27 @@
 			</div>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<div
-				class="p-2 overflow-auto bg-neutral rounded-2xl songs overflow-y-hidden"
+				class="p-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
 				on:wheel={(event) => {
 					event.preventDefault();
 					event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
 				}}
 				tabindex="0"
 			>
-				<iframe
-					class="song"
-					style="border-radius:12px"
-					src="https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator"
-					width="100%"
-					height="152"
-					frameBorder="0"
-					allowfullscreen
-					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-					loading="lazy"
+				<Song
+					url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
 				/>
-				<iframe
-					class="song"
-					style="border-radius:12px"
-					src="https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator"
-					width="100%"
-					height="152"
-					frameBorder="0"
-					allowfullscreen
-					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-					loading="lazy"
+				<Song
+					url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
 				/>
-				<iframe
-					class="song"
-					style="border-radius:12px"
-					src="https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator"
-					width="100%"
-					height="152"
-					frameBorder="0"
-					allowfullscreen
-					allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-					loading="lazy"
+				<Song
+					url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
 				/>
 			</div>
 			<!-- prettier-ignore -->
 			<div class="slider">
 				<div class="slide-track">
-					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
+					{#each Array.from({ length: 4 }, (_, i) => i + 1) as i}
 						<!-- prettier-ignore -->
 						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Musik
@@ -256,11 +301,11 @@
 			</div>
 		</div>
 	</section>
-	<section id="videos" class="min-h-screen flex flex-col scroll-mt-0 z-10">
+	<section id="videos" class="z-10 flex flex-col min-h-screen scroll-mt-0">
 		<!-- prettier-ignore -->
-		<div class="carousel w-full h-screen">
+		<div class="w-full h-screen carousel">
 			{#each videos as video, index}
-			<div id="video-{index}" class="carousel-item relative w-full h-full">
+			<div id="video-{index}" class="relative w-full h-full carousel-item">
 				<iframe src={video.videoUrl}
 				title="YouTube video player"
 				frameborder="0"
@@ -299,11 +344,11 @@
 			Pressekit Downloaden
 		</a>
 		<div class="py-5">
-			<div class="collapse collapse-plus bg-base-200 my-2">
+			<div class="my-2 collapse collapse-plus bg-base-200">
 				<input type="radio" name="info-accordion" checked />
-				<div class="collapse-title text-xl font-medium">Über uns</div>
+				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
-					<div class="prose max-w-full">
+					<div class="max-w-full prose">
 						<h3 class="text-5xl">Wer ist Täglich frisches Obst?</h3>
 						Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "Täglich frisches
 						Obst" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt. Abseits
@@ -319,11 +364,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="collapse collapse-plus bg-base-200 my-2">
+			<div class="my-2 collapse collapse-plus bg-base-200">
 				<input type="radio" name="info-accordion" />
-				<div class="collapse-title text-xl font-medium">Radiosendungen/Interviews</div>
-				<div class="collapse-content flex gap-2">
-					<div class="card w-96 bg-base-100 shadow-xl">
+				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
+				<div class="flex flex-wrap gap-2 collapse-content">
+					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/" target="_blank" class="relative">
@@ -340,13 +385,13 @@
 								Der Frühling kann kommen, "täglich frisches Obst" sorgen für den musikalischen
 								Vitamin-Boost!
 							</p>
-							<div class="card-actions justify-start">
+							<div class="justify-start card-actions">
 								<!-- prettier-ignore -->
 								<a href="https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/" target="_blank" class="btn btn-primary">zur Radioshow</a>
 							</div>
 						</div>
 					</div>
-					<div class="card w-96 bg-base-100 shadow-xl">
+					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.fro.at/ann-and-pat-radioshow-gluehohren/" target="_blank" class="relative">
@@ -360,7 +405,7 @@
 								<div class="badge badge-secondary">21.12.2022</div>
 							</h3>
 							<p>06 TÄGLICH FRISCHES OBST - Dolce far niente (min. 18:12)</p>
-							<div class="card-actions justify-start">
+							<div class="justify-start card-actions">
 								<!-- prettier-ignore -->
 								<a href="https://www.fro.at/ann-and-pat-radioshow-gluehohren/" target="_blank" class="btn btn-primary">zur Radiosendung</a>
 							</div>
@@ -368,17 +413,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="collapse collapse-plus bg-base-200 my-2">
+			<div class="my-2 collapse collapse-plus bg-base-200">
 				<input type="radio" name="info-accordion" />
-				<div class="collapse-title text-xl font-medium">Artikel über Täglich Frisches Obst</div>
-				<div class="collapse-content flex gap-2">
-					<div class="card w-96 bg-base-100 shadow-xl">
+				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
+				<div class="flex gap-2 collapse-content">
+					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="relative">
 								<img src="/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.webp" alt="band" />
 								<!-- prettier-ignore -->
-								<a href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686" target="_blank" class="cursor-pointer iconify-icon absolute top-0 left-0"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" height="40px" /></a>
+								<a href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686" target="_blank" class="absolute top-0 left-0 cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" height="40px" /></a>
 								<a href="https://www.instagram.com/niko_nopp/" target="_blank" class="absolute bottom-0 right-1">© Niko Nopp</a>
 							</a>
 						</figure>
@@ -389,7 +434,7 @@
 								<div class="badge badge-secondary">Dezember 2022</div>
 							</h3>
 							<p>Neue Single von Täglich frisches Obst: „Dolce far Niente“</p>
-							<div class="card-actions justify-start">
+							<div class="justify-start card-actions">
 								<!-- prettier-ignore -->
 								<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="btn btn-primary">zum Artikel</a>
 							</div>
@@ -397,11 +442,11 @@
 					</div>
 				</div>
 			</div>
-			<a href="/legal/privacy-policy" class="link-secondary link-hover font-extrabold">
+			<a href="/legal/privacy-policy" class="font-extrabold link-secondary link-hover">
 				Datenschutz & Cookies
 			</a>
 			|
-			<a href="/legal/imprint" class="link-secondary link-hover font-extrabold">Impressum</a>
+			<a href="/legal/imprint" class="font-extrabold link-secondary link-hover">Impressum</a>
 		</div>
 	</section>
 	<!-- prettier-ignore -->
@@ -411,7 +456,7 @@
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
-		<div class="absolute top-0 left-1/2 transform -translate-x-1/2">
+		<div class="absolute top-0 transform -translate-x-1/2 left-1/2">
 			<!-- prettier-ignore -->
 			<h2 class="px-4 text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt

@@ -97,21 +97,21 @@ export const gigs: Gig[] = [
         time: null,
         location: 'Wien',
         event: 'G5-Event Operschall',
-        tickets: true
+        tickets: null
     },
     {
         date: '16.09.2023',
         time: null,
         location: 'Wels',
         event: 'Schlachthof Wels',
-        tickets: true
+        tickets: null
     },
     {
         date: '01.12.2023',
         time: null,
         location: 'Linz',
         event: 'Kultur HOF',
-        tickets: true
+        tickets: null
     }
 ];
 

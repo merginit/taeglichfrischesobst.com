@@ -23,7 +23,8 @@ const config = {
 			$asset: 'src/lib/assets',
 			$image: 'src/lib/assets/images',
 			$model: 'src/lib/assets/models',
-			$main: 'src'
+			$main: 'src',
+			'@storyblok/svelte': './node_modules/@storyblok/svelte',
 		},
 	}
 };
