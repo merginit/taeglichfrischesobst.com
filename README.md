@@ -37,6 +37,9 @@ Linz, Austria
 
 ## Website Status
 
-![Netlify](https://img.shields.io/website/https/taeglich-frisches-obst.netlify.app?logo=netlify&label=netlify)
-![Vercel](https://img.shields.io/website/https/taeglichfrischesobst.vercel.app?logo=vercel&label=vercel)
 ![CloudflarePages](https://img.shields.io/website/https/tfo.pages.dev?logo=cloudflarepages&label=cloudlare)
+![Netlify](https://img.shields.io/website/https/taeglich-frisches-obst.netlify.app?logo=netlify&label=netlify)
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=taeglichfrischesobst)](https://taeglichfrischesobst.vercel.app)
+
+![Oracle](https://img.shields.io/website/https/tfo.pages.dev?logo=oracle&label=www.taeglichfrischesobst.com)
+![Oracle](https://img.shields.io/website/https/tfo.pages.dev?logo=oracle&label=taeglichfrischesobst.com)
