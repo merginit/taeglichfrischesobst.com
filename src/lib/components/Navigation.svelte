@@ -15,7 +15,7 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<nav class="sticky top-0 z-10">
+<nav class="sticky top-0 z-40">
 	<div class="relative z-20 bg-neutral" id="navigation">
 		{#if outerWidth > 1135}
 			<ul class="flex justify-center gap-16 py-4 overflow-x-auto text-secondary">

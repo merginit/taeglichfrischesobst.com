@@ -174,30 +174,34 @@
 							<span class="loading loading-ball loading-lg" />
 						{/each}
 					</tbody>
+					<tfoot class="sticky bottom-0 min-w-full bg-neutral">
+						<tr>
+							<td colspan="5" class="p-0">
+								<hr />
+								<div class="flex justify-center w-full py-2">
+									<!-- prettier-ignore -->
+									<button
+										class="btn btn-primary"
+										type="button"
+										on:click={() => (displayAllGigs = !displayAllGigs)}>
+										{#if displayAllGigs}
+											Weniger
+										{:else}
+											Mehr
+										{/if}
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
-				<div class="sticky bottom-0 w-full bg-neutral">
-					<hr />
-					<div class="flex justify-center py-2">
-						<!-- prettier-ignore -->
-						<button
-							class="btn btn-primary"
-							type="button"
-							on:click={() => (displayAllGigs = !displayAllGigs)}>
-							{#if displayAllGigs}
-								Weniger
-							{:else}
-								Mehr
-							{/if}
-						</button>
-					</div>
-				</div>
 			</div>
 			<!-- prettier-ignore -->
 			<h2 class="relative text-2xl font-bold -z-40 sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
 				{#if outerWidth > 1535}
 					<!-- prettier-ignore -->
-					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="absolute top-0 left-0 w-40 wobble -z-50">
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="absolute top-0 left-0 w-40 pointer-events-none wobble -z-50">
 						<path fill="hsl(var(--b2))" d="M41.8,-70C55.9,-64.1,70.5,-56.6,79.5,-44.7C88.5,-32.7,91.8,-16.4,91.2,-0.4C90.6,15.6,85.9,31.3,77.6,44.4C69.3,57.5,57.4,68.2,43.9,76.7C30.3,85.3,15.2,91.8,0.5,90.9C-14.2,90.1,-28.3,81.9,-41.1,72.8C-53.8,63.8,-65.1,53.9,-72.5,41.6C-79.9,29.4,-83.4,14.7,-83.8,-0.2C-84.2,-15.1,-81.5,-30.3,-73.5,-41.6C-65.5,-52.9,-52.3,-60.3,-39.2,-66.8C-26.1,-73.3,-13,-78.9,0.4,-79.6C13.8,-80.2,27.6,-75.9,41.8,-70Z" transform="translate(100 100)" />
 					</svg>
 				{/if}
@@ -208,7 +212,7 @@
 	<section id="music" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
 		<div class="flex flex-wrap justify-center gap-4 px-6 md:px-10 lg:px-16">
 			<!-- prettier-ignore -->
-			<div class="slider-reverse">
+			<div class="gap-2 lg:gap-4 slider-reverse">
 				<div class="slide-track-reverse">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
 						<!-- prettier-ignore -->
@@ -268,7 +272,7 @@
 			</div>
 			<!-- prettier-ignore -->
 			<div class="slider">
-				<div class="slide-track">
+				<div class="gap-2 lg:gap-4 slide-track">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as i}
 						<!-- prettier-ignore -->
 						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
@@ -450,13 +454,13 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" class="min-h-screen flex flex-col mt-[15rem] scroll-mt-[15rem] -z-10 mx-4 relative">
+	<section id="contact" class="min-h-screen flex flex-col mt-[15rem] scroll-mt-[15rem] z-10 mx-4 relative">
 		{#if outerWidth > 1535}
 			<!-- prettier-ignore -->
-			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
+			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
-		<div class="absolute top-0 transform -translate-x-1/2 left-1/2">
+		<div class="absolute top-0 z-10 transform -translate-x-1/2 left-1/2">
 			<!-- prettier-ignore -->
 			<h2 class="px-4 text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt
@@ -470,7 +474,6 @@
 							value="Hey Täglich Frisches Obst,"
 							class="w-full max-w-xs p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
 							title="Nachricht"
-							disabled
 						/>
 						<div class="flex flex-wrap gap-2">
 							<input
@@ -479,9 +482,8 @@
 								class="input input-bordered"
 								title="Email"
 								placeholder="deine@email.tld"
-								disabled
 							/>
-							<button type="submit" class="btn btn-secondary btn-disabled" disabled>Absenden</button
+							<button type="submit" class="btn btn-secondary" disabled>Absenden</button
 							>
 						</div>
 					</form>
@@ -502,7 +504,7 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary">Abonnieren</button>
+							<button type="submit" class="btn btn-secondary" disabled>Abonnieren</button>
 						</form>
 						<form on:submit|preventDefault={unsubscribeFromMailList} class="flex flex-wrap gap-2">
 							<input
@@ -512,7 +514,7 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary">Deabonnieren</button>
+							<button type="submit" class="btn btn-secondary" disabled>Deabonnieren</button>
 						</form>
 					</div>
 				</div>

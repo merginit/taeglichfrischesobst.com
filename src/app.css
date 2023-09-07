@@ -1,12 +1,33 @@
-@postcss-import url('/assets/fonts/Hepta_Slab/HeptaSlab-VariableFont_wght.ttf');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Hepta Slab';
+    src: url('/assets/fonts/Hepta_Slab/HeptaSlab-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Hanken Grotesk';
+    src: url('/assets/fonts/Hanken_Grotesk/HankenGrotesk-VariableFont_wght.ttf') format('truetype');
+}
+
 html {
-    font-family: 'Hepta Slab', serif;
+    font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     scroll-behavior: smooth;
+}
+
+h1 {
+    font-family: 'Hepta Slab', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.badge {
+    height: auto;
+    text-align: center;
 }
 
 /* Copyright Caption for Photoswipe */
@@ -42,7 +63,13 @@ html {
     animation: slide 20s linear infinite;
     display: flex;
     align-items: center;
-    width: calc(10% * 24);
+    width: calc(10% * 24 - 1rem);
+}
+
+@media (min-width: 1024px) {
+    .slider .slide-track, .slider-reverse .slide-track-reverse  {
+    width: calc(10% * 24 - 2rem);
+}
 }
 
 .slider .slide-track:hover, .slider-reverse .slide-track-reverse:hover {

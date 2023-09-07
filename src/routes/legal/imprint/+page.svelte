@@ -15,15 +15,15 @@
 </svelte:head>
 
 <div class="flex gap-4">
-	<ul class="not-prose menu bg-base-200 w-56 rounded-box h-fit">
+	<ul class="w-56 max-w-full not-prose menu bg-base-200 rounded-box h-fit">
 		<li class="menu-title">Rechtliches</li>
 		<li><a href="/legal/imprint" class="active">Impressum</a></li>
 		<li><a href="/legal/privacy-policy">Datenschutz & Cookies</a></li>
 	</ul>
 
-	<h1 class="pt-2 mb-2 self-center break-words">Impressum</h1>
+	<h1 class="self-center pt-2 mb-2 break-all">Impressum</h1>
 </div>
 
-<div class="bg-base-200 w-full rounded-xl px-2 py-1">
+<div class="w-full px-2 py-1 mt-2 bg-base-200 rounded-xl">
 	<strong>Stand: 23.07.2023</strong>
 </div>
