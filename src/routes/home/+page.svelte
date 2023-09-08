@@ -12,6 +12,7 @@
 	import IconLoader from '$script/icons';
 	import Song from '$component/Song.svelte';
 	import { onMount } from 'svelte';
+	import { embeddedAccepted } from '$script/cookiestate.js';
 	/* import {
 		getStoryblokApi,
 		useStoryblokBridge,
@@ -260,15 +261,23 @@
 				}}
 				tabindex="0"
 			>
-				<Song
-					url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
-				/>
-				<Song
-					url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
-				/>
-				<Song
-					url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
-				/>
+				{#if $embeddedAccepted}
+					<Song
+						url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
+					/>
+					<Song
+						url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
+					/>
+					<Song
+						url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
+					/>
+				{:else}
+					Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
+					anzuzeigen.
+
+					<!-- prettier-ignore -->
+					<button class="btn btn-primary" type="button" data-cc="c-settings">Cookie Einstellungen</button>
+				{/if}
 			</div>
 			<!-- prettier-ignore -->
 			<div class="slider">
@@ -308,22 +317,32 @@
 	<section id="videos" class="z-10 flex flex-col min-h-screen scroll-mt-0">
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
-			{#each videos as video, index}
-			<div id="video-{index}" class="relative w-full h-full carousel-item">
-				<iframe src={video.videoUrl}
-				title="YouTube video player"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen
-				class="w-full h-full"></iframe>
-				<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				  <a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
-				  <a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
-				</div>
-			  </div>
+			{#if $embeddedAccepted}
+				{#each videos as video, index}
+					<div id="video-{index}" class="relative w-full h-full carousel-item">
+						<iframe src={video.videoUrl}
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen
+						class="w-full h-full"></iframe>
+						<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+						<a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
+						<a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
+						</div>
+					</div>
+				{:else}
+					<span class="loading loading-ball loading-lg"></span>
+				{/each}
 			{:else}
-			  <span class="loading loading-ball loading-lg"></span>
-			{/each}
+			<div class="flex flex-col flex-wrap items-center w-full py-2 mx-4 h-fit mt-[20rem] bg-neutral rounded-2xl">
+				Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Videos von YouTube
+				anzuzeigen.
+
+				<!-- prettier-ignore -->
+				<button class="mt-2 btn btn-primary" type="button" data-cc="c-settings">Cookie Einstellungen</button>
+			</div>
+			{/if}
 		</div>
 
 		<!-- prettier-ignore -->

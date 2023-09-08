@@ -10,6 +10,7 @@
 	import IconLoader from '$script/icons';
 	import Icon from '@iconify/svelte';
 	import LegalMain from '$component/LegalMain.svelte';
+	import { Toaster } from 'svelte-french-toast';
 
 	onMount(() => {
 		// Theme Changer
@@ -22,22 +23,24 @@
 
 <header class="relative flex flex-col justify-between w-full parallax-header">
 	<!-- svelte-ignore a11y-invalid-attribute -->
-	<a class="fixed top-0 z-50 -left-4 rotate-12" href="">
-		<img class="w-14 2xl:w-28 shaking" src="/favicon.png" alt="logo" />
+	<a class="fixed z-50 top-4 left-2 rotate-12" href="/home">
+		<img class="w-10 2xl:w-24 shaking" src="/assets/images/fruit.png" alt="logo" />
 	</a>
 
 	<!-- prettier-ignore -->
 	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 m-4">
-		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
-		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
-		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
-		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="cursor-pointer transition-opacity hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
+		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
+		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
 	</div>
 </header>
 
 <Navigation page={'legal'} />
 
 <LegalMain>
+	<Toaster />
+
 	<slot />
 </LegalMain>
 

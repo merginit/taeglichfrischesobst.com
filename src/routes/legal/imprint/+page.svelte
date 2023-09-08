@@ -15,7 +15,7 @@
 </svelte:head>
 
 <div class="flex gap-4">
-	<ul class="w-56 max-w-full not-prose menu bg-base-200 rounded-box h-fit">
+	<ul class="w-56 max-w-full menu bg-base-200 rounded-box h-fit">
 		<li class="menu-title">Rechtliches</li>
 		<li><a href="/legal/imprint" class="active">Impressum</a></li>
 		<li><a href="/legal/privacy-policy">Datenschutz & Cookies</a></li>
@@ -24,6 +24,15 @@
 	<h1 class="self-center pt-2 mb-2 break-all">Impressum</h1>
 </div>
 
-<div class="w-full px-2 py-1 mt-2 bg-base-200 rounded-xl">
-	<strong>Stand: 23.07.2023</strong>
+<div class="w-full px-2 py-1 mt-2 mb-6 bg-base-200 rounded-xl">
+	<strong>Stand: 08.09.2023</strong>
+</div>
+
+<div class="prose">
+	<h2>Täglich frisches Obst</h2>
+
+	<strong>Tobias Fröller</strong><br />
+	<a href="mailto:taeglichfrischesobst.business@gmail.com">
+		taeglichfrischesobst.business@gmail.com
+	</a>
 </div>
