@@ -178,7 +178,7 @@
 						<tr>
 							<td colspan="5" class="p-0">
 								<hr />
-								<div class="flex justify-center w-full py-2">
+								<div class="flex w-[calc(100% - 1rem)] py-2 px-2 sm:justify-center">
 									<!-- prettier-ignore -->
 									<button
 										class="btn btn-primary"
@@ -353,18 +353,21 @@
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
-						<h3 class="text-5xl">Wer ist Täglich frisches Obst?</h3>
-						Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "Täglich frisches
-						Obst" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt. Abseits
-						etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit Elementen aus Funk,
-						Rock und Jazz, der die Grenzen des Genres herausfordert. Ende des Jahres 2022 veröffentlichte
-						die Band ihre ersten beiden Singles, insgesamt drei Songs, die auf den verschiedensten Musikplattformen
-						bereits vielfach gestreamt wurden und auch das Publikum bei ihren Live-Auftritten mitreißen.
-						Die fünfköpfige Band mit sowohl klassischen als auch Jazz- und Pop-Backgrounds, bestehend
-						aus Josef Brandner (Gesang), Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob
-						Brandstetter (E-Bass) und Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine begeisterte
-						Fangemeinde aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil die deutschsprachige
-						Musikszene zu erobern.
+						<h3 class="text-4xl">Wer ist Täglich frisches Obst?</h3>
+						<p class="text-lg">
+							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "Täglich
+							frisches Obst" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen
+							Vielfalt. Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen
+							Klang mit Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert.
+							Ende des Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt
+							drei Songs, die auf den verschiedensten Musikplattformen bereits vielfach gestreamt
+							wurden und auch das Publikum bei ihren Live-Auftritten mitreißen. Die fünfköpfige Band
+							mit sowohl klassischen als auch Jazz- und Pop-Backgrounds, bestehend aus Josef
+							Brandner (Gesang), Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob
+							Brandstetter (E-Bass) und Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine
+							begeisterte Fangemeinde aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil die
+							deutschsprachige Musikszene zu erobern.
+						</p>
 					</div>
 				</div>
 			</div>
@@ -460,7 +463,7 @@
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
-		<div class="absolute top-0 z-10 transform -translate-x-1/2 left-1/2">
+		<div class="absolute top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
 			<h2 class="px-4 text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt

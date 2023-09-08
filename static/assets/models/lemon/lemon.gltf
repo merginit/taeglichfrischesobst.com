@@ -1,175 +1,147 @@
 {
-    "asset": {
-        "copyright": "2020 (c) Adobe Inc.",
-        "generator": "Adobe Dimension - c07c1086882a7bcae137810da574e69379bf2af7",
-        "version": "2.0"
-    },
-    "accessors": [
-        {
-            "bufferView": 0,
-            "componentType": 5126,
-            "count": 1765,
-            "type": "VEC3",
-            "max": [
-                0.010777980089187622,
-                0.010894768871366978,
-                0.01402358990162611
-            ],
-            "min": [
-                -0.011016430333256722,
-                -0.010578189976513386,
-                -0.0157167986035347
-            ]
-        },
-        {
-            "bufferView": 1,
-            "componentType": 5126,
-            "count": 1765,
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 2,
-            "componentType": 5126,
-            "count": 1765,
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 3,
-            "componentType": 5125,
-            "count": 7824,
-            "type": "SCALAR",
-            "max": [
-                1764.0
-            ],
-            "min": [
-                0.0
-            ]
-        }
-    ],
-    "bufferViews": [
-        {
-            "buffer": 0,
-            "byteOffset": 0,
-            "byteLength": 21180,
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteOffset": 21180,
-            "byteLength": 21180,
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteOffset": 42360,
-            "byteLength": 14120,
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteOffset": 56480,
-            "byteLength": 31296,
-            "target": 34963
-        }
-    ],
-    "buffers": [
-        {
-            "byteLength": 87776,
-            "uri": "lemon_binary.bin"
-        }
-    ],
-    "cameras": [
-        {
-            "perspective": {
-                "znear": 0.000010000000656873454,
-                "yfov": 0.6024156808853149,
-                "zfar": 2.0,
-                "aspectRatio": 1.3333333730697632
-            },
-            "type": "perspective",
-            "name": "render_camera"
-        }
-    ],
-    "images": [
-        {
-            "name": "lemon",
-            "uri": "textures\\lemon.jpg",
-            "mimeType": "image/jpeg"
-        }
-    ],
-    "materials": [
-        {
-            "pbrMetallicRoughness": {
-                "baseColorTexture": {
-                    "index": 0
-                },
-                "metallicFactor": 0.0,
-                "roughnessFactor": 0.6000000238418579
-            },
-            "name": "Lemon_test",
-            "doubleSided": true
-        }
-    ],
-    "meshes": [
-        {
-            "name": "mmGroup0",
-            "primitives": [
-                {
-                    "attributes": {
-                        "POSITION": 0,
-                        "NORMAL": 1,
-                        "TEXCOORD_0": 2
-                    },
-                    "indices": 3,
-                    "material": 0
-                }
-            ]
-        }
-    ],
-    "nodes": [
-        {
-            "translation": [
-                0.5,
-                0.29999998211860659,
-                0.5
-            ],
-            "rotation": [
-                -0.12059047073125839,
-                0.379409521818161,
-                0.04995020851492882,
-                0.9159756302833557
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                0.9999999403953552
-            ],
-            "camera": 0,
-            "name": "render_camera_n3d"
-        },
-        {
-            "mesh": 0,
-            "name": "mmGroup0"
-        }
-    ],
-    "samplers": [
-        {}
-    ],
-    "scenes": [
-        {
-            "nodes": [
-                0,
-                1
-            ],
-            "name": "scene"
-        }
-    ],
-    "textures": [
-        {
-            "name": "Lemon_test::baseColor::image",
-            "sampler": 0,
-            "source": 0
-        }
-    ],
-    "scene": 0
+	"asset": {
+		"copyright": "2020 (c) Adobe Inc.",
+		"generator": "Adobe Dimension - c07c1086882a7bcae137810da574e69379bf2af7",
+		"version": "2.0"
+	},
+	"accessors": [
+		{
+			"bufferView": 0,
+			"componentType": 5126,
+			"count": 1765,
+			"type": "VEC3",
+			"max": [0.010777980089187622, 0.010894768871366978, 0.01402358990162611],
+			"min": [-0.011016430333256722, -0.010578189976513386, -0.0157167986035347]
+		},
+		{
+			"bufferView": 1,
+			"componentType": 5126,
+			"count": 1765,
+			"type": "VEC3"
+		},
+		{
+			"bufferView": 2,
+			"componentType": 5126,
+			"count": 1765,
+			"type": "VEC2"
+		},
+		{
+			"bufferView": 3,
+			"componentType": 5125,
+			"count": 7824,
+			"type": "SCALAR",
+			"max": [1764.0],
+			"min": [0.0]
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteOffset": 0,
+			"byteLength": 21180,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteOffset": 21180,
+			"byteLength": 21180,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteOffset": 42360,
+			"byteLength": 14120,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteOffset": 56480,
+			"byteLength": 31296,
+			"target": 34963
+		}
+	],
+	"buffers": [
+		{
+			"byteLength": 87776,
+			"uri": "lemon_binary.bin"
+		}
+	],
+	"cameras": [
+		{
+			"perspective": {
+				"znear": 0.000010000000656873454,
+				"yfov": 0.6024156808853149,
+				"zfar": 2.0,
+				"aspectRatio": 1.3333333730697632
+			},
+			"type": "perspective",
+			"name": "render_camera"
+		}
+	],
+	"images": [
+		{
+			"name": "lemon",
+			"uri": "textures\\lemon.jpg",
+			"mimeType": "image/jpeg"
+		}
+	],
+	"materials": [
+		{
+			"pbrMetallicRoughness": {
+				"baseColorTexture": {
+					"index": 0
+				},
+				"metallicFactor": 0.0,
+				"roughnessFactor": 0.6000000238418579
+			},
+			"name": "Lemon_test",
+			"doubleSided": true
+		}
+	],
+	"meshes": [
+		{
+			"name": "mmGroup0",
+			"primitives": [
+				{
+					"attributes": {
+						"POSITION": 0,
+						"NORMAL": 1,
+						"TEXCOORD_0": 2
+					},
+					"indices": 3,
+					"material": 0
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"translation": [0.5, 0.29999998211860659, 0.5],
+			"rotation": [
+				-0.12059047073125839, 0.379409521818161, 0.04995020851492882, 0.9159756302833557
+			],
+			"scale": [1.0, 1.0, 0.9999999403953552],
+			"camera": 0,
+			"name": "render_camera_n3d"
+		},
+		{
+			"mesh": 0,
+			"name": "mmGroup0"
+		}
+	],
+	"samplers": [{}],
+	"scenes": [
+		{
+			"nodes": [0, 1],
+			"name": "scene"
+		}
+	],
+	"textures": [
+		{
+			"name": "Lemon_test::baseColor::image",
+			"sampler": 0,
+			"source": 0
+		}
+	],
+	"scene": 0
 }

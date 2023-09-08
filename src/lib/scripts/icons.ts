@@ -1,30 +1,30 @@
-import { browser } from "$app/environment";
+import { browser } from '$app/environment';
 
 class IconLoader {
-    private static instance: IconLoader;
-    private remainingIcons = -1;
+	private static instance: IconLoader;
+	private remainingIcons = -1;
 
-    private constructor() {
-        if (browser && this.remainingIcons === -1) {
-            this.remainingIcons = document.getElementsByClassName('iconify-icon').length;
-            console.log(this.remainingIcons);
-        }
-    }
+	private constructor() {
+		if (browser && this.remainingIcons === -1) {
+			this.remainingIcons = document.getElementsByClassName('iconify-icon').length;
+			console.log(this.remainingIcons);
+		}
+	}
 
-    public static getInstance(): IconLoader {
-        if (!IconLoader.instance) {
-            IconLoader.instance = new IconLoader();
-        }
-        return IconLoader.instance;
-    }
+	public static getInstance(): IconLoader {
+		if (!IconLoader.instance) {
+			IconLoader.instance = new IconLoader();
+		}
+		return IconLoader.instance;
+	}
 
-    public iconLoaded(): void {
-        this.remainingIcons -= 1;
+	public iconLoaded(): void {
+		this.remainingIcons -= 1;
 
-        if (this.remainingIcons === 0) {
-            console.log('all icons loaded');
-        }
-    }
+		if (this.remainingIcons === 0) {
+			console.log('all icons loaded');
+		}
+	}
 }
 
 export default IconLoader;

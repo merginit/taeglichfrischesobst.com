@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite'; // import preprocess from 'svelte-preprocess';
-import seqPreprocessor from 'svelte-sequential-preprocessor'
-import { preprocessThrelte } from '@threlte/preprocess'
+import seqPreprocessor from 'svelte-sequential-preprocessor';
+import { preprocessThrelte } from '@threlte/preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -24,8 +24,8 @@ const config = {
 			$image: 'src/lib/assets/images',
 			$model: 'src/lib/assets/models',
 			$main: 'src',
-			'@storyblok/svelte': './node_modules/@storyblok/svelte',
-		},
+			'@storyblok/svelte': './node_modules/@storyblok/svelte'
+		}
 	}
 };
 

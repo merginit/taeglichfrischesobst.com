@@ -5,9 +5,9 @@
 </script>
 
 {#key blok}
-  <div use:storyblokEditable={blok} class="px-6">
-    {#each blok.body as blok}
-      <StoryblokComponent {blok} />
-    {/each}
-  </div>
+	<div use:storyblokEditable={blok} class="px-6">
+		{#each blok.body as blok}
+			<StoryblokComponent {blok} />
+		{/each}
+	</div>
 {/key}
