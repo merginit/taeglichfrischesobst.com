@@ -43,6 +43,6 @@
 
 	<div class="overflow-hidden">
 		<!-- prettier-ignore -->
-		<svg class="absolute top-[2rem] sm:top-[1rem] lg:top-[0.5rem] pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path class="fill-neutral" fill-opacity="1" d="M0,224L30,208C60,192,120,160,180,170.7C240,181,300,235,360,234.7C420,235,480,181,540,138.7C600,96,660,64,720,85.3C780,107,840,181,900,202.7C960,224,1020,192,1080,192C1140,192,1200,224,1260,245.3C1320,267,1380,277,1410,282.7L1440,288L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path></svg>
+		<svg class="absolute top-[2rem] sm:top-[1rem] lg:top-[0.5rem] pointer-events-none" version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 320" style="enable-background:new 0 0 1440 320;" xml:space="preserve"><path class="fill-neutral" d="M0,162.6l30-11.6c30-11.6,90-34.8,150-27.1c60,7.5,120,46.7,180,46.4c60,0.2,120-39,180-69.7c60-31,120-54.2,180-38.8c60,15.7,120,69.4,180,85.2c60,15.5,120-7.8,180-7.8s120,23.2,180,38.7c60,15.7,120,23,150,27.1l30,3.8V0h-30c-30,0-90,0-150,0s-120,0-180,0S960,0,900,0S780,0,720,0S600,0,540,0S420,0,360,0S240,0,180,0S60,0,30,0H0V162.6z"/></svg>
 	</div>
 </nav>

@@ -4,18 +4,21 @@ class IconLoader {
 	private static instance: IconLoader;
 	private remainingIcons = -1;
 
-	private constructor() {
-		if (browser && this.remainingIcons === -1) {
-			this.remainingIcons = document.getElementsByClassName('iconify-icon').length;
-			console.log(this.remainingIcons);
-		}
-	}
-
 	public static getInstance(): IconLoader {
 		if (!IconLoader.instance) {
 			IconLoader.instance = new IconLoader();
 		}
+
+		IconLoader.instance.getTotalIcons();
+
 		return IconLoader.instance;
+	}
+
+	public getTotalIcons(): void {
+		if (browser && this.remainingIcons === -1) {
+			this.remainingIcons = document.getElementsByClassName('iconify-icon').length;
+			console.log(this.remainingIcons);
+		}
 	}
 
 	public iconLoaded(): void {
