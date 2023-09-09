@@ -13,6 +13,7 @@
 	import Song from '$component/Song.svelte';
 	import { onMount } from 'svelte';
 	import { embeddedAccepted } from '$script/cookiestate.js';
+	import { openCookieBanner } from '$script/cookies';
 	/* import {
 		getStoryblokApi,
 		useStoryblokBridge,
@@ -119,7 +120,7 @@
 
 	const iconLoaderInstance = IconLoader.getInstance();
 	const iconLoaded = iconLoaderInstance.iconLoaded;
-
+	
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
 
@@ -261,23 +262,23 @@
 				}}
 				tabindex="0"
 			>
-				{#if $embeddedAccepted}
-					<Song
-						url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
-					/>
-					<Song
-						url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
-					/>
-					<Song
-						url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
-					/>
-				{:else}
-					Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
-					anzuzeigen.
+			{#if embeddedAccepted()}
+				<Song
+					url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
+				/>
+				<Song
+					url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
+				/>
+				<Song
+					url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
+				/>
+			{:else}
+				Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
+				anzuzeigen.
 
-					<!-- prettier-ignore -->
-					<button class="btn btn-primary" type="button" data-cc="c-settings">Cookie Einstellungen</button>
-				{/if}
+				<!-- prettier-ignore -->
+				<button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
+			{/if}
 			</div>
 			<!-- prettier-ignore -->
 			<div class="slider">
@@ -317,7 +318,7 @@
 	<section id="videos" class="z-10 flex flex-col min-h-screen scroll-mt-0">
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
-			{#if $embeddedAccepted}
+			{#if embeddedAccepted()}
 				{#each videos as video, index}
 					<div id="video-{index}" class="relative w-full h-full carousel-item">
 						<iframe src={video.videoUrl}
@@ -340,7 +341,7 @@
 				anzuzeigen.
 
 				<!-- prettier-ignore -->
-				<button class="mt-2 btn btn-primary" type="button" data-cc="c-settings">Cookie Einstellungen</button>
+				<button class="mt-2 btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
 			</div>
 			{/if}
 		</div>

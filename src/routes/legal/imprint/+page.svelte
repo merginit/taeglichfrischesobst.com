@@ -28,7 +28,7 @@
 	<strong>Stand: 08.09.2023</strong>
 </div>
 
-<div class="prose">
+<div class="prose break-all">
 	<h2>Täglich frisches Obst</h2>
 
 	<strong>Tobias Fröller</strong><br />

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { openCookieBanner } from '$script/cookies';
 
 	export let data: PageData;
 </script>
@@ -27,10 +28,10 @@
 </div>
 
 <div class="flex flex-wrap items-center justify-between w-full gap-4 py-1 pl-2 pr-1 mt-2 mb-6 bg-base-200 rounded-xl">
-	<strong>Stand: 08.09.2023</strong><span><button class="btn btn-primary" type="button" data-cc="c-settings">Cookie Einstellungen</button></span>
+	<strong>Stand: 08.09.2023</strong><span><button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button></span>
 </div>
 
-<div class="prose">
+<div class="prose break-all">
 	<h2>Inhaltsverzeichnis</h2>
 	<ul>
 		<li>

@@ -1,26 +1,4 @@
-// obtain plugin
-import toast from 'svelte-french-toast';
-import { embeddedAccepted } from "$script/cookiestate";
-
-function getCookie(name) {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-
-        if (cookie.startsWith(name + '=')) {
-            const cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            return cookieValue;
-        }
-    }
-    return null;
-}
-
-const ccCookieValue = getCookie('cc_cookie');
-const init_val = ccCookieValue ? ((JSON.parse(ccCookieValue)?.categories.includes("embedding")) ?? false) : false;
-embeddedAccepted.set(init_val);
-
-
-const cc = initCookieConsent();
+window.cc = initCookieConsent();
 
 cc.run({
     // languages
@@ -56,9 +34,9 @@ cc.run({
     },
 
     onChange: function (cookie, changed_preferences) {
-        toast.success("Cookie-Einstellungen gespeichert!");
-
-        embeddedAccepted.set(cookie.categories.includes("embedding"));
+        // callback triggered when user changes cookie preferences
+        
+        window.location.reload();
     },
 
     languages: {
@@ -95,7 +73,7 @@ cc.run({
                         title: 'Unbedingt notwendige Cookies',
                         description: 'Diese Cookies sind für das ordnungsgemäße Funktionieren meiner Website unerlässlich. Ohne diese Cookies würde die Website nicht ordnungsgemäß funktionieren',
                         toggle: {
-                            value: 'notwendig',
+                            value: 'needed',
                             enabled: true,
                             readonly: true
                         },
