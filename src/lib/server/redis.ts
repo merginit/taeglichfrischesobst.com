@@ -1,5 +1,6 @@
 import { REDIS_CONNECTION } from '$env/static/private';
 import { createClient } from 'redis';
+import { building } from '$app/environment';
 
 export const redisDB = createClient({
 	url: REDIS_CONNECTION
@@ -25,5 +26,8 @@ redisDB.on('error', function (err) {
 	console.error(err);
 });
 
-// await redisDB.connect();
+if (!building) {
+	await redisDB.connect();
+}
+
 // await redisDB.disconnect(); await redisDB.quit();

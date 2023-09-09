@@ -18,7 +18,7 @@ export const POST = (async ({ request }) => {
 	if (emailRegex.test(email)) {
 		const value = await redisDB.get(email);
 
-		if (value === null) {
+		if (value) {
 			// Write to Database
 			await redisDB.del(email);
 			// Send Email

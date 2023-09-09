@@ -491,12 +491,13 @@
 			<div class="flex flex-col items-center justify-center w-full gap-4">
 				<div id="contact-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
-					<form class="flex flex-col gap-2">
+					<form action="https://formsubmit.co/taeglichfrischesobst.business@gmail.com" method="POST" class="flex flex-col gap-2">
 						<textarea
 							placeholder="Deine Nachricht..."
 							value="Hey Täglich Frisches Obst,"
 							class="w-full max-w-xs p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
 							title="Nachricht"
+							name="message"
 						/>
 						<div class="flex flex-wrap gap-2">
 							<input
@@ -506,7 +507,7 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary" disabled>Absenden</button
+							<button type="submit" class="btn btn-secondary">Absenden</button
 							>
 						</div>
 					</form>
@@ -527,7 +528,7 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary" disabled>Abonnieren</button>
+							<button type="submit" class="btn btn-secondary">Abonnieren</button>
 						</form>
 						<form on:submit|preventDefault={unsubscribeFromMailList} class="flex flex-wrap gap-2">
 							<input
@@ -537,7 +538,7 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary" disabled>Deabonnieren</button>
+							<button type="submit" class="btn btn-secondary">Deabonnieren</button>
 						</form>
 					</div>
 				</div>
