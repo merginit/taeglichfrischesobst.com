@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
 class IconLoader {
-	private static instance: IconLoader;
+	private static instance: IconLoader | null = null;
 	private remainingIcons = -1;
 
 	public static getInstance(): IconLoader {
