@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AmbientLight, OrbitControls, PerspectiveCamera } from '@threlte/core';
-	import { Environment, GLTF } from '@threlte/extras';
+	import { GLTF } from '@threlte/extras';
 
 	const model_base_path = '/assets/models/';
 </script>

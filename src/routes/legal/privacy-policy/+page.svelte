@@ -1,8 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { openCookieBanner } from '$script/cookies';
-
-	export let data: PageData;
 </script>
 
 <svelte:head>
@@ -27,8 +24,14 @@
 	<h1 class="self-center pt-2 mb-2 break-all">Datenschutz & Cookies</h1>
 </div>
 
-<div class="flex flex-wrap items-center justify-between w-full gap-4 py-1 pl-2 pr-1 mt-2 mb-6 bg-base-200 rounded-xl">
-	<strong>Stand: 08.09.2023</strong><span><button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button></span>
+<div
+	class="flex flex-wrap items-center justify-between w-full gap-4 py-1 pl-2 pr-1 mt-2 mb-6 bg-base-200 rounded-xl"
+>
+	<strong>Stand: 08.09.2023</strong><span
+		><button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}
+			>Cookie Einstellungen</button
+		></span
+	>
 </div>
 
 <div class="prose break-all">
@@ -376,7 +379,7 @@
 		</strong>Barichgasse 40-42, 1030 Wien<strong class="adsimple-112580075">
 			<br />
 			Telefonnr.:
-		</strong>+43 1 52 152-0<strong class="adsimple-112580075">
+		</strong>+43 1 52 152-0<strong class="adsimple-112580075">
 			<br />
 			E-Mail-Adresse:
 		</strong>
@@ -453,7 +456,7 @@
 		/>
 		Sie erkennen die Benutzung dieser Absicherung der Datenübertragung am kleinen Schlosssymbol
 		<img
-			role="img"
+			alt="Schlosssymbol"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/schlosssymbol-https.svg"
 			width="17"
 			height="18"
@@ -545,8 +548,8 @@
 		warum dieser benötigt wird. Weil das Wort &#8220;Auftragsverarbeitungsvertrag&#8221; ein
 		ziemlicher Zungenbrecher ist, werden wir hier im Text auch öfters nur das Akronym AVV benutzen.
 		Wie die meisten Unternehmen arbeiten wir nicht alleine, sondern nehmen auch selbst
-		Dienstleistungen anderer Unternehmen oder Einzelpersonen in Anspruch.  Durch die Einbeziehung
-		verschiedener Unternehmen bzw. Dienstleister kann es sein, dass wir  personenbezogene Daten zur
+		Dienstleistungen anderer Unternehmen oder Einzelpersonen in Anspruch. Durch die Einbeziehung
+		verschiedener Unternehmen bzw. Dienstleister kann es sein, dass wir personenbezogene Daten zur
 		Verarbeitung weitergeben. Diese Partner fungieren dann als Auftragsverarbeiter, mit denen wir
 		einen Vertrag, den sogenannten Auftragsverarbeitungsvertrag (AVV), abschließen. Für Sie am
 		wichtigsten zu wissen ist, dass die Verarbeitung Ihrer personenbezogenen Daten ausschließlich
@@ -677,7 +680,6 @@
 	</p>
 	<p>
 		<img
-			role="img"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/http-cookie-interaction.svg"
 			alt="HTTP Cookie Interaktion zwischen Browser und Webserver"
 			width="100%"
@@ -697,7 +699,7 @@
 		<strong class="adsimple-112580075">Wert:</strong> GA1.2.1326744211.152112580075-9<br />
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Unterscheidung der Websitebesucher<br
 		/>
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
+		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
 	</p>
 	<p>Diese Mindestgrößen sollte ein Browser unterstützen können:</p>
 	<ul class="adsimple-112580075">
@@ -744,7 +746,7 @@
 		Wenn Sie mehr über Cookies wissen möchten und technische Dokumentationen nicht scheuen,
 		empfehlen wir <a class="adsimple-112580075" href="https://datatracker.ietf.org/doc/html/rfc6265"
 			>https://datatracker.ietf.org/doc/html/rfc6265</a
-		>, dem Request for Comments der Internet Engineering Task Force (IETF) namens &#8220;HTTP State
+		>, dem Request for Comments der Internet Engineering Task Force (IETF) namens &#8220;HTTP State
 		Management Mechanism&#8221;.
 	</p>
 	<h3 class="adsimple-112580075">Zweck der Verarbeitung über Cookies</h3>
@@ -908,7 +910,6 @@
 	</p>
 	<p>
 		<img
-			role="img"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/browser-und-webserver.svg"
 			alt="Browser und Webserver"
 			width="100%"
@@ -1742,14 +1743,14 @@
 		<strong class="adsimple-112580075">Wert:</strong> 1<br />
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie registriert Ihre
 		eindeutige ID auf mobilen Geräten, um den GPS-Standort zu tracken.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 30 Minuten
+		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 30 Minuten
 	</p>
 	<p>
 		<strong class="adsimple-112580075">Name:</strong> VISITOR_INFO1_LIVE<br />
 		<strong class="adsimple-112580075">Wert:</strong> 95Chz8bagyU<br />
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie versucht die
 		Bandbreite des Users auf unseren Webseiten (mit eingebautem YouTube-Video) zu schätzen.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 8 Monaten
+		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 8 Monaten
 	</p>
 	<p>Weitere Cookies, die gesetzt werden, wenn Sie mit Ihrem YouTube-Konto angemeldet sind:</p>
 	<p>
@@ -1774,14 +1775,14 @@
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie wird verwendet, um
 		ein Profil über Ihre Interessen zu erstellen. Diese Daten helfen personalisierte Werbung
 		anzeigen zu können.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
+		<strong class="adsimple-112580075">Ablaufdatum:</strong>nach 2 Jahren
 	</p>
 	<p>
 		<strong class="adsimple-112580075">Name:</strong> LOGIN_INFO<br />
 		<strong class="adsimple-112580075">Wert:</strong> AFmmF2swRQIhALl6aL…<br />
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> In diesem Cookie werden
 		Informationen über Ihre Login-Daten gespeichert.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
+		<strong class="adsimple-112580075">Ablaufdatum:</strong>nach 2 Jahren
 	</p>
 	<p>
 		<strong class="adsimple-112580075">Name:</strong> SAPISID<br />
@@ -1789,7 +1790,7 @@
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie funktioniert, indem
 		es Ihren Browser und Ihr Gerät eindeutig identifiziert. Es wird verwendet, um ein Profil über
 		Ihre Interessen zu erstellen.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
+		<strong class="adsimple-112580075">Ablaufdatum:</strong>nach 2 Jahren
 	</p>
 	<p>
 		<strong class="adsimple-112580075">Name:</strong> SID<br />
@@ -1797,7 +1798,7 @@
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie speichert Ihre
 		Google-Konto-ID und Ihren letzten Anmeldezeitpunkt in digital signierter und verschlüsselter
 		Form.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
+		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 2 Jahren
 	</p>
 	<p>
 		<strong class="adsimple-112580075">Name:</strong> SIDCC<br />
@@ -1805,7 +1806,7 @@
 		<strong class="adsimple-112580075">Verwendungszweck:</strong> Dieses Cookie speichert
 		Informationen, wie Sie die Webseite nutzen und welche Werbung Sie vor dem Besuch auf unserer
 		Seite möglicherweise gesehen haben.<br />
-		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 3 Monaten
+		<strong class="adsimple-112580075">Ablaufdatum:</strong> nach 3 Monaten
 	</p>
 	<h3 class="adsimple-112580075">Wie lange und wo werden die Daten gespeichert?</h3>
 	<p>
@@ -2491,7 +2492,7 @@
 		verpflichtet. Diese Vorschrift regelt den Umgang mit personenbezogenen Daten, die in Drittländer
 		transferiert und dort auch verarbeitet werden.
 	</p>
-	<h3 class="adsimple-112580075" />
+	<h3 class="adsimple-112580075">&nbsp;</h3>
 	<h2 id="verletzung-des-schutzes-personenbezogener-daten" class="adsimple-112580075">
 		Verletzung des Schutzes personenbezogener Daten
 	</h2>

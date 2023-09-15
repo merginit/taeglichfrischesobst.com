@@ -1,9 +1,3 @@
-<script lang="ts">
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-</script>
-
 <svelte:head>
 	<meta property="og:url" content="https://taeglichfrischesobst.vercel.app/legal/imprint" />
 	<meta property="og:title" content="Impressum" />

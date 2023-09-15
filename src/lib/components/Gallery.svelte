@@ -1,5 +1,4 @@
 <script lang="js">
-	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import PhotoSwipeLightbox from 'photoswipe/lightbox';
 	import 'photoswipe/style.css';
@@ -20,7 +19,7 @@
 				isButton: false,
 				appendTo: 'root',
 				html: 'Caption text',
-				onInit: (el, pswp) => {
+				onInit: (el) => {
 					lightbox.pswp.on('change', () => {
 						const currSlideElement = lightbox.pswp.currSlide.data.element;
 						let captionHTML = '';
@@ -38,7 +37,7 @@
 	});
 </script>
 
-<div class="pswp-gallery flex flex-wrap items-center gap-2" id={galleryID}>
+<div class="flex flex-wrap items-center gap-2 pswp-gallery" id={galleryID}>
 	{#each images as image}
 		<a
 			href={image.URL}

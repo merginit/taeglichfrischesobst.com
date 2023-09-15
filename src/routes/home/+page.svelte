@@ -120,7 +120,7 @@
 
 	const iconLoaderInstance = IconLoader.getInstance();
 	const iconLoaded = iconLoaderInstance.iconLoaded;
-	
+
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
 
@@ -218,7 +218,7 @@
 				<div class="slide-track-reverse">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
 						<!-- prettier-ignore -->
-						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+						<h2 id="socials-slider-headline-{iteration}" class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Socials
 						</h2>
 						<!-- prettier-ignore -->
@@ -262,30 +262,30 @@
 				}}
 				tabindex="0"
 			>
-			{#if embeddedAccepted()}
-				<Song
-					url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
-				/>
-				<Song
-					url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
-				/>
-				<Song
-					url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
-				/>
-			{:else}
-				Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
-				anzuzeigen.
+				{#if embeddedAccepted()}
+					<Song
+						url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
+					/>
+					<Song
+						url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
+					/>
+					<Song
+						url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
+					/>
+				{:else}
+					Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
+					anzuzeigen.
 
-				<!-- prettier-ignore -->
-				<button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
-			{/if}
+					<!-- prettier-ignore -->
+					<button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
+				{/if}
 			</div>
 			<!-- prettier-ignore -->
 			<div class="slider">
 				<div class="gap-2 lg:gap-4 slide-track">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as i}
 						<!-- prettier-ignore -->
-						<h2 class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+						<h2 id="socials-slider-headline-{i}" class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Musik
 						</h2>
 						<!-- prettier-ignore -->
