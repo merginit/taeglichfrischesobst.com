@@ -35,7 +35,7 @@
 	<path class="fill-neutral" fill-opacity="1" d="M0,256L26.7,224C53.3,192,107,128,160,96C213.3,64,267,64,320,85.3C373.3,107,427,149,480,165.3C533.3,181,587,171,640,154.7C693.3,139,747,117,800,133.3C853.3,149,907,203,960,229.3C1013.3,256,1067,256,1120,250.7C1173.3,245,1227,235,1280,240C1333.3,245,1387,267,1413,277.3L1440,288L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path></svg>
 
 	<!-- prettier-ignore -->
-	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 m-4">
+	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 mt-1 mr-1">
 		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
 		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
 		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>

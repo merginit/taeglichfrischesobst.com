@@ -8,7 +8,7 @@
 	import { gigs } from '$script/data';
 	import { videos } from '$script/data';
 	import { images } from '$script/data';
-	import { compareDates, isFutureDate } from '$script/utility';
+	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
 	import IconLoader from '$script/icons';
 	import Song from '$component/Song.svelte';
 	import { onMount } from 'svelte';
@@ -164,12 +164,17 @@
 								<td>{gig.location}</td>
 								<td>{gig.event}</td>
 								<td>
-									<!-- prettier-ignore -->
-									<a href={gig.tickets && typeof gig.tickets === "string" ? gig.tickets : '#'}>
-										<button disabled={typeof gig.tickets !== "string" ? true : false}  class="btn {gig.tickets && typeof gig.tickets === "string" && gig.tickets.trim().length > 0 ? 'btn-success' : 'btn-error'}" type="button">
-											{typeof gig.tickets !== "string" ? "" : "Tickets"}
-										</button>
-									</a>
+									{#if gig.date && new Date() <= dateOfString(gig.date) && gig.tickets}
+										<!-- prettier-ignore -->
+										<a href={gig.tickets ?? "/"}>
+											<button
+												class="btn btn-primary"
+												type="button"
+											>
+											Tickets
+											</button>
+										</a>
+									{/if}
 								</td>
 							</tr>
 						{:else}
@@ -199,7 +204,7 @@
 				</table>
 			</div>
 			<!-- prettier-ignore -->
-			<h2 class="relative text-2xl font-bold -z-40 sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
+			<h2 class="relative text-4xl font-bold -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
 				{#if outerWidth > 1535}
 					<!-- prettier-ignore -->
@@ -218,7 +223,7 @@
 				<div class="slide-track-reverse">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
 						<!-- prettier-ignore -->
-						<h2 id="socials-slider-headline-{iteration}" class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+						<h2 id="socials-slider-headline-{iteration}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Socials
 						</h2>
 						<!-- prettier-ignore -->
@@ -285,7 +290,7 @@
 				<div class="gap-2 lg:gap-4 slide-track">
 					{#each Array.from({ length: 4 }, (_, i) => i + 1) as i}
 						<!-- prettier-ignore -->
-						<h2 id="socials-slider-headline-{i}" class="ml-2 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
+						<h2 id="socials-slider-headline-{i}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Musik
 						</h2>
 						<!-- prettier-ignore -->
@@ -347,14 +352,14 @@
 		</div>
 
 		<!-- prettier-ignore -->
-		<h2 class="text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">
+		<h2 class="text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl">
 			Videos
 		</h2>
 	</section>
 	<section id="gallery" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
 		<div class="flex mr-2">
 			<!-- prettier-ignore -->
-			<h2 class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl"
+			<h2 class="text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl"
 				style="writing-mode:vertical-lr; transform: rotate(-180deg);">
 				Fotos
 			</h2>
@@ -362,7 +367,7 @@
 		</div>
 	</section>
 	<section id="info" class="min-h-screen mt-[20rem] scroll-mt-[20rem] z-10 p-5">
-		<h2 class="text-6xl">Infos</h2>
+		<h2 class="text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">Infos</h2>
 		<!-- prettier-ignore -->
 		<a class="btn btn-primary" href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_">
 			Pressekit Downloaden
@@ -395,7 +400,7 @@
 				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
-					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
+					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/" target="_blank" class="relative">
@@ -418,7 +423,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
+					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.fro.at/ann-and-pat-radioshow-gluehohren/" target="_blank" class="relative">
@@ -444,7 +449,7 @@
 				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
-					<div class="w-[calc(100% - 2rem)] lg:w-96 shadow-xl card bg-base-100">
+					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
 						<figure>
 							<!-- prettier-ignore -->
 							<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="relative">
@@ -485,7 +490,7 @@
 
 		<div class="absolute top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
-			<h2 class="px-4 text-2xl font-bold text-center sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
+			<h2 class="px-4 text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt
 			</h2>
 			<div class="flex flex-col items-center justify-center w-full gap-4">
@@ -495,11 +500,11 @@
 						<textarea
 							placeholder="Deine Nachricht..."
 							value="Hey Täglich Frisches Obst,"
-							class="w-full max-w-xs p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
+							class="w-full p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
 							title="Nachricht"
 							name="message"
 						/>
-						<div class="flex flex-wrap gap-2">
+						<div class="grid grid-rows-1 sm:grid-cols-[1fr_auto] gap-2">
 							<input
 								type="email"
 								name="email"
@@ -520,7 +525,7 @@
 						oder neue Releases anstehen!
 					</p>
 					<div class="flex flex-col gap-2">
-						<form on:submit|preventDefault={subscribeToMailList} class="flex flex-wrap gap-2">
+						<form on:submit|preventDefault={subscribeToMailList} class="grid grid-rows-1 sm:grid-cols-[1fr_auto] gap-2">
 							<input
 								type="email"
 								name="email"
@@ -528,9 +533,9 @@
 								title="Email"
 								placeholder="deine@email.tld"
 							/>
-							<button type="submit" class="btn btn-secondary">Abonnieren</button>
+							<button type="submit" class="btn-secondary btn">Abonnieren</button>
 						</form>
-						<form on:submit|preventDefault={unsubscribeFromMailList} class="flex flex-wrap gap-2">
+						<form on:submit|preventDefault={unsubscribeFromMailList} class="grid grid-rows-1 sm:grid-cols-[1fr_auto] gap-2">
 							<input
 								type="email"
 								name="email"
