@@ -58,7 +58,7 @@ async function sendEmail(email: string) {
 	});
 
 	const options = {
-		from: 'Täglich Frisches Obst - Gig-Letter <taeglichfrischesobst.noreply@gmail.com>',
+		from: 'Täglich Frisches Obst - Gig-Letter <noreply@taeglichfrischesobst.com>',
 		to: email,
 		subject: 'Willkommen auf der frisch-fruchtigen Mailingliste von Täglich Frisches Obst!',
 		html: emailHtml

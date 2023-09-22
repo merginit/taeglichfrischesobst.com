@@ -26,7 +26,7 @@
 	<h2>Täglich frisches Obst</h2>
 
 	<strong>Tobias Fröller</strong><br />
-	<a href="mailto:taeglichfrischesobst.business@gmail.com">
-		taeglichfrischesobst.business@gmail.com
+	<a href="mailto:business@taeglichfrischesobst.com">
+		business@taeglichfrischesobst.com
 	</a>
 </div>

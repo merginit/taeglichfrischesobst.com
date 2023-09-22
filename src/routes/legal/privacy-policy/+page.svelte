@@ -229,8 +229,8 @@
 		</span>
 	</p>
 	<p>
-		E-Mail: <a href="mailto:taeglichfrischesobst.business@gmail.com"
-			>taeglichfrischesobst.business@gmail.com</a
+		E-Mail: <a href="mailto:business@taeglichfrischesobst.com"
+			>business@taeglichfrischesobst.com</a
 		>
 		<br />
 		Telefon: <a href="tel:+43 650 6123449">+43 650 6123449</a>

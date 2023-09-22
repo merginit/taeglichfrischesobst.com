@@ -496,7 +496,7 @@
 			<div class="flex flex-col items-center justify-center w-full gap-4">
 				<div id="contact-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
-					<form action="https://formsubmit.co/taeglichfrischesobst.business@gmail.com" method="POST" class="flex flex-col gap-2">
+					<form action="https://formsubmit.co/business@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
 						<textarea
 							placeholder="Deine Nachricht..."
 							value="Hey Täglich Frisches Obst,"

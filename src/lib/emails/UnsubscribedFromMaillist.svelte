@@ -114,7 +114,7 @@
 				target="_blank">Website besuchen</Button
 			>
 			<Hr style={hr} />
-			<Link style={footer} href="mailto:taeglichfrischesobst.business@gmail.com" target="_blank">
+			<Link style={footer} href="mailto:business@taeglichfrischesobst.com" target="_blank">
 				Täglich Frisches Obst
 			</Link>
 		</Container>

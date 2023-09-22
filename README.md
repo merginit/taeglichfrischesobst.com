@@ -19,7 +19,7 @@ Am 03.09.22 hat die Band bereits ihre erste Doppelsingle released, um bald darau
 
 Für das Jahr 2023 sind weitere Releases geplant und vielleicht sogar mal ein ganzes Album.
 
-[taeglichfrischesobst.business@gmail.com](mailto:taeglichfrischesobst.business@gmail.com),
+[business@taeglichfrischesobst.com](mailto:business@taeglichfrischesobst.com),
 Linz, Austria
 
 ## Follow TFO
