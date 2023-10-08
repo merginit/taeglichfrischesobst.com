@@ -10,7 +10,7 @@
 
 <svelte:window bind:outerWidth />
 
-<footer class="relative mt-16">
+<footer class="relative">
 	<input
 		type="checkbox"
 		class="absolute bottom-0 {outerWidth < 1435

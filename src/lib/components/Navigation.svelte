@@ -2,6 +2,7 @@
 	import NavigationLinks from '$component/NavigationLinks.svelte';
 	import Icon from '@iconify/svelte';
 	import IconLoader from '$script/icons';
+	import { navigationHeight } from '$store/objectsizes';
 
 	export let page = 'home';
 
@@ -9,13 +10,20 @@
 	const iconLoaded = iconLoaderInstance.iconLoaded;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
+
+	let nh = 0;
+	$: {
+		if (nh) {
+			navigationHeight.set(nh);
+		}
+	}
 </script>
 
 <svelte:window bind:outerWidth />
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<nav class="sticky top-0 z-40">
+<nav class="sticky top-0 z-40" bind:offsetHeight={nh}>
 	<div class="relative z-20" id="navigation">
 		{#if outerWidth > 1135}
 			<ul class="flex justify-center gap-16 py-4 overflow-x-auto text-secondary">

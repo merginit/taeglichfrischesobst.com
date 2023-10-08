@@ -14,13 +14,22 @@
 	import { onMount } from 'svelte';
 	import { embeddedAccepted } from '$script/cookiestate.js';
 	import { openCookieBanner } from '$script/cookies';
+	import {
+		sectionMarginTop as nh,
+		gigsSectionHeight as gs,
+		musicSectionHeight as ms,
+		videosSectionHeight as vs,
+		gallerySectionHeight as gas,
+		infoSectionHeight as is,
+		contactSectionHeight as cs
+	} from '$store/objectsizes.js';
 	/* import {
 		getStoryblokApi,
 		useStoryblokBridge,
 		StoryblokComponent,
 		type ISbStoryData
 	} from '@storyblok/svelte'; */
-	// import gsap from 'gsap';
+	// import gsap from 'gsap'; // alt: https://wowjs.uk/
 
 	/* svelte-ignore unused-export-let */
 	export let data;
@@ -122,6 +131,39 @@
 	const iconLoaded = iconLoaderInstance.iconLoaded;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
+
+	let gigsSection = 0;
+	let musicSection = 0;
+	let videosSection = 0;
+	let gallerySection = 0;
+	let infoSection = 0;
+	let contactSection = 0;
+
+	$: {
+		if (gigsSection) {
+			gs.set(gigsSection);
+		}
+
+		if (musicSection) {
+			ms.set(musicSection);
+		}
+
+		if (videosSection) {
+			vs.set(videosSection);
+		}
+
+		if (gallerySection) {
+			gas.set(gallerySection);
+		}
+
+		if (infoSection) {
+			is.set(infoSection);
+		}
+
+		if (contactSection) {
+			cs.set(contactSection);
+		}
+	}
 </script>
 
 <svelte:head>
@@ -142,13 +184,18 @@
 
 <Toaster />
 
-<main class="min-h-screen">
-	<section id="gigs" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem]">
+<main class="min-h-screen pb-16">
+	<section
+		id="gigs"
+		bind:offsetHeight={gigsSection}
+		class="flex flex-col"
+		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
+	>
 		<div class="p-6 md:p-10 lg:p-16">
 			<div class="relative overflow-auto max-h-96 bg-neutral rounded-xl text-secondary">
 				<table class="table">
 					<thead class="text-lg font-bold text-secondary">
-						<tr>
+						<tr class="sticky top-0 bg-neutral">
 							<th />
 							<th>Datum</th>
 							<th>Ort</th>
@@ -216,7 +263,12 @@
 		</div>
 	</section>
 	<!-- svelte-ignore a11y-missing-attribute -->
-	<section id="music" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
+	<section
+		id="music"
+		bind:offsetHeight={musicSection}
+		class="z-10 flex flex-col mb-16"
+		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
+	>
 		<div class="flex flex-wrap justify-center gap-4 px-6 md:px-10 lg:px-16">
 			<!-- prettier-ignore -->
 			<div class="gap-2 lg:gap-4 slider-reverse">
@@ -320,7 +372,11 @@
 			</div>
 		</div>
 	</section>
-	<section id="videos" class="z-10 flex flex-col min-h-screen scroll-mt-0">
+	<section
+		id="videos"
+		bind:offsetHeight={videosSection}
+		class="z-10 flex flex-col mt-2 scroll-mt-0 bg-base-200"
+	>
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
 			{#if embeddedAccepted()}
@@ -341,7 +397,8 @@
 					<span class="loading loading-ball loading-lg"></span>
 				{/each}
 			{:else}
-			<div class="flex flex-col flex-wrap items-center w-full py-2 mx-4 h-fit mt-[20rem] bg-neutral rounded-2xl">
+			<div class="flex flex-col flex-wrap items-center self-center w-full p-2 mx-4 h-fit bg-neutral rounded-2xl" 
+			style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 				Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Videos von YouTube
 				anzuzeigen.
 
@@ -352,11 +409,16 @@
 		</div>
 
 		<!-- prettier-ignore -->
-		<h2 class="text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl">
+		<h2 class="pb-4 text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl">
 			Videos
 		</h2>
 	</section>
-	<section id="gallery" class="min-h-screen flex flex-col mt-[20rem] scroll-mt-[20rem] z-10">
+	<section
+		id="gallery"
+		bind:offsetHeight={gallerySection}
+		class="z-10 flex flex-col"
+		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
+	>
 		<div class="flex mr-2">
 			<!-- prettier-ignore -->
 			<h2 class="text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl"
@@ -366,7 +428,12 @@
 			<Gallery galleryID="gallery" {images} />
 		</div>
 	</section>
-	<section id="info" class="min-h-screen mt-[20rem] scroll-mt-[20rem] z-10 p-5">
+	<section
+		id="info"
+		bind:offsetHeight={infoSection}
+		class="z-10 p-5"
+		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
+	>
 		<h2 class="text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">Infos</h2>
 		<!-- prettier-ignore -->
 		<a class="btn btn-primary" href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_">
@@ -482,7 +549,7 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" class="min-h-screen flex flex-col mt-[15rem] scroll-mt-[15rem] z-10 mx-4 relative">
+	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 		{#if outerWidth > 1535}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
@@ -494,7 +561,7 @@
 				Kontakt
 			</h2>
 			<div class="flex flex-col items-center justify-center w-full gap-4">
-				<div id="contact-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+				<div id="contact-form" class="w-full p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
 					<form action="https://formsubmit.co/business@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
 						<textarea
@@ -546,6 +613,13 @@
 							<button type="submit" class="btn btn-secondary">Deabonnieren</button>
 						</form>
 					</div>
+				</div>
+				<div id="booking-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+					<h3 class="mb-4 text-3xl font-bold text-secondary">Booking</h3>
+					<p class="mb-2 text-secondary">
+						<strong>Kontakt</strong>: Livia Eibl & Tobias Fröller <br>
+						<a href="mailto:booking@taeglichfrischesobst.com">booking@taeglichfrischesobst.com</a>
+					</p>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import {
+		gigsSectionHeight as gs,
+		musicSectionHeight as ms,
+		videosSectionHeight as vs,
+		gallerySectionHeight as gas,
+		infoSectionHeight as is,
+		contactSectionHeight as cs
+	} from '$store/objectsizes.js';
 
 	export let page = 'home';
 
@@ -14,17 +22,16 @@
 
 	$: active = '';
 	$: scrollY = 0;
-	$: outerHeight = 0;
 
-	$: section_01 = outerHeight;
-	$: section_02 = section_01 + outerHeight;
-	$: section_03 = section_02 + outerHeight;
-	$: section_04 = section_03 + outerHeight;
-	$: section_05 = section_04 + outerHeight;
-	$: section_06 = section_05 + outerHeight;
+	$: section_01 = $gs;
+	$: section_02 = section_01 + $ms;
+	$: section_03 = section_02 + $vs;
+	$: section_04 = section_03 + $gas;
+	$: section_05 = section_04 + $is;
+	$: section_06 = section_05 + $cs;
 </script>
 
-<svelte:window bind:scrollY bind:outerHeight on:scroll={() => (active = '')} />
+<svelte:window bind:scrollY on:scroll={() => (active = '')} />
 
 <li class="text-xl font-bold sm:text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl">
 	<!-- prettier-ignore -->
