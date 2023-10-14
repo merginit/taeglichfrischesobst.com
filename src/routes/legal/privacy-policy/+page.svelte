@@ -229,9 +229,7 @@
 		</span>
 	</p>
 	<p>
-		E-Mail: <a href="mailto:business@taeglichfrischesobst.com"
-			>business@taeglichfrischesobst.com</a
-		>
+		E-Mail: <a href="mailto:business@taeglichfrischesobst.com">business@taeglichfrischesobst.com</a>
 		<br />
 		Telefon: <a href="tel:+43 650 6123449">+43 650 6123449</a>
 		<br />
@@ -467,7 +465,7 @@
 		Transfer Protocol Secure wiki&#8221; um gute Links zu weiterführenden Informationen zu erhalten.
 	</p>
 	<h2 id="kommunikation" class="adsimple-112580075">Kommunikation</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -626,7 +624,7 @@
 		ansehen. Hier wird ein Mustervertrag vorgestellt.
 	</p>
 	<h2 id="cookies" class="adsimple-112580075">Cookies</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -857,7 +855,7 @@
 		eingesetzte Software Cookies verwendet.
 	</p>
 	<h2 id="webhosting-einleitung" class="adsimple-112580075">Webhosting Einleitung</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -980,7 +978,7 @@
 	<h2 id="website-baukastensysteme-einleitung" class="adsimple-112580075">
 		Website Baukastensysteme Einleitung
 	</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -1076,7 +1074,7 @@
 		der Datenschutzerklärung des Anbieters.
 	</p>
 	<h2 id="e-mail-marketing-einleitung" class="adsimple-112580075">E-Mail-Marketing Einleitung</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -1268,7 +1266,7 @@
 	<h2 id="content-delivery-networks-einleitung" class="adsimple-112580075">
 		Content Delivery Networks Einleitung
 	</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -1367,7 +1365,7 @@
 	<h2 id="cloudflare-datenschutzerklaerung" class="adsimple-112580075">
 		Cloudflare Datenschutzerklärung
 	</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -1531,7 +1529,7 @@
 		>.
 	</p>
 	<h2 id="audio-video-einleitung" class="adsimple-112580075">Audio &amp; Video Einleitung</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>
@@ -1650,7 +1648,7 @@
 	<h2 id="youtube-datenschutzerklaerung" class="adsimple-112580075">
 		YouTube Datenschutzerklärung
 	</h2>
-	<table border="1" cellpadding="15">
+	<table>
 		<tbody>
 			<tr>
 				<td>

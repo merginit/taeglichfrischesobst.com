@@ -1,8 +1,16 @@
 <script lang="js">
+	import 'photoswipe/style.css';
 	import { onMount } from 'svelte';
 	import PhotoSwipeLightbox from 'photoswipe/lightbox';
-	import 'photoswipe/style.css';
+
+	/**
+	 * @type {string}
+	 */
 	export let galleryID;
+
+	/**
+	 * @type {Array<{URL: string, width: number, height: number}>}
+	 */
 	export let images;
 
 	onMount(() => {

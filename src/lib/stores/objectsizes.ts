@@ -3,8 +3,8 @@ import { writable, derived } from 'svelte/store';
 export const navigationHeight = writable(0);
 
 export const sectionMarginTop = derived(
-    navigationHeight,
-    ($navigationHeight) => $navigationHeight / 8
+	navigationHeight,
+	($navigationHeight) => $navigationHeight / 8
 );
 
 export const gigsSectionHeight = writable(0);

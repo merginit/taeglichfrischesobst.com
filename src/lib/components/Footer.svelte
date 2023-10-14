@@ -1,9 +1,5 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
-	import IconLoader from '$script/icons';
-
-	const iconLoaderInstance = IconLoader.getInstance();
-	const iconLoaded = iconLoaderInstance.iconLoaded;
+	import IconLoader from './IconLoader.svelte';
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
@@ -25,11 +21,21 @@
 		<!-- prettier-ignore -->
 		<div id="streaming" class="absolute bottom-0 right-0 z-40 w-full">
 			<div class="flex flex-row-reverse gap-2 m-4 mb-8">
-				<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" width={'50px'} /></a>
-				<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="arcticons:amazon-music" color="hsl(var(--s))" width={'50px'} /></a>
-				<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:applemusic" color="hsl(var(--s))" width={'45px'} /></a>
-				<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:tidal" color="hsl(var(--s))" width={'50px'} /></a>
-				<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="fa6-brands:deezer" color="hsl(var(--s))" width={'50px'} /></a>
+				<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+					<IconLoader icon="mdi:spotify" color="hsl(var(--s))">spotify</IconLoader>
+				</a>
+				<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+					<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))">amazon music</IconLoader>
+				</a>
+				<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+					<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width="45px">apple music</IconLoader>
+				</a>
+				<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+					<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))">tidal</IconLoader>
+				</a>
+				<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+					<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))">deezer</IconLoader>
+				</a>
 			</div>
 		</div>
 	{/if}

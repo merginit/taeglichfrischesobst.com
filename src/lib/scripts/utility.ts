@@ -10,14 +10,14 @@ export const isFutureDate = (date: string) => {
 };
 
 export const dateOfString = (date: string) => {
-	const parts = date.split(".");
+	const parts = date.split('.');
 	const year = parseInt(parts[2], 10);
 	const month = parseInt(parts[1], 10) - 1;
 	const day = parseInt(parts[0], 10);
 	const final_date = new Date(year, month, day);
 
 	return final_date;
-}
+};
 
 export const hslToHex = (h: number, s: number, l: number) => {
 	l /= 100;

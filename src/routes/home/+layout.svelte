@@ -6,18 +6,14 @@
 	import { themeChange } from 'theme-change';
 	import { onMount } from 'svelte';
 	import App from '$component/App.svelte';
-	import Icon from '@iconify/svelte';
-	import IconLoader from '$script/icons';
 	import Navigation from '$component/Navigation.svelte';
 	import Footer from '$component/Footer.svelte';
+	import IconLoader from '$component/IconLoader.svelte';
 
 	onMount(() => {
 		// Theme Changer
 		themeChange(false);
 	});
-
-	const iconLoaderInstance = IconLoader.getInstance();
-	const iconLoaded = iconLoaderInstance.iconLoaded;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
@@ -36,10 +32,18 @@
 
 	<!-- prettier-ignore -->
 	<div id="socials" class="fixed top-0 right-0 z-50 flex items-center justify-center gap-2 mt-1 mr-1">
-		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={'35px'} /></a>
-		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'} /></a>
-		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'} /></a>
-		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'} /></a>
+		<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+			<IconLoader icon="mdi:youtube" color="hsl(var(--s))" width={'35px'}>youtube</IconLoader>
+		</a>
+		<a href="https://www.instagram.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+			<IconLoader icon="ri:instagram-fill" color="hsl(var(--s))" width={'25px'}>instagram</IconLoader>
+		</a>
+		<a href="https://www.tiktok.com/@taeglichfrischesobst" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+			<IconLoader icon="ic:baseline-tiktok" color="hsl(var(--s))" width={'28px'}>tiktok</IconLoader>
+		</a>
+		<a href="https://www.facebook.com/taeglichfrischesobst/" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
+			<IconLoader icon="ri:facebook-fill" color="hsl(var(--s))" width={'25px'}>facebook</IconLoader>
+		</a>
 	</div>
 
 	<!-- prettier-ignore -->

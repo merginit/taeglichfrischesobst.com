@@ -1418,11 +1418,13 @@
 		 * @returns {boolean}
 		 */
 		_cookieconsent.allowedCategory = function (cookie_category) {
+			var allowed_categories = null;
+
 			if (!invalid_consent || _config.mode === 'opt-in')
-				var allowed_categories =
+				allowed_categories =
 					JSON.parse(_getCookie(_config.cookie_name, 'one', true) || '{}')['categories'] || [];
 			// mode is 'opt-out'
-			else var allowed_categories = default_enabled_categories;
+			else allowed_categories = default_enabled_categories;
 
 			return _inArray(allowed_categories, cookie_category) > -1;
 		};

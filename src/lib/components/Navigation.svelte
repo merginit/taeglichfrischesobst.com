@@ -1,13 +1,9 @@
 <script lang="ts">
-	import NavigationLinks from '$component/NavigationLinks.svelte';
-	import Icon from '@iconify/svelte';
-	import IconLoader from '$script/icons';
 	import { navigationHeight } from '$store/objectsizes';
+	import NavigationLinks from '$component/NavigationLinks.svelte';
+	import IconLoader from './IconLoader.svelte';
 
 	export let page = 'home';
-
-	const iconLoaderInstance = IconLoader.getInstance();
-	const iconLoaded = iconLoaderInstance.iconLoaded;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 
@@ -33,12 +29,9 @@
 			<div class="flex items-center pt-2 ml-12">
 				<div class="dropdown dropdown-bottom">
 					<label tabindex="0" class="iconify-icon">
-						<Icon
-							on:load={() => iconLoaded()}
-							icon="charm:menu-hamburger"
-							color="hsl(var(--s))"
-							width={'28px'}
-						/>
+						<IconLoader icon="charm:menu-hamburger" color="hsl(var(--s))" width={'28px'}
+							>menu</IconLoader
+						>
 					</label>
 					<!-- prettier-ignore -->
 					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 border-2 border-primary rounded-box w-fit text-secondary">

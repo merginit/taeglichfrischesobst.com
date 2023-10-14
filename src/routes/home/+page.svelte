@@ -2,15 +2,10 @@
 </script>
 
 <script lang="ts">
-	import Icon from '@iconify/svelte';
-	import toast, { Toaster } from 'svelte-french-toast';
-	import Gallery from '$component/Gallery.svelte';
 	import { gigs } from '$script/data';
 	import { videos } from '$script/data';
 	import { images } from '$script/data';
 	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
-	import IconLoader from '$script/icons';
-	import Song from '$component/Song.svelte';
 	import { onMount } from 'svelte';
 	import { embeddedAccepted } from '$script/cookiestate.js';
 	import { openCookieBanner } from '$script/cookies';
@@ -23,6 +18,10 @@
 		infoSectionHeight as is,
 		contactSectionHeight as cs
 	} from '$store/objectsizes.js';
+	import toast, { Toaster } from 'svelte-french-toast';
+	import IconLoader from '$component/IconLoader.svelte';
+	import Song from '$component/Song.svelte';
+	import Gallery from '$component/Gallery.svelte';
 	/* import {
 		getStoryblokApi,
 		useStoryblokBridge,
@@ -126,9 +125,6 @@
 
 	let displayAllGigs = false;
 	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
-
-	const iconLoaderInstance = IconLoader.getInstance();
-	const iconLoaded = iconLoaderInstance.iconLoaded;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 
@@ -282,13 +278,17 @@
 						<div class="slide">
 							<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"
 							target="_blank"
-							class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"} /></a>
+							class="cursor-pointer iconify-icon">
+								<IconLoader icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"}>youtube</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
 							<a href="https://www.instagram.com/taeglichfrischesobst/"
 							target="_blank"
-							class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							class="cursor-pointer iconify-icon">
+								<IconLoader icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>instagram</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 
@@ -296,14 +296,17 @@
 							<a href="https://www.tiktok.com/@taeglichfrischesobst"
 							target="_blank"
 							class="cursor-pointer iconify-icon"
-							><Icon on:load={() => iconLoaded()} icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							>
+								<IconLoader icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tiktok</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
 							<a href="https://www.facebook.com/taeglichfrischesobst/"
 							target="_blank"
 							class="cursor-pointer iconify-icon"
-							><Icon on:load={() => iconLoaded()} icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							>
+								<IconLoader icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>facebook</IconLoader>
 						</div>
 					{:else}
 						<span class="loading loading-ball loading-lg"></span>
@@ -347,23 +350,33 @@
 						</h2>
 						<!-- prettier-ignore -->
 						<div class="slide">
-							<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer iconify-icon">
+								<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>spotify</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
-							<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer iconify-icon">
+								<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>amazon music</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
-							<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"} /></a>
+							<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer iconify-icon">
+								<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"}>apple music</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
-							<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer iconify-icon">
+								<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tidal</IconLoader>
+							</a>
 						</div>
 						<!-- prettier-ignore -->
 						<div class="slide">
-							<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"} /></a>
+							<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer iconify-icon">
+								<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>deezer</IconLoader>
+							</a>
 						</div>
 					{:else}
 						<span class="loading loading-ball loading-lg"></span>
@@ -522,7 +535,9 @@
 							<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="relative">
 								<img src="/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.webp" alt="band" />
 								<!-- prettier-ignore -->
-								<a href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686" target="_blank" class="absolute top-0 left-0 cursor-pointer iconify-icon"><Icon on:load={() => iconLoaded()} icon="mdi:spotify" color="hsl(var(--s))" height="40px" /></a>
+								<a href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686" target="_blank" class="absolute top-0 left-0 cursor-pointer iconify-icon">
+									<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width="40px">spotify</IconLoader>
+								</a>
 								<a href="https://www.instagram.com/niko_nopp/" target="_blank" class="absolute bottom-0 right-1">© Niko Nopp</a>
 							</a>
 						</figure>
