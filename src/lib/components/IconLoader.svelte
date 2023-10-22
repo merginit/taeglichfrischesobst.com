@@ -3,7 +3,7 @@
 	import Icon from '@iconify/svelte';
 	export let icon: string | IconifyIconName;
 	export let color: string;
-	export let width: string = '50px';
+	export let width = '50px';
 </script>
 
 {#await loadIcon(icon)}

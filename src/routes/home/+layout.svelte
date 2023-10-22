@@ -1,11 +1,7 @@
 <script lang="ts">
-	import type { LayoutData } from './$types';
-	export let data: LayoutData;
-
-	import '$main/app.css';
 	import { themeChange } from 'theme-change';
 	import { onMount } from 'svelte';
-	import App from '$component/App.svelte';
+	import ThreeDimensional from '$component/ThreeDimensional.svelte';
 	import Navigation from '$component/Navigation.svelte';
 	import Footer from '$component/Footer.svelte';
 	import IconLoader from '$component/IconLoader.svelte';
@@ -53,15 +49,15 @@
 
 	{#if outerWidth > 1775}
 		<div class="absolute top-0 left-0">
-			<App />
+			<ThreeDimensional />
 		</div>
 
 		<div class="absolute transform -top-72 left-1/3 -translate-x-1/3">
-			<App />
+			<ThreeDimensional />
 		</div>
 
 		<div class="absolute bottom-0 right-0">
-			<App />
+			<ThreeDimensional />
 		</div>
 	{/if}
 

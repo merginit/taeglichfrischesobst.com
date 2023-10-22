@@ -1,6 +1,7 @@
+import type { LayoutServerLoad } from './$types';
 import { gigs } from '$script/data';
 
-export async function load({ fetch }) {
+export const load: LayoutServerLoad = async function ({ fetch }) {
 	try {
 		const response = await fetch('/storyblok?slug=gigs');
 		const data = await response.json();
@@ -14,4 +15,4 @@ export async function load({ fetch }) {
 
 		return null;
 	}
-}
+};

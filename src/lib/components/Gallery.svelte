@@ -1,17 +1,11 @@
-<script lang="js">
+<script lang="ts">
 	import 'photoswipe/style.css';
 	import { onMount } from 'svelte';
 	import PhotoSwipeLightbox from 'photoswipe/lightbox';
+	import type { Image } from '$script/types';
 
-	/**
-	 * @type {string}
-	 */
-	export let galleryID;
-
-	/**
-	 * @type {Array<{URL: string, width: number, height: number}>}
-	 */
-	export let images;
+	export let galleryID: string;
+	export let images: Image[];
 
 	onMount(() => {
 		let lightbox = new PhotoSwipeLightbox({
@@ -27,7 +21,7 @@
 				isButton: false,
 				appendTo: 'root',
 				html: 'Caption text',
-				onInit: (el) => {
+				onInit: (el: HTMLElement) => {
 					lightbox.pswp.on('change', () => {
 						const currSlideElement = lightbox.pswp.currSlide.data.element;
 						let captionHTML = '';

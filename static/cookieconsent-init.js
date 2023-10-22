@@ -25,9 +25,7 @@ cc.run({
 	remove_cookie_tables: false,
 	autoclear_cookies: true,
 
-	onChange: function (cookie, changed_preferences) {
-		// callback triggered when user changes cookie preferences
-
+	onChange: function () {
 		window.location.reload();
 	},
 

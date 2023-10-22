@@ -1,3 +1,4 @@
+import type { Handle } from '@sveltejs/kit';
 import { minify } from 'html-minifier';
 import { dev } from '$app/environment';
 
@@ -13,8 +14,7 @@ const minification_options = {
 	processConditionalComments: true
 };
 
-/** @type {import('@sveltejs/kit').Handle} */
-export async function handle({ event, resolve }) {
+export const handle: Handle = async function ({ event, resolve }) {
 	let page = '';
 	return resolve(event, {
 		transformPageChunk: ({ html, done }) => {
@@ -24,4 +24,4 @@ export async function handle({ event, resolve }) {
 			}
 		}
 	});
-}
+};
