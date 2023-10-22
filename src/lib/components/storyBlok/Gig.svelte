@@ -9,5 +9,7 @@
 	{blok.location}
 	{blok.date}
 	{blok.time}
-	{blok.tickets?.url ?? null}
+	{#if blok.tickets !== null && typeof blok.tickets === 'object' && 'url' in blok.tickets}
+		{blok.tickets?.url ?? null}
+	{/if}
 </div>

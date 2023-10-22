@@ -3,7 +3,7 @@ import { SENDGRID_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
 // Email
-import EmailTemplate from '$main/lib/emails/SubscribedToMaillist.svelte';
+import EmailTemplate from '$email/SubscribedToMaillist.svelte';
 import { render } from 'svelte-email';
 import sendgrid from '@sendgrid/mail';
 

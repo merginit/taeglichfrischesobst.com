@@ -1,14 +1,15 @@
-<script lang="ts" context="module" type="module">
-</script>
-
 <script lang="ts">
+	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
+	import { subscribeToMailList, unsubscribeFromMailList } from '$script/api.js';
+	import { embeddedAccepted } from '$script/cookiestate.js';
+	import { openCookieBanner } from '$script/cookies';
 	import { gigs } from '$script/data';
 	import { videos } from '$script/data';
 	import { images } from '$script/data';
-	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
+	import { fetchGigs } from '$script/data';
+	import type { LayoutData } from './$types';
+	import type { Gig } from '$script/types';
 	import { onMount } from 'svelte';
-	import { embeddedAccepted } from '$script/cookiestate.js';
-	import { openCookieBanner } from '$script/cookies';
 	import {
 		sectionMarginTop as nh,
 		gigsSectionHeight as gs,
@@ -18,122 +19,41 @@
 		infoSectionHeight as is,
 		contactSectionHeight as cs
 	} from '$store/objectsizes.js';
-	import toast, { Toaster } from 'svelte-french-toast';
+	import { Toaster } from 'svelte-french-toast';
 	import IconLoader from '$component/IconLoader.svelte';
 	import Song from '$component/Song.svelte';
 	import Gallery from '$component/Gallery.svelte';
-	/* import {
-		getStoryblokApi,
-		useStoryblokBridge,
-		StoryblokComponent,
-		type ISbStoryData
-	} from '@storyblok/svelte'; */
-	// import gsap from 'gsap'; // alt: https://wowjs.uk/
+	import SlideItem from '$component/SlideItem.svelte';
+	import Card from '$component/Card.svelte';
 
 	/* svelte-ignore unused-export-let */
-	export let data;
+	export let data: LayoutData;
 
-	async function mailListAction(event: Event, endpoint: string) {
-		const form = event.target as HTMLFormElement;
-		const data = new FormData(form);
-		const email = data.get('email')?.toString();
-
-		if (email && email.trim().length > 0) {
-			const response = await fetch(`/${endpoint}`, {
-				method: 'POST',
-				body: JSON.stringify({
-					email: email
-				}),
-				headers: {
-					Accept: 'application/json',
-					'content-type': 'application/json'
-				}
-			});
-
-			const res = await response.json();
-			console.log('res', res, res.success);
-
-			if (res.success) {
-				toast.success(res.response);
-			} else {
-				toast.error(res?.response ?? res.message);
-			}
-		} else {
-			toast.error('Bitte gib eine gültige E-Mail Adresse ein!');
-		}
-	}
-
-	async function subscribeToMailList(event: Event) {
-		await mailListAction(event, 'subscribe-to-maillist');
-		console.log('subscribed to mail list');
-	}
-
-	async function unsubscribeFromMailList(event: Event) {
-		await mailListAction(event, 'unsubscribe-from-maillist');
-		console.log('unsubscribed from mail list');
-	}
-
-	/* let story: ISbStoryData<any> | null = null;
-	onMount(async () => {
-		const storyblokApi = getStoryblokApi();
-		const { data } = await storyblokApi.get('cdn/stories/home', {
-			version: 'draft'
-		});
-		story = data.story;
-
-		if (story) {
-			useStoryblokBridge(story.id, (newStory) => (story = newStory));
-		}
-	}); */
-
-	let gigsIncludingFetched: any[] = [];
-
-	onMount(async () => {
-		const fetchedGigs = await fetchGigs();
-		gigsIncludingFetched = gigs.concat(fetchedGigs);
-	});
-
-	async function fetchGigs() {
-		const response = await fetch('/storyblok?slug=gigs');
-		const data = await response.json();
-		const fetchedGigs = data.data;
-
-		fetchedGigs.forEach((gig: any) => {
-			// format date
-			if (gig.date) {
-				const parsedDate = new Date(gig.date);
-				const day = parsedDate.getDate().toString().padStart(2, '0');
-				const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
-				const year = parsedDate.getFullYear();
-
-				gig.date = `${day}.${month}.${year}`;
-			}
-
-			// format ticket url
-			if (gig.tickets) {
-				gig.tickets = gig.tickets.url;
-			}
-		});
-
-		return fetchedGigs;
-	}
-
-	$: allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
-		compareDates(eventA.date, eventB.date)
-	);
-	$: futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
-
+	let gigsIncludingFetched: Gig[] = [];
 	let displayAllGigs = false;
+
+	$: allGigs = gigsIncludingFetched;
+	$: futureGigs = allGigs;
 	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
-
 	let gigsSection = 0;
 	let musicSection = 0;
 	let videosSection = 0;
 	let gallerySection = 0;
 	let infoSection = 0;
 	let contactSection = 0;
+
+	onMount(async () => {
+		const fetchedGigs = await fetchGigs();
+		gigsIncludingFetched = gigs.concat(fetchedGigs);
+
+		allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
+			compareDates(eventA.date, eventB.date)
+		);
+
+		futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
+	});
 
 	$: {
 		if (gigsSection) {
@@ -174,13 +94,9 @@
 
 <svelte:window bind:outerWidth />
 
-<!-- {#if story}
-	<StoryblokComponent blok={story.content} />
-{/if} -->
-
 <Toaster />
 
-<main class="min-h-screen pb-16">
+<main class="min-h-screen">
 	<section
 		id="gigs"
 		bind:offsetHeight={gigsSection}
@@ -209,7 +125,7 @@
 								<td>
 									{#if gig.date && new Date() <= dateOfString(gig.date) && gig.tickets}
 										<!-- prettier-ignore -->
-										<a href={gig.tickets ?? "/"}>
+										<a href={typeof gig.tickets === 'string' ? gig?.tickets ?? "/" : "/"}>
 											<button
 												class="btn btn-primary"
 												type="button"
@@ -274,40 +190,18 @@
 						<h2 id="socials-slider-headline-{iteration}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Socials
 						</h2>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"
-							target="_blank"
-							class="cursor-pointer iconify-icon">
-								<IconLoader icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"}>youtube</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://www.instagram.com/taeglichfrischesobst/"
-							target="_blank"
-							class="cursor-pointer iconify-icon">
-								<IconLoader icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>instagram</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-
-						<div class="slide">
-							<a href="https://www.tiktok.com/@taeglichfrischesobst"
-							target="_blank"
-							class="cursor-pointer iconify-icon"
-							>
-								<IconLoader icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tiktok</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://www.facebook.com/taeglichfrischesobst/"
-							target="_blank"
-							class="cursor-pointer iconify-icon"
-							>
-								<IconLoader icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>facebook</IconLoader>
-						</div>
+						<SlideItem url={"https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"}>
+							<IconLoader icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"}>youtube</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://www.instagram.com/taeglichfrischesobst"}>
+							<IconLoader icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>instagram</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://www.tiktok.com/@taeglichfrischesobst"}>
+							<IconLoader icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tiktok</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://www.facebook.com/taeglichfrischesobst"}>
+							<IconLoader icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>facebook</IconLoader>
+						</SlideItem>
 					{:else}
 						<span class="loading loading-ball loading-lg"></span>
 					{/each}
@@ -323,15 +217,12 @@
 				tabindex="0"
 			>
 				{#if embeddedAccepted()}
-					<Song
-						url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'}
-					/>
-					<Song
-						url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'}
-					/>
-					<Song
-						url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'}
-					/>
+					<!-- prettier-ignore -->
+					<Song url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'} />
+					<!-- prettier-ignore -->
+					<Song url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'} />
+					<!-- prettier-ignore -->
+					<Song url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'} />
 				{:else}
 					Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
 					anzuzeigen.
@@ -348,36 +239,21 @@
 						<h2 id="socials-slider-headline-{i}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
 							Musik
 						</h2>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="cursor-pointer iconify-icon">
-								<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>spotify</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="cursor-pointer iconify-icon">
-								<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>amazon music</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="cursor-pointer iconify-icon">
-								<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"}>apple music</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="cursor-pointer iconify-icon">
-								<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tidal</IconLoader>
-							</a>
-						</div>
-						<!-- prettier-ignore -->
-						<div class="slide">
-							<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="cursor-pointer iconify-icon">
-								<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>deezer</IconLoader>
-							</a>
-						</div>
+						<SlideItem url={"https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV"}>
+							<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>spotify</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm"}>
+							<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>amazon music</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117"}>
+							<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"}>apple music</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://listen.tidal.com/artist/34019184"}>
+							<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tidal</IconLoader>
+						</SlideItem>
+						<SlideItem url={"https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c"}>
+							<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>deezer</IconLoader>
+						</SlideItem>
 					{:else}
 						<span class="loading loading-ball loading-lg"></span>
 					{/each}
@@ -480,80 +356,53 @@
 				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
-					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
-						<figure>
-							<!-- prettier-ignore -->
-							<a href="https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/" target="_blank" class="relative">
-								<img src="/assets/images/radio/ann_and_pat-Radioshow–ZeitFuerVitamine.png" alt="ann_and_pat-ZeitFuerVitamine" />
-							</a>
-						</figure>
-
-						<div class="card-body">
-							<h3 class="card-title">
-								ann and pat radioshow - interview
-								<div class="badge badge-secondary">15.3.2023</div>
-							</h3>
-							<p>
-								Der Frühling kann kommen, "täglich frisches Obst" sorgen für den musikalischen
-								Vitamin-Boost!
-							</p>
-							<div class="justify-start card-actions">
-								<!-- prettier-ignore -->
-								<a href="https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/" target="_blank" class="btn btn-primary">zur Radioshow</a>
-							</div>
-						</div>
-					</div>
-					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
-						<figure>
-							<!-- prettier-ignore -->
-							<a href="https://www.fro.at/ann-and-pat-radioshow-gluehohren/" target="_blank" class="relative">
-								<img src="/assets/images/radio/ann_and_pat-Radioshow–Gluehohren.png" alt="ann_and_pat-ZeitFuerVitamine" />
-							</a>
-						</figure>
-
-						<div class="card-body">
-							<h3 class="card-title">
-								ann and pat radioshow - auftritt
-								<div class="badge badge-secondary">21.12.2022</div>
-							</h3>
-							<p>06 TÄGLICH FRISCHES OBST - Dolce far niente (min. 18:12)</p>
-							<div class="justify-start card-actions">
-								<!-- prettier-ignore -->
-								<a href="https://www.fro.at/ann-and-pat-radioshow-gluehohren/" target="_blank" class="btn btn-primary">zur Radiosendung</a>
-							</div>
-						</div>
-					</div>
+					<Card
+						figure_url={'https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/'}
+						figure_img_src={'/assets/images/radio/ann_and_pat-Radioshow–ZeitFuerVitamine.png'}
+						content_title={'ann and pat radioshow - interview'}
+						content_date={'15.3.2023'}
+						content_description={`Der Frühling kann kommen, "täglich frisches Obst" sorgen für den musikalischen
+					Vitamin-Boost!`}
+						content_url={'https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/'}
+						content_url_label={'zur Radioshow'}
+					/>
+					<Card
+						figure_url={'https://www.fro.at/ann-and-pat-radioshow-gluehohren/'}
+						figure_img_src={'/assets/images/radio/ann_and_pat-Radioshow–Gluehohren.png'}
+						content_title={'ann and pat radioshow - auftritt'}
+						content_date={'21.12.2022'}
+						content_description={`06 TÄGLICH FRISCHES OBST - Dolce far niente (min. 18:12)`}
+						content_url={'https://www.fro.at/ann-and-pat-radioshow-gluehohren/'}
+						content_url_label={'zur Radiosendung'}
+					/>
 				</div>
 			</div>
 			<div class="my-2 collapse collapse-plus bg-base-200">
 				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
-					<div class="w-full shadow-xl lg:w-96 card bg-base-100">
-						<figure>
-							<!-- prettier-ignore -->
-							<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="relative">
-								<img src="/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.webp" alt="band" />
-								<!-- prettier-ignore -->
-								<a href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686" target="_blank" class="absolute top-0 left-0 cursor-pointer iconify-icon">
-									<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width="40px">spotify</IconLoader>
-								</a>
-								<a href="https://www.instagram.com/niko_nopp/" target="_blank" class="absolute bottom-0 right-1">© Niko Nopp</a>
-							</a>
-						</figure>
-
-						<div class="card-body">
-							<h3 class="card-title">
-								„Dolce far Niente“
-								<div class="badge badge-secondary">Dezember 2022</div>
-							</h3>
-							<p>Neue Single von Täglich frisches Obst: „Dolce far Niente“</p>
-							<div class="justify-start card-actions">
-								<!-- prettier-ignore -->
-								<a href="https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/" target="_blank" class="btn btn-primary">zum Artikel</a>
-							</div>
-						</div>
-					</div>
+					<Card
+						figure_url={'https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/'}
+						figure_img_src={'/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.webp'}
+						content_title={'„Dolce far Niente“'}
+						content_date={'Dezember 2022'}
+						content_description={`Neue Single von Täglich frisches Obst: „Dolce far Niente“`}
+						content_url={'https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/'}
+						content_url_label={'zum Artikel'}
+					>
+						<a
+							href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686"
+							target="_blank"
+							class="absolute top-0 left-0 cursor-pointer iconify-icon"
+						>
+							<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width="40px">spotify</IconLoader>
+						</a>
+						<a
+							href="https://www.instagram.com/niko_nopp/"
+							target="_blank"
+							class="absolute bottom-0 right-1">© Niko Nopp</a
+						>
+					</Card>
 				</div>
 			</div>
 			<a href="/legal/privacy-policy" class="font-extrabold link-secondary link-hover">
@@ -564,7 +413,7 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
+	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-auto" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 		{#if outerWidth > 1535}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
@@ -640,6 +489,3 @@
 		</div>
 	</section>
 </main>
-
-<style lang="postcss">
-</style>

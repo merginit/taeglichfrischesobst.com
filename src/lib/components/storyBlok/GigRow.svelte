@@ -9,7 +9,11 @@
 	<td>{blok?.location ?? ''}</td>
 	<td>{blok?.date ?? ''}</td>
 	<td>{blok?.time ?? ''}</td>
-	<td>{(typeof blok?.tickets === 'object' ? blok?.tickets?.url : blok?.tickets) ?? ''}</td>
+	{#if blok.tickets !== null && typeof blok.tickets === 'object' && 'url' in blok.tickets}
+		<td>{blok?.tickets?.url ?? ''}</td>
+	{:else}
+		<td>{blok?.tickets ?? ''}</td>
+	{/if}
 </tr>
 
 <style>
