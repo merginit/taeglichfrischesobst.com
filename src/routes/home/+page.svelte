@@ -32,11 +32,6 @@
 	let gigsIncludingFetched: Gig[] = [];
 	let displayAllGigs = false;
 
-	$: allGigs = gigsIncludingFetched;
-	$: futureGigs = allGigs;
-	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
-
-	$: outerWidth = 0; // for responsiveness, if media query is not enough
 	let gigsSection = 0;
 	let musicSection = 0;
 	let videosSection = 0;
@@ -47,13 +42,15 @@
 	onMount(async () => {
 		const fetchedGigs = await fetchGigs();
 		gigsIncludingFetched = gigs.concat(fetchedGigs);
-
-		allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
-			compareDates(eventA.date, eventB.date)
-		);
-
-		futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
 	});
+
+	$: allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
+		compareDates(eventA.date, eventB.date)
+	);
+	$: futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
+	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
+
+	$: outerWidth = 0; // for responsiveness, if media query is not enough
 
 	$: {
 		if (gigsSection) {
@@ -325,7 +322,7 @@
 	>
 		<h2 class="text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">Infos</h2>
 		<!-- prettier-ignore -->
-		<a class="btn btn-primary" href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_">
+		<a class="btn btn-primary" target="_blank" href="https://drive.google.com/uc?export=download&id=1WJmYZWmbSTjPHaW6mrQ7k83jcfQmK94b" download="tfo-pressekit">
 			Pressekit Downloaden
 		</a>
 		<div class="py-5">
@@ -336,8 +333,9 @@
 					<div class="max-w-full prose">
 						<h3 class="text-4xl">Wer ist Täglich frisches Obst?</h3>
 						<p class="text-lg">
-							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "Täglich
-							frisches Obst" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen
+							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band 
+							"<a target="_blank" href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
+							>Täglich frisches Obst</a>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen
 							Vielfalt. Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen
 							Klang mit Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert.
 							Ende des Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt
@@ -452,7 +450,7 @@
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Newsletter</h3>
 					<p class="mb-2 text-secondary">
 						Erfahre als einer der Ersten, <br>
-						wann wenn Täglich Frisches Obst wieder auftritt <br> 
+						wann Täglich Frisches Obst wieder auftritt <br> 
 						oder neue Releases anstehen!
 					</p>
 					<div class="flex flex-col gap-2">
