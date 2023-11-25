@@ -19,12 +19,13 @@
 		infoSectionHeight as is,
 		contactSectionHeight as cs
 	} from '$store/objectsizes.js';
-	import { Toaster } from 'svelte-french-toast';
+	import { Toaster, toast } from 'svelte-french-toast';
 	import IconLoader from '$component/IconLoader.svelte';
 	import Song from '$component/Song.svelte';
 	import Gallery from '$component/Gallery.svelte';
 	import SlideItem from '$component/SlideItem.svelte';
 	import Card from '$component/Card.svelte';
+	import { browser } from '$app/environment';
 
 	/* svelte-ignore unused-export-let */
 	export let data: LayoutData;
@@ -75,6 +76,20 @@
 
 		if (contactSection) {
 			cs.set(contactSection);
+		}
+	}
+
+	function copyToClipboard(text: string, location: string | null = null) {
+		if (location && browser) {
+			const url = new URL(text, window.location.protocol + location);
+
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(url.toString()).then(() => {
+					toast.success("Text erfolgreich in die Zwischenablage kopiert: " + url);
+				}).catch(() => {
+					toast.error("Fehler beim Kopieren in die Zwischenablage");
+				});
+			}
 		}
 	}
 </script>
@@ -159,6 +174,7 @@
 					</tfoot>
 				</table>
 			</div>
+			<div class="flex justify-end px-2"><a href="/request-gig" class="underline hover:no-underline">Location vorschlagen</a>&nbsp;|&nbsp;<button type="button" on:click={() => copyToClipboard("gigs", window.location.host)}>Link kopieren</button></div>
 			<!-- prettier-ignore -->
 			<h2 class="relative text-4xl font-bold -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
