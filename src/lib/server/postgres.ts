@@ -1,5 +1,5 @@
 import { POSTGRES_CONNECTION } from '$env/static/private';
-import pg from 'pg'
+import pg from 'pg';
 
 export const client = new pg.Client(POSTGRES_CONNECTION);
 

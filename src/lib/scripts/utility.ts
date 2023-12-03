@@ -35,8 +35,8 @@ export const hslToHex = (h: number, s: number, l: number) => {
 export function setCookie(name: string, value: string, hours: number): void {
 	const date = new Date();
 	date.setTime(date.getTime() + hours * 60 * 60 * 1000);
-	const expires = "expires=" + date.toUTCString();
-	document.cookie = name + "=" + value + "; " + expires + "; path=/";
+	const expires = 'expires=' + date.toUTCString();
+	document.cookie = name + '=' + value + '; ' + expires + '; path=/';
 }
 
 export function getCookie(name: string): string | null {

@@ -48,7 +48,10 @@
 	$: allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
 		compareDates(eventA.date, eventB.date)
 	);
-	$: futureGigs = allGigs.filter((gig) => isFutureDate(gig.date));
+	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
+		compareDates(eventB.date, eventA.date)
+	);
+	$: futureGigs = allGigsReversed.filter((gig) => isFutureDate(gig.date));
 	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
@@ -84,11 +87,14 @@
 			const url = new URL(text, window.location.protocol + location);
 
 			if (navigator.clipboard) {
-				navigator.clipboard.writeText(url.toString()).then(() => {
-					toast.success("Text erfolgreich in die Zwischenablage kopiert: " + url);
-				}).catch(() => {
-					toast.error("Fehler beim Kopieren in die Zwischenablage");
-				});
+				navigator.clipboard
+					.writeText(url.toString())
+					.then(() => {
+						toast.success('Text erfolgreich in die Zwischenablage kopiert: ' + url);
+					})
+					.catch(() => {
+						toast.error('Fehler beim Kopieren in die Zwischenablage');
+					});
 			}
 		}
 	}
@@ -174,7 +180,13 @@
 					</tfoot>
 				</table>
 			</div>
-			<div class="flex justify-end px-2"><a href="/request-gig" class="underline hover:no-underline">Location vorschlagen</a>&nbsp;|&nbsp;<button type="button" on:click={() => copyToClipboard("gigs", window.location.host)}>Link kopieren</button></div>
+			<div class="flex justify-end px-2">
+				<a href="/request-gig" class="underline hover:no-underline">Location vorschlagen</a
+				>&nbsp;|&nbsp;<button
+					type="button"
+					on:click={() => copyToClipboard('gigs', window.location.host)}>Link kopieren</button
+				>
+			</div>
 			<!-- prettier-ignore -->
 			<h2 class="relative text-4xl font-bold -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
 				Gigs
@@ -349,19 +361,21 @@
 					<div class="max-w-full prose">
 						<h3 class="text-4xl">Wer ist Täglich frisches Obst?</h3>
 						<p class="text-lg">
-							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band 
-							"<a target="_blank" href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
-							>Täglich frisches Obst</a>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen
-							Vielfalt. Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen
-							Klang mit Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert.
-							Ende des Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt
-							drei Songs, die auf den verschiedensten Musikplattformen bereits vielfach gestreamt
-							wurden und auch das Publikum bei ihren Live-Auftritten mitreißen. Die fünfköpfige Band
-							mit sowohl klassischen als auch Jazz- und Pop-Backgrounds, bestehend aus Josef
-							Brandner (Gesang), Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob
-							Brandstetter (E-Bass) und Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine
-							begeisterte Fangemeinde aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil die
-							deutschsprachige Musikszene zu erobern.
+							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "<a
+								target="_blank"
+								href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
+								>Täglich frisches Obst</a
+							>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt.
+							Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit
+							Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert. Ende des
+							Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt drei Songs,
+							die auf den verschiedensten Musikplattformen bereits vielfach gestreamt wurden und
+							auch das Publikum bei ihren Live-Auftritten mitreißen. Die fünfköpfige Band mit sowohl
+							klassischen als auch Jazz- und Pop-Backgrounds, bestehend aus Josef Brandner (Gesang),
+							Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob Brandstetter (E-Bass) und
+							Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine begeisterte Fangemeinde
+							aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil die deutschsprachige
+							Musikszene zu erobern.
 						</p>
 					</div>
 				</div>
@@ -441,7 +455,7 @@
 			<div class="flex flex-col items-center justify-center w-full gap-4">
 				<div id="contact-form" class="w-full p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
-					<form action="https://formsubmit.co/business@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
+					<form action="https://formsubmit.co/info@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
 						<textarea
 							placeholder="Deine Nachricht..."
 							value="Hey Täglich Frisches Obst,"
