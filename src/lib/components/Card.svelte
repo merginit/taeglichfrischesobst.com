@@ -19,7 +19,7 @@
 	<figure>
 		<!-- prettier-ignore -->
 		<a href={figure_url} target="_blank" class="relative">
-            <img src={figure_img_src} alt={figure_img_alt} />
+            <img loading="lazy" src={figure_img_src} alt={figure_img_alt} />
             <slot></slot>
         </a>
 	</figure>

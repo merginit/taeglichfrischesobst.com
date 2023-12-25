@@ -454,6 +454,7 @@
 		/>
 		Sie erkennen die Benutzung dieser Absicherung der Datenübertragung am kleinen Schlosssymbol
 		<img
+			loading="lazy"
 			alt="Schlosssymbol"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/schlosssymbol-https.svg"
 			width="17"
@@ -678,6 +679,7 @@
 	</p>
 	<p>
 		<img
+			loading="lazy"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/http-cookie-interaction.svg"
 			alt="HTTP Cookie Interaktion zwischen Browser und Webserver"
 			width="100%"
@@ -908,6 +910,7 @@
 	</p>
 	<p>
 		<img
+			loading="lazy"
 			src="https://www.adsimple.at/wp-content/uploads/2018/03/browser-und-webserver.svg"
 			alt="Browser und Webserver"
 			width="100%"
