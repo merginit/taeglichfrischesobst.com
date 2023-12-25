@@ -162,10 +162,10 @@
 						<tr>
 							<td colspan="5" class="p-0">
 								<hr />
-								<div class="flex w-[calc(100% - 1rem)] py-2 px-2 sm:justify-center">
+								<div class="flex w-[calc(100% - 1rem)] py-2 px-2 sm:justify-center relative">
 									<!-- prettier-ignore -->
 									<button
-										class="btn btn-primary"
+										class="sticky top-0 left-2 btn btn-primary"
 										type="button"
 										on:click={() => (displayAllGigs = !displayAllGigs)}>
 										{#if displayAllGigs}
@@ -442,41 +442,18 @@
 	</section>
 	<!-- prettier-ignore -->
 	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-auto" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
-		{#if outerWidth > 1535}
+		{#if outerWidth >= 750}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
 		<div class="absolute top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
-			<h2 class="px-4 text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
+			<h2 class="sticky top-0 left-0 px-4 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt
 			</h2>
-			<div class="flex flex-col items-center justify-center w-full gap-4">
-				<div id="contact-form" class="w-full p-2 border-2 bg-neutral border-primary rounded-2xl">
-					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
-					<form action="https://formsubmit.co/info@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
-						<textarea
-							placeholder="Deine Nachricht..."
-							value="Hey Täglich Frisches Obst,"
-							class="w-full p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
-							title="Nachricht"
-							name="message"
-						/>
-						<div class="grid grid-rows-1 sm:grid-cols-[1fr_auto] gap-2">
-							<input
-								type="email"
-								name="email"
-								class="input input-bordered"
-								title="Email"
-								placeholder="deine@email.tld"
-							/>
-							<button type="submit" class="btn btn-secondary">Absenden</button
-							>
-						</div>
-					</form>
-				</div>
-				<div id="gig-letter" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+			<div class="flex flex-col items-center justify-center gap-4">
+				<div id="gig-letter" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Newsletter</h3>
 					<p class="mb-2 text-secondary">
 						Erfahre als einer der Ersten, <br>
@@ -506,7 +483,30 @@
 						</form>
 					</div>
 				</div>
-				<div id="booking-form" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
+				<div id="contact-form" class="max-w-full p-2 border-2 bg-neutral border-primary rounded-2xl w-[65ch]">
+					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
+					<form action="https://formsubmit.co/info@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
+						<textarea
+							placeholder="Deine Nachricht..."
+							value="Hey Täglich Frisches Obst,"
+							class="p-2 pt-1 resize-none textarea textarea-bordered textarea-lg"
+							title="Nachricht"
+							name="message"
+						/>
+						<div class="grid grid-rows-1 sm:grid-cols-[1fr_auto] gap-2">
+							<input
+								type="email"
+								name="email"
+								class="input input-bordered"
+								title="Email"
+								placeholder="deine@email.tld"
+							/>
+							<button type="submit" class="btn btn-secondary">Absenden</button
+							>
+						</div>
+					</form>
+				</div>
+				<div id="booking-form" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Booking</h3>
 					<p class="mb-2 text-secondary">
 						<strong>Kontakt</strong>: Livia Eibl & Tobias Fröller <br>

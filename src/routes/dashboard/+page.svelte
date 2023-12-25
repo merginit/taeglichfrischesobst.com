@@ -149,11 +149,11 @@
 	</div>
 {/if}
 
-<main class="flex items-center justify-center h-screen bg-white px-5 pt-[calc(50px+0.5rem)]">
+<main class="flex justify-center flex-wrap min-h-screen overflow-x-auto bg-white px-5 pt-[calc(50px+0.5rem)]">
 	{#if loginState && gigLocationSuggestionsHandler && gigLetterSubscribersHandler}
-		<div class="flex flex-col min-h-screen">
+		<div class="flex flex-col justify-start overflow-x-auto">
 			<h2 class="mt-2 text-2xl font-extrabold text-accent">Gig-Location Vorschläge</h2>
-			<Datatable handler={gigLocationSuggestionsHandler}>
+			<Datatable handler={gigLocationSuggestionsHandler} class="overflow-x-auto">
 				<table class="table">
 					<thead class="text-black">
 						<tr>
@@ -181,9 +181,9 @@
 			</Datatable>
 		</div>
 		<div class="divider 2xl:divider-horizontal" />
-		<div class="flex flex-col min-h-screen">
+		<div class="flex flex-col justify-start max-w-full">
 			<h2 class="mt-2 text-2xl font-extrabold text-accent">Gig-Letter Subscribers</h2>
-			<Datatable handler={gigLetterSubscribersHandler}>
+			<Datatable handler={gigLetterSubscribersHandler} class="overflow-x-auto">
 				<table class="table">
 					<thead class="text-black">
 						<tr>
