@@ -207,7 +207,7 @@
 			</Datatable>
 		</div>
 	{:else}
-		<div id="dashboard-login" class="p-2 bg-black border-2 border-accent rounded-2xl">
+		<div id="dashboard-login" class="p-2 bg-black border-2 h-fit border-accent rounded-2xl">
 			<h3 class="mb-4 text-3xl font-bold text-white">Dashboard</h3>
 			<div class="flex flex-col gap-2">
 				<form
