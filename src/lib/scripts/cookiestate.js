@@ -1,7 +1,7 @@
-import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
+import { getCookie } from '$script/utility';
 
-export const embeddedAccepted = () => {
-	if (browser && window.cc) {
-		return window.cc.get('level').includes('embedding');
-	}
-};
+const cookie = JSON.parse(getCookie("cc_cookie") || "{}");
+const initialAllowFunctionality = cookie?.categories?.includes('functionality') ?? false;
+
+export const allowFunctionality = writable(initialAllowFunctionality);

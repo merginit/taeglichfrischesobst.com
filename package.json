@@ -72,7 +72,7 @@
 		"svelte-email": "^0.0.4",
 		"svelte-french-toast": "^1.2.0",
 		"theme-change": "^2.5.0",
-		"vanilla-cookieconsent": "^2.9.2"
+		"vanilla-cookieconsent": "^3.0.0-rc.17"
 	},
 	"config": {
 		"commitizen": {

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
 	import { subscribeToMailList, unsubscribeFromMailList } from '$script/api.js';
-	import { embeddedAccepted } from '$script/cookiestate.js';
-	import { openCookieBanner } from '$script/cookies';
+	import { allowFunctionality } from '$script/cookiestate.js';
 	import { gigs } from '$script/data';
 	import { videos } from '$script/data';
 	import { images } from '$script/data';
@@ -25,6 +24,7 @@
 	import Gallery from '$component/Gallery.svelte';
 	import SlideItem from '$component/SlideItem.svelte';
 	import Card from '$component/Card.svelte';
+	import CookieConsentConfig from "$component/CookieConsentConfig.svelte";
 	import { browser } from '$app/environment';
 
 	/* svelte-ignore unused-export-let */
@@ -113,6 +113,7 @@
 <svelte:window bind:outerWidth />
 
 <Toaster />
+<CookieConsentConfig />
 
 <main class="min-h-screen">
 	<section
@@ -241,7 +242,7 @@
 				}}
 				tabindex="0"
 			>
-				{#if embeddedAccepted()}
+				{#if $allowFunctionality}
 					<!-- prettier-ignore -->
 					<Song url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'} />
 					<!-- prettier-ignore -->
@@ -253,7 +254,7 @@
 					anzuzeigen.
 
 					<!-- prettier-ignore -->
-					<button class="btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
+					<button class="btn btn-primary" type="button" data-cc="show-preferencesModal">Cookie Einstellungen</button>
 				{/if}
 			</div>
 			<!-- prettier-ignore -->
@@ -293,7 +294,7 @@
 	>
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
-			{#if embeddedAccepted()}
+			{#if $allowFunctionality}
 				{#each videos as video, index}
 					<div id="video-{index}" class="relative w-full h-full carousel-item">
 						<iframe src={video.videoUrl}
@@ -317,7 +318,7 @@
 				anzuzeigen.
 
 				<!-- prettier-ignore -->
-				<button class="mt-2 btn btn-primary" type="button" on:click={() => openCookieBanner()}>Cookie Einstellungen</button>
+				<button class="mt-2 btn btn-primary" type="button" data-cc="show-preferencesModal">Cookie Einstellungen</button>
 			</div>
 			{/if}
 		</div>
