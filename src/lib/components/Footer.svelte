@@ -21,21 +21,11 @@
 		<!-- prettier-ignore -->
 		<div id="streaming" class="absolute bottom-0 right-0 z-40 w-full">
 			<div class="flex flex-row-reverse gap-2 m-4 mb-8">
-				<a href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
-					<IconLoader icon="mdi:spotify" color="hsl(var(--s))">spotify</IconLoader>
-				</a>
-				<a href="https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
-					<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))">amazon music</IconLoader>
-				</a>
-				<a href="https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
-					<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width="45px">apple music</IconLoader>
-				</a>
-				<a href="https://listen.tidal.com/artist/34019184" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
-					<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))">tidal</IconLoader>
-				</a>
-				<a href="https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c" target="_blank" class="transition-opacity cursor-pointer hover:opacity-90 iconify-icon">
-					<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))">deezer</IconLoader>
-				</a>
+				<IconLoader anchor_href={"https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV"} anchor_classes={"transition-opacity hover:opacity-90"} icon="mdi:spotify" color="hsl(var(--s))">spotify</IconLoader>
+				<IconLoader anchor_href={"https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm"} anchor_classes={"transition-opacity hover:opacity-90"} icon="arcticons:amazon-music" color="hsl(var(--s))">amazon music</IconLoader>
+				<IconLoader anchor_href={"https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117"} anchor_classes={"transition-opacity hover:opacity-90"} icon="simple-icons:applemusic" color="hsl(var(--s))" width="45px">apple music</IconLoader>
+				<IconLoader anchor_href={"https://listen.tidal.com/artist/34019184"} anchor_classes={"transition-opacity hover:opacity-90"} icon="simple-icons:tidal" color="hsl(var(--s))">tidal</IconLoader>
+				<IconLoader anchor_href={"https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c"} anchor_classes={"transition-opacity hover:opacity-90"} icon="fa6-brands:deezer" color="hsl(var(--s))">deezer</IconLoader>
 			</div>
 		</div>
 	{/if}

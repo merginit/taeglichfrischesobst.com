@@ -1,11 +1,11 @@
 <script lang="js" context="module" type="module">
 	import { browser } from '$app/environment';
-    import { allowFunctionality } from '$script/cookiestate';
-  	import "vanilla-cookieconsent/dist/cookieconsent.css";
+	import { allowFunctionality } from '$script/cookiestate';
+	import 'vanilla-cookieconsent/dist/cookieconsent.css';
 
 	if (browser) {
 		CookieConsent.run({
-			onChange: ({ cookie, changedCategories, changedPreferences }) => {
+			onChange: ({ cookie, changedCategories }) => {
 				if (changedCategories.includes('functionality')) {
 					if (cookie.categories.includes('functionality')) {
 						allowFunctionality.set(true);
@@ -15,7 +15,7 @@
 				}
 			},
 
-			onModalReady: ({ modalName, modal }) => {
+			onModalReady: (/* { modalName, modal } */) => {
 				// INFO: only works at hover of button sadly
 				const preferences = CookieConsent.getUserPreferences();
 				const af = preferences?.acceptedCategories?.includes('functionality') ?? false;
@@ -225,7 +225,7 @@
 
 <script lang="js">
 	// @ts-nocheck
-	import * as CookieConsent from "vanilla-cookieconsent";
+	import * as CookieConsent from 'vanilla-cookieconsent';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -233,7 +233,7 @@
 	});
 
 	function initializeCookieConsentButtons() {
-		if (browser) {			
+		if (browser) {
 			// INFO: only works at first render using the library => loop data-cc="show-preferencesModal" again
 			const buttons = document.querySelectorAll('[data-cc]');
 			buttons.forEach((button) => {

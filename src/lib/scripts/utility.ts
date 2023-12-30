@@ -1,4 +1,4 @@
-import { browser } from "$app/environment";
+import { browser } from '$app/environment';
 
 export const compareDates = (a: string, b: string) => {
 	const dateA = new Date(a.split('.').reverse().join('-'));

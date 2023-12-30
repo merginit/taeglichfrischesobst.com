@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
-import adapterCloudflare from "@sveltejs/adapter-cloudflare";
+import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'; // import preprocess from 'svelte-preprocess';
 import seqPreprocessor from 'svelte-sequential-preprocessor';
 import { preprocessThrelte } from '@threlte/preprocess';

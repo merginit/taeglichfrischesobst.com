@@ -1,9 +1,5 @@
 import type { Gig, Image, Video } from '$script/types';
 
-export const gigs: Gig[] = [
-	// moved to storyblok
-];
-
 export const fetchGigs = async function () {
 	const response = await fetch('/storyblok?slug=gigs');
 	const data = await response.json();
@@ -86,11 +82,6 @@ export const images: Image[] = [
 		URL: `${band_image_path}Kultur HOF Linz 27.1.23 02 ©Simon Rauch.${image_file_extension}`,
 		width: 2048,
 		height: 1365
-	},
-	{
-		URL: `${band_image_path}Still Musikvideo Auf dem Dach ©Niko Nopp.${image_file_extension}`,
-		width: 1600,
-		height: 1200
 	}
 ];
 

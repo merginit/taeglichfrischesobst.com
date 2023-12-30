@@ -149,7 +149,9 @@
 	</div>
 {/if}
 
-<main class="flex justify-center flex-wrap min-h-screen overflow-x-auto bg-white px-5 pt-[calc(50px+0.5rem)]">
+<main
+	class="flex justify-center flex-wrap min-h-screen overflow-x-auto bg-white px-5 pt-[calc(50px+0.5rem)]"
+>
 	{#if loginState && gigLocationSuggestionsHandler && gigLetterSubscribersHandler}
 		<div class="flex flex-col justify-start overflow-x-auto">
 			<h2 class="mt-2 text-2xl font-extrabold text-accent">Gig-Location Vorschläge</h2>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CookieConsentConfig from "$component/CookieConsentConfig.svelte";
+	import CookieConsentConfig from '$component/CookieConsentConfig.svelte';
 </script>
 
 <svelte:head>

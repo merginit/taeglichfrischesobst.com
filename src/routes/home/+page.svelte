@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
 	import { subscribeToMailList, unsubscribeFromMailList } from '$script/api.js';
-	import { allowFunctionality } from '$script/cookiestate.js';
-	import { gigs } from '$script/data';
 	import { videos } from '$script/data';
 	import { images } from '$script/data';
 	import { fetchGigs } from '$script/data';
-	import type { LayoutData } from './$types';
 	import type { Gig } from '$script/types';
+	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import {
 		sectionMarginTop as nh,
 		gigsSectionHeight as gs,
@@ -20,17 +19,17 @@
 	} from '$store/objectsizes.js';
 	import { Toaster, toast } from 'svelte-french-toast';
 	import IconLoader from '$component/IconLoader.svelte';
-	import Song from '$component/Song.svelte';
 	import Gallery from '$component/Gallery.svelte';
-	import SlideItem from '$component/SlideItem.svelte';
 	import Card from '$component/Card.svelte';
-	import CookieConsentConfig from "$component/CookieConsentConfig.svelte";
-	import { browser } from '$app/environment';
+	import CookieConsentConfig from '$component/CookieConsentConfig.svelte';
+	import HorizontalSlider from '$component/HorizontalSlider.svelte';
+	import Song from '$component/Song.svelte';
+	import Embedded from '$component/Embedded.svelte';
 
 	/* svelte-ignore unused-export-let */
 	export let data: LayoutData;
 
-	let gigsIncludingFetched: Gig[] = [];
+	let totalGigs: Gig[] = [];
 	let displayAllGigs = false;
 
 	let gigsSection = 0;
@@ -42,17 +41,16 @@
 
 	onMount(async () => {
 		const fetchedGigs = await fetchGigs();
-		gigsIncludingFetched = gigs.concat(fetchedGigs);
+		totalGigs = fetchedGigs;
 	});
 
-	$: allGigs = gigsIncludingFetched.sort((eventA, eventB) =>
-		compareDates(eventA.date, eventB.date)
-	);
+	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
 		compareDates(eventB.date, eventA.date)
 	);
+
 	$: futureGigs = allGigsReversed.filter((gig) => isFutureDate(gig.date));
-	$: displayedGigs = displayAllGigs ? allGigs : futureGigs;
+	$: pastGigs = allGigs.filter((gig) => !isFutureDate(gig.date));
 
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 
@@ -127,17 +125,19 @@
 				<table class="table">
 					<thead class="text-lg font-bold text-secondary">
 						<tr class="sticky top-0 bg-neutral">
-							<th />
 							<th>Datum</th>
 							<th>Ort</th>
 							<th>Veranstaltung</th>
-							<th>Aktion</th>
+							<th />
 						</tr>
 					</thead>
 					<tbody class="text-lg">
-						{#each displayedGigs as gig, index}
-							<tr>
-								<th>{index + 1}</th>
+						{#each futureGigs as gig, index}
+							<tr
+								style={futureGigs.length - 1 === index
+									? 'border-color: hsl(var(--p) / var(--tw-bg-opacity));'
+									: ''}
+							>
 								<td>{gig.date}{gig.time ? ' (' + gig.time + ')' : ''}</td>
 								<td>{gig.location}</td>
 								<td>{gig.event}</td>
@@ -158,6 +158,30 @@
 						{:else}
 							<span class="loading loading-ball loading-lg" />
 						{/each}
+						{#if displayAllGigs}
+							{#each pastGigs as gig}
+								<tr>
+									<td>{gig.date}{gig.time ? ' (' + gig.time + ')' : ''}</td>
+									<td>{gig.location}</td>
+									<td>{gig.event}</td>
+									<td>
+										{#if gig.date && new Date() <= dateOfString(gig.date) && gig.tickets}
+											<!-- prettier-ignore -->
+											<a href={typeof gig.tickets === 'string' ? gig?.tickets ?? "/" : "/"}>
+										<button
+											class="btn btn-primary"
+											type="button"
+										>
+										Tickets
+										</button>
+									</a>
+										{/if}
+									</td>
+								</tr>
+							{:else}
+								<span class="loading loading-ball loading-lg" />
+							{/each}
+						{/if}
 					</tbody>
 					<tfoot class="sticky bottom-0 min-w-full bg-neutral">
 						<tr>
@@ -182,11 +206,12 @@
 				</table>
 			</div>
 			<div class="flex justify-end px-2">
-				<a href="/request-gig" class="underline hover:no-underline">Location vorschlagen</a
-				>&nbsp;|&nbsp;<button
-					type="button"
-					on:click={() => copyToClipboard('gigs', window.location.host)}>Link kopieren</button
-				>
+				<!-- prettier-ignore -->
+				<a href="/request-gig" class="underline hover:no-underline">Location vorschlagen</a>
+				&nbsp;|&nbsp;
+				<button type="button" on:click={() => copyToClipboard('gigs', window.location.host)}>
+					Link kopieren
+				</button>
 			</div>
 			<!-- prettier-ignore -->
 			<h2 class="relative text-4xl font-bold -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
@@ -207,85 +232,102 @@
 		class="z-10 flex flex-col mb-16"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
-		<div class="flex flex-wrap justify-center gap-4 px-6 md:px-10 lg:px-16">
-			<!-- prettier-ignore -->
-			<div class="gap-2 lg:gap-4 slider-reverse">
-				<div class="slide-track-reverse">
-					{#each Array.from({ length: 4 }, (_, i) => i + 1) as iteration}
+		<HorizontalSlider>
+			<svelte:fragment slot="top">
+				<!-- prettier-ignore -->
+				<h2 class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide-content">
+					Socials
+				</h2>
+				<IconLoader
+					anchor_href={'https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw'}
+					anchor_classes="slide-content"
+					icon="mdi:youtube"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '140px' : '70px'}>youtube</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://www.instagram.com/taeglichfrischesobst'}
+					anchor_classes="slide-content"
+					icon="ri:instagram-fill"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>instagram</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://www.tiktok.com/@taeglichfrischesobst'}
+					anchor_classes="slide-content"
+					icon="ic:baseline-tiktok"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>tiktok</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://www.facebook.com/taeglichfrischesobst'}
+					anchor_classes="slide-content"
+					icon="ri:facebook-fill"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>facebook</IconLoader
+				>
+			</svelte:fragment>
+			<svelte:fragment slot="center">
+				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+				<!-- prettier-ignore -->
+				<div class="p-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
+					on:wheel={(event) => {
+						event.preventDefault();
+						event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
+					}} tabindex="0">
+					
+					<Embedded component_type="audio">
 						<!-- prettier-ignore -->
-						<h2 id="socials-slider-headline-{iteration}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
-							Socials
-						</h2>
-						<SlideItem url={"https://www.youtube.com/channel/UCM6LtE6jYUv7wEHvgB83_Qw"}>
-							<IconLoader icon="mdi:youtube" color="hsl(var(--s))" width={outerWidth > 1135 ? '140px' : "70px"}>youtube</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://www.instagram.com/taeglichfrischesobst"}>
-							<IconLoader icon="ri:instagram-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>instagram</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://www.tiktok.com/@taeglichfrischesobst"}>
-							<IconLoader icon="ic:baseline-tiktok" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tiktok</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://www.facebook.com/taeglichfrischesobst"}>
-							<IconLoader icon="ri:facebook-fill" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>facebook</IconLoader>
-						</SlideItem>
-					{:else}
-						<span class="loading loading-ball loading-lg"></span>
-					{/each}
-				</div>
-			</div>
-			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-			<div
-				class="p-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
-				on:wheel={(event) => {
-					event.preventDefault();
-					event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
-				}}
-				tabindex="0"
-			>
-				{#if $allowFunctionality}
-					<!-- prettier-ignore -->
-					<Song url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'} />
-					<!-- prettier-ignore -->
-					<Song url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'} />
-					<!-- prettier-ignore -->
-					<Song url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'} />
-				{:else}
-					Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Musik von Spotify
-					anzuzeigen.
-
-					<!-- prettier-ignore -->
-					<button class="btn btn-primary" type="button" data-cc="show-preferencesModal">Cookie Einstellungen</button>
-				{/if}
-			</div>
-			<!-- prettier-ignore -->
-			<div class="slider">
-				<div class="gap-2 lg:gap-4 slide-track">
-					{#each Array.from({ length: 4 }, (_, i) => i + 1) as i}
+						<Song url={'https://open.spotify.com/embed/track/6ypAL1XSxjx1sSP2Ibr6pb?utm_source=generator'} />
 						<!-- prettier-ignore -->
-						<h2 id="socials-slider-headline-{i}" class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide">
-							Musik
-						</h2>
-						<SlideItem url={"https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV"}>
-							<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>spotify</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm"}>
-							<IconLoader icon="arcticons:amazon-music" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>amazon music</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117"}>
-							<IconLoader icon="simple-icons:applemusic" color="hsl(var(--s))" width={outerWidth > 1135 ? '90px' : "45px"}>apple music</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://listen.tidal.com/artist/34019184"}>
-							<IconLoader icon="simple-icons:tidal" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>tidal</IconLoader>
-						</SlideItem>
-						<SlideItem url={"https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c"}>
-							<IconLoader icon="fa6-brands:deezer" color="hsl(var(--s))" width={outerWidth > 1135 ? '100px' : "50px"}>deezer</IconLoader>
-						</SlideItem>
-					{:else}
-						<span class="loading loading-ball loading-lg"></span>
-					{/each}
+						<Song url={'https://open.spotify.com/embed/track/667zFxc0RivFgJ989sq6LH?utm_source=generator'} />
+						<!-- prettier-ignore -->
+						<Song url={'https://open.spotify.com/embed/track/1O3l3joweVnJ7ZsJvioPVh?utm_source=generator'} />        
+					</Embedded>
 				</div>
-			</div>
-		</div>
+			</svelte:fragment>
+			<svelte:fragment slot="bottom">
+				<!-- prettier-ignore -->
+				<h2 class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide-content">
+					Musik
+				</h2>
+				<IconLoader
+					anchor_href="https://open.spotify.com/artist/1dnEfTWZekuLgNFkASxQqV"
+					anchor_classes="slide-content"
+					icon="mdi:spotify"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>spotify</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://music.amazon.de/artists/B0BBSY4YP1/t%C3%A4glich-frisches-obst?marketplaceId=A1PA6795UKMFR9&musicTerritory=DE&ref=dm_sh_AhKPMyUQ5RtLmXouGyIV6Uqxm'}
+					anchor_classes="slide-content"
+					icon="arcticons:amazon-music"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>amazon music</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://music.apple.com/us/artist/t%C3%A4glich-frisches-obst/1641480117'}
+					anchor_classes="slide-content"
+					icon="simple-icons:applemusic"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '90px' : '45px'}>apple music</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://listen.tidal.com/artist/34019184'}
+					anchor_classes="slide-content"
+					icon="simple-icons:tidal"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>tidal</IconLoader
+				>
+				<IconLoader
+					anchor_href={'https://www.deezer.com/de/artist/180952187?ext_publisher_id=1041161&awc=23454_1670112062_0e4fa0035bb449fff233bea5be9de03c'}
+					anchor_classes="slide-content"
+					icon="fa6-brands:deezer"
+					color="hsl(var(--s))"
+					width={outerWidth > 1135 ? '100px' : '50px'}>deezer</IconLoader
+				>
+			</svelte:fragment>
+		</HorizontalSlider>
 	</section>
 	<section
 		id="videos"
@@ -294,37 +336,28 @@
 	>
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
-			{#if $allowFunctionality}
+			<Embedded component_type="video">
 				{#each videos as video, index}
-					<div id="video-{index}" class="relative w-full h-full carousel-item">
-						<iframe src={video.videoUrl}
-						title="YouTube video player"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						allowfullscreen
-						class="w-full h-full"></iframe>
-						<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-						<a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
-						<a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
-						</div>
+				<div id="video-{index}" class="relative w-full h-full carousel-item">
+					<iframe src={video.videoUrl}
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen
+					class="w-full h-full"></iframe>
+					<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+					<a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
+					<a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
 					</div>
+				</div>
 				{:else}
 					<span class="loading loading-ball loading-lg"></span>
 				{/each}
-			{:else}
-			<div class="flex flex-col flex-wrap items-center self-center w-full p-2 mx-4 h-fit bg-neutral rounded-2xl" 
-			style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
-				Einbettungen müssen in den Cookie-Einstellungen erlaubt sein um Videos von YouTube
-				anzuzeigen.
-
-				<!-- prettier-ignore -->
-				<button class="mt-2 btn btn-primary" type="button" data-cc="show-preferencesModal">Cookie Einstellungen</button>
-			</div>
-			{/if}
+			</Embedded>
 		</div>
 
 		<!-- prettier-ignore -->
-		<h2 class="pb-4 text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl">
+		<h2 class="py-2 text-4xl font-bold text-center lg:text-5xl xl:text-7xl 2xl:text-9xl">
 			Videos
 		</h2>
 	</section>
@@ -354,30 +387,37 @@
 		<a class="btn btn-primary" target="_blank" href="https://drive.google.com/uc?export=download&id=1WJmYZWmbSTjPHaW6mrQ7k83jcfQmK94b" download="tfo-pressekit">
 			Pressekit Downloaden
 		</a>
-		<div class="py-5">
+		<div class="py-5 max-w-full w-[1200px]">
 			<div class="my-2 collapse collapse-plus bg-base-200">
 				<input type="radio" name="info-accordion" checked />
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
 						<h3 class="text-4xl">Wer ist Täglich frisches Obst?</h3>
-						<p class="text-lg">
-							Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "<a
-								target="_blank"
-								href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
-								>Täglich frisches Obst</a
-							>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt.
-							Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit
-							Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert. Ende des
-							Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt drei Songs,
-							die auf den verschiedensten Musikplattformen bereits vielfach gestreamt wurden und
-							auch das Publikum bei ihren Live-Auftritten mitreißen. Die fünfköpfige Band mit sowohl
-							klassischen als auch Jazz- und Pop-Backgrounds, bestehend aus Josef Brandner (Gesang),
-							Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob Brandstetter (E-Bass) und
-							Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine begeisterte Fangemeinde
-							aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil die deutschsprachige
-							Musikszene zu erobern.
-						</p>
+						<span class="flex flex-col gap-8 lg:flex-row">
+							<p class="flex-shrink text-lg lg:max-w-[50%]">
+								Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "<a
+									target="_blank"
+									href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
+									>Täglich frisches Obst</a
+								>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt.
+								Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit
+								Elementen aus Funk, Rock und Jazz, der die Grenzen des Genres herausfordert. Ende
+								des Jahres 2022 veröffentlichte die Band ihre ersten beiden Singles, insgesamt drei
+								Songs, die auf den verschiedensten Musikplattformen bereits vielfach gestreamt
+								wurden und auch das Publikum bei ihren Live-Auftritten mitreißen. Die fünfköpfige
+								Band mit sowohl klassischen als auch Jazz- und Pop-Backgrounds, bestehend aus Josef
+								Brandner (Gesang), Jakob Lasinger (E-Gitarre), Vincent Louis (E-Gitarre), Jakob
+								Brandstetter (E-Bass) und Tobias Fröller (Schlagzeug), hat in kürzester Zeit eine
+								begeisterte Fangemeinde aufgebaut und ist bereit, mit ihrem außergewöhnlichen Stil
+								die deutschsprachige Musikszene zu erobern.
+							</p>
+							<img
+								class="self-start flex-grow object-contain overflow-hidden"
+								src="/assets/images/band/Still Musikvideo Auf dem Dach ©Niko Nopp.webp"
+								alt="Still Musikvideo Auf dem Dach - ©Niko Nopp"
+							/>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -402,7 +442,7 @@
 						content_date={'21.12.2022'}
 						content_description={`06 TÄGLICH FRISCHES OBST - Dolce far niente (min. 18:12)`}
 						content_url={'https://www.fro.at/ann-and-pat-radioshow-gluehohren/'}
-						content_url_label={'zur Radiosendung'}
+						content_url_label={'zur Radioshow'}
 					/>
 				</div>
 			</div>
@@ -419,13 +459,13 @@
 						content_url={'https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/'}
 						content_url_label={'zum Artikel'}
 					>
-						<a
-							href="https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686"
-							target="_blank"
-							class="absolute top-0 left-0 cursor-pointer iconify-icon"
+						<IconLoader
+							anchor_href={'https://open.spotify.com/track/6ypAL1XSxjx1sSP2Ibr6pb?si=96c5e096eb9c4686'}
+							anchor_classes="absolute top-0 left-0"
+							icon="mdi:spotify"
+							color="hsl(var(--s))"
+							width="40px">spotify</IconLoader
 						>
-							<IconLoader icon="mdi:spotify" color="hsl(var(--s))" width="40px">spotify</IconLoader>
-						</a>
 						<a
 							href="https://www.instagram.com/niko_nopp/"
 							target="_blank"
@@ -442,13 +482,13 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-auto" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
+	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-visible h-fit" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 		{#if outerWidth >= 750}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
-		<div class="absolute top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
+		<div class="relative top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
 			<h2 class="sticky top-0 left-0 px-4 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
 				Kontakt

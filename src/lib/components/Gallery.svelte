@@ -48,7 +48,12 @@
 			target="_blank"
 			rel="noreferrer"
 		>
-			<img loading="lazy" class="max-h-56" src={image.URL} alt={image.URL.split('©')[1].split('.')[0]} />
+			<img
+				loading="lazy"
+				class="max-h-56"
+				src={image.URL}
+				alt={image.URL.split('©')[1].split('.')[0]}
+			/>
 		</a>
 	{/each}
 </div>

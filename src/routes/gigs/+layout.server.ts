@@ -1,5 +1,4 @@
 import type { LayoutServerLoad } from './$types';
-import { gigs } from '$script/data';
 
 export const load: LayoutServerLoad = async function ({ fetch }) {
 	try {
@@ -7,7 +6,7 @@ export const load: LayoutServerLoad = async function ({ fetch }) {
 		const data = await response.json();
 		const fetchedGigs = data.data;
 
-		const gigsObject = { gigs: fetchedGigs.concat(gigs) };
+		const gigsObject = { gigs: fetchedGigs };
 
 		return gigsObject;
 	} catch (error) {
