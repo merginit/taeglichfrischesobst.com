@@ -39,11 +39,6 @@ export const images: Image[] = [
 		height: 1365
 	},
 	{
-		URL: `${band_image_path}Josef_Jakob_Vinny_Tobi ©Niko Nopp.${image_file_extension}`,
-		width: 1600,
-		height: 900
-	},
-	{
 		URL: `${band_image_path}Kramladen 31.03.23 _ 01 ©Simon Rauch.${image_file_extension}`,
 		width: 2048,
 		height: 1365
@@ -82,6 +77,11 @@ export const images: Image[] = [
 		URL: `${band_image_path}Kultur HOF Linz 27.1.23 02 ©Simon Rauch.${image_file_extension}`,
 		width: 2048,
 		height: 1365
+	},
+	{
+		URL: `${band_image_path}Josef_Jakob_Vinny_Tobi ©Niko Nopp.${image_file_extension}`,
+		width: 1600,
+		height: 900
 	}
 ];
 

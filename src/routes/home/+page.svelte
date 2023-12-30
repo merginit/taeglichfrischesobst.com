@@ -214,7 +214,7 @@
 				</button>
 			</div>
 			<!-- prettier-ignore -->
-			<h2 class="relative text-4xl font-bold -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image">
+			<h2 class="relative text-4xl font-bold text-right -z-40 lg:text-5xl xl:text-7xl 2xl:text-9xl bg-image sm:text-left">
 				Gigs
 				{#if outerWidth > 1535}
 					<!-- prettier-ignore -->
@@ -270,7 +270,7 @@
 			<svelte:fragment slot="center">
 				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 				<!-- prettier-ignore -->
-				<div class="p-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
+				<div class="p-2 mx-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
 					on:wheel={(event) => {
 						event.preventDefault();
 						event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
@@ -490,12 +490,12 @@
 
 		<div class="relative top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
-			<h2 class="sticky top-0 left-0 px-4 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary">
+			<h2 class="sticky top-0 left-0 px-4 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary mb-1 sm:mb-0">
 				Kontakt
 			</h2>
 			<div class="flex flex-col items-center justify-center gap-4">
 				<div id="gig-letter" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
-					<h3 class="mb-4 text-3xl font-bold text-secondary">Newsletter</h3>
+					<h3 class="mb-4 text-2xl sm:text-3xl font-bold text-secondary">Newsletter</h3>
 					<p class="mb-2 text-secondary">
 						Erfahre als einer der Ersten, <br>
 						wann Täglich Frisches Obst wieder auftritt <br> 
@@ -525,7 +525,7 @@
 					</div>
 				</div>
 				<div id="contact-form" class="max-w-full p-2 border-2 bg-neutral border-primary rounded-2xl w-[65ch]">
-					<h3 class="mb-4 text-3xl font-bold text-secondary">Schreibe uns:</h3>
+					<h3 class="mb-4 text-2xl sm:text-3xl font-bold text-secondary">Schreibe uns:</h3>
 					<form action="https://formsubmit.co/info@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
 						<textarea
 							placeholder="Deine Nachricht..."
