@@ -29,15 +29,23 @@
 	/* svelte-ignore unused-export-let */
 	export let data: LayoutData;
 
+	let accordionContent = new Array(3);
+	function isElementFullyVisible(el: { getBoundingClientRect: () => any }) {
+		const rect = el.getBoundingClientRect();
+		return (
+			rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+		);
+	}
+
 	let totalGigs: Gig[] = [];
 	let displayAllGigs = false;
 
-	let gigsSection = 0;
-	let musicSection = 0;
-	let videosSection = 0;
-	let gallerySection = 0;
-	let infoSection = 0;
-	let contactSection = 0;
+	let gigsSection: HTMLElement;
+	let musicSection: HTMLElement;
+	let videosSection: HTMLElement;
+	let gallerySection: HTMLElement;
+	let infoSection: HTMLElement;
+	let contactSection: HTMLElement;
 
 	onMount(async () => {
 		const fetchedGigs = await fetchGigs();
@@ -56,27 +64,27 @@
 
 	$: {
 		if (gigsSection) {
-			gs.set(gigsSection);
+			gs.set(gigsSection.getBoundingClientRect().top);
 		}
 
 		if (musicSection) {
-			ms.set(musicSection);
+			ms.set(musicSection.getBoundingClientRect().top);
 		}
 
 		if (videosSection) {
-			vs.set(videosSection);
+			vs.set(videosSection.getBoundingClientRect().top);
 		}
 
 		if (gallerySection) {
-			gas.set(gallerySection);
+			gas.set(gallerySection.getBoundingClientRect().top);
 		}
 
 		if (infoSection) {
-			is.set(infoSection);
+			is.set(infoSection.getBoundingClientRect().top);
 		}
 
 		if (contactSection) {
-			cs.set(contactSection);
+			cs.set(contactSection.getBoundingClientRect().top);
 		}
 	}
 
@@ -116,7 +124,7 @@
 <main class="min-h-screen">
 	<section
 		id="gigs"
-		bind:offsetHeight={gigsSection}
+		bind:this={gigsSection}
 		class="flex flex-col"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
@@ -228,7 +236,7 @@
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<section
 		id="music"
-		bind:offsetHeight={musicSection}
+		bind:this={musicSection}
 		class="z-10 flex flex-col mb-16"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
@@ -331,7 +339,7 @@
 	</section>
 	<section
 		id="videos"
-		bind:offsetHeight={videosSection}
+		bind:this={videosSection}
 		class="z-10 flex flex-col mt-2 scroll-mt-0 bg-base-200"
 	>
 		<!-- prettier-ignore -->
@@ -363,7 +371,7 @@
 	</section>
 	<section
 		id="gallery"
-		bind:offsetHeight={gallerySection}
+		bind:this={gallerySection}
 		class="z-10 flex flex-col"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
@@ -378,7 +386,7 @@
 	</section>
 	<section
 		id="info"
-		bind:offsetHeight={infoSection}
+		bind:this={infoSection}
 		class="z-10 p-5"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
@@ -388,8 +396,21 @@
 			Pressekit Downloaden
 		</a>
 		<div class="py-5 max-w-full w-[1200px]">
-			<div class="my-2 collapse collapse-plus bg-base-200">
-				<input type="radio" name="info-accordion" checked />
+			<div
+				class="my-2 collapse collapse-plus bg-base-200"
+				id="accordion-content-1"
+				bind:this={accordionContent[0]}
+			>
+				<input
+					type="radio"
+					name="info-accordion"
+					checked
+					on:click={() => {
+						if (!isElementFullyVisible(accordionContent[0])) {
+							accordionContent[0].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
+						}
+					}}
+				/>
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
@@ -421,8 +442,20 @@
 					</div>
 				</div>
 			</div>
-			<div class="my-2 collapse collapse-plus bg-base-200">
-				<input type="radio" name="info-accordion" />
+			<div
+				class="my-2 collapse collapse-plus bg-base-200"
+				id="accordion-content-2"
+				bind:this={accordionContent[1]}
+			>
+				<input
+					type="radio"
+					name="info-accordion"
+					on:click={() => {
+						if (!isElementFullyVisible(accordionContent[1])) {
+							accordionContent[1].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
+						}
+					}}
+				/>
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
 					<Card
@@ -446,8 +479,20 @@
 					/>
 				</div>
 			</div>
-			<div class="my-2 collapse collapse-plus bg-base-200">
-				<input type="radio" name="info-accordion" />
+			<div
+				class="my-2 collapse collapse-plus bg-base-200"
+				id="accordion-content-3"
+				bind:this={accordionContent[2]}
+			>
+				<input
+					type="radio"
+					name="info-accordion"
+					on:click={() => {
+						if (!isElementFullyVisible(accordionContent[2])) {
+							accordionContent[2].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
+						}
+					}}
+				/>
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
 					<Card
@@ -482,7 +527,7 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" bind:offsetHeight={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-visible h-fit" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
+	<section id="contact" bind:this={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-visible h-fit" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 		{#if outerWidth >= 750}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
@@ -490,12 +535,12 @@
 
 		<div class="relative top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
 			<!-- prettier-ignore -->
-			<h2 class="sticky top-0 left-0 px-4 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary mb-1 sm:mb-0">
+			<h2 class="px-4 mb-1 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary sm:mb-0">
 				Kontakt
 			</h2>
 			<div class="flex flex-col items-center justify-center gap-4">
 				<div id="gig-letter" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
-					<h3 class="mb-4 text-2xl sm:text-3xl font-bold text-secondary">Newsletter</h3>
+					<h3 class="mb-4 text-2xl font-bold sm:text-3xl text-secondary">Newsletter</h3>
 					<p class="mb-2 text-secondary">
 						Erfahre als einer der Ersten, <br>
 						wann Täglich Frisches Obst wieder auftritt <br> 
@@ -525,7 +570,7 @@
 					</div>
 				</div>
 				<div id="contact-form" class="max-w-full p-2 border-2 bg-neutral border-primary rounded-2xl w-[65ch]">
-					<h3 class="mb-4 text-2xl sm:text-3xl font-bold text-secondary">Schreibe uns:</h3>
+					<h3 class="mb-4 text-2xl font-bold sm:text-3xl text-secondary">Schreibe uns:</h3>
 					<form action="https://formsubmit.co/info@taeglichfrischesobst.com" method="POST" class="flex flex-col gap-2">
 						<textarea
 							placeholder="Deine Nachricht..."
