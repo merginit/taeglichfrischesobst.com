@@ -6,7 +6,7 @@
 	import { fetchGigs } from '$script/data';
 	import type { Gig } from '$script/types';
 	import type { LayoutData } from './$types';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 	import {
 		sectionMarginTop as nh,
@@ -30,6 +30,7 @@
 	export let data: LayoutData;
 
 	let accordionContent = new Array(3);
+	let resizeObservers: [ResizeObserver];
 	function isElementFullyVisible(el: { getBoundingClientRect: () => any }) {
 		const rect = el.getBoundingClientRect();
 		return (
@@ -47,10 +48,29 @@
 	let infoSection: HTMLElement;
 	let contactSection: HTMLElement;
 
+	onDestroy(() => {
+		resizeObservers?.forEach(observer => observer.disconnect());
+	});
+
 	onMount(async () => {
 		const fetchedGigs = await fetchGigs();
 		totalGigs = fetchedGigs;
-	});
+
+		if (accordionContent[0] && accordionContent[1] && accordionContent[2]) {
+			accordionContent.forEach((content) => {
+				const observer = new ResizeObserver(entries => {
+					for (let entry of entries) {
+						if (entry.target === content && !isElementFullyVisible(content)) {
+							content.scrollIntoView({ behavior: 'instant', block: 'start', inline: "start" });
+						}
+					}
+				});
+
+				observer.observe(content);
+				resizeObservers.push(observer);
+    		});
+		}
+    });
 
 	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
@@ -405,11 +425,6 @@
 					type="radio"
 					name="info-accordion"
 					checked
-					on:click={() => {
-						if (!isElementFullyVisible(accordionContent[0])) {
-							accordionContent[0].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
-						}
-					}}
 				/>
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
@@ -450,11 +465,6 @@
 				<input
 					type="radio"
 					name="info-accordion"
-					on:click={() => {
-						if (!isElementFullyVisible(accordionContent[1])) {
-							accordionContent[1].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
-						}
-					}}
 				/>
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
@@ -487,11 +497,6 @@
 				<input
 					type="radio"
 					name="info-accordion"
-					on:click={() => {
-						if (!isElementFullyVisible(accordionContent[2])) {
-							accordionContent[2].scrollIntoView({ behavior: 'auto', block: 'start', inline: "nearest" });
-						}
-					}}
 				/>
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
