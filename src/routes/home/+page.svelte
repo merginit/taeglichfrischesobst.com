@@ -38,6 +38,7 @@
 		);
 	}
 
+	let initLoad = true; // DON'T SCROLL ON INIT LOAD!!!
 	let galleryImages: Image[] = [];
 	let lastImageAuthor: string;
 	let lastImageSrc: string;
@@ -65,7 +66,7 @@
 			accordionContent.forEach((content) => {
 				const observer = new ResizeObserver(entries => {
 					for (let entry of entries) {
-						if (entry.target === content && !isElementFullyVisible(content)) {
+						if (entry.target === content && !isElementFullyVisible(content) && !initLoad) {
 							content.scrollIntoView({ behavior: 'instant', block: 'start', inline: "start" });
 						}
 					}
@@ -73,6 +74,7 @@
 
 				observer.observe(content);
 				resizeObservers.push(observer);
+				initLoad = false;
     		});
 		}
     });
