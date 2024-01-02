@@ -1,4 +1,4 @@
-import type { Gig, Image, Video } from '$script/types';
+import type { Gig, StoryblokImageAsset, Video } from '$script/types';
 
 export const fetchGigs = async function () {
 	const response = await fetch('/storyblok?slug=gigs');
@@ -25,65 +25,39 @@ export const fetchGigs = async function () {
 	return fetchedGigs;
 };
 
-const band_image_path = '/assets/images/band/';
-const image_file_extension = 'webp';
-export const images: Image[] = [
-	{
-		URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 01 F ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Alter Bauhof Ottensheim 6.1.23 02 F ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 _ 01 ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 _ 02 ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 _ 03 ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 _ 04 ©Simon Rauch.${image_file_extension}`,
-		width: 3000,
-		height: 2000
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 _ 05 ©Simon Rauch.${image_file_extension}`,
-		width: 1796,
-		height: 1194
-	},
-	{
-		URL: `${band_image_path}Kramladen 31.03.23 ©Simon Rauch.${image_file_extension}`,
-		width: 3000,
-		height: 2000
-	},
-	{
-		URL: `${band_image_path}Kultur HOF Linz 27.1.23 01 ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Kultur HOF Linz 27.1.23 02 ©Simon Rauch.${image_file_extension}`,
-		width: 2048,
-		height: 1365
-	},
-	{
-		URL: `${band_image_path}Josef_Jakob_Vinny_Tobi ©Niko Nopp.${image_file_extension}`,
-		width: 1600,
-		height: 900
-	}
-];
+export const fetchImages = async function () {
+	const response = await fetch('/storyblok?slug=images');
+	const data = await response.json();
+	const fetchedImages = data.data;
+
+	const fetchedImagesAsImagesType = fetchedImages.map((image: StoryblokImageAsset) => {
+		const dimensions = (image.webp?.filename || image.png?.filename)?.split('/')[5]?.split('x');
+		const splitName = (image.webp?.filename || image.png?.filename)?.split('-');
+		const slicedName = splitName.slice(-2);
+		const couldBeAuthor = `${slicedName[0]?.replace(' ', '')} ${slicedName[1]?.replace('.webp', '')?.replace('.png', '')}`;
+
+		return {
+			width: dimensions ? parseInt(dimensions[0]) : undefined,
+			height: dimensions ? parseInt(dimensions[1]) : undefined,
+			webp: {
+				src: image.webp?.filename,
+				copyright: image.webp?.copyright?.trim() === "" ? couldBeAuthor : image.webp?.copyright,
+				title: image.webp?.title ?? image.webp?.alt,
+				alt: image.webp?.alt ?? image.webp?.title ?? image.webp?.filename?.split('©')[1]?.split('.')[0],
+				source: image.webp?.source ?? "a.storyblok.com/f"
+			},
+			png: {
+				src: image.png?.filename,
+				copyright: image.webp?.copyright?.trim() === "" ? couldBeAuthor : image.webp?.copyright,
+				title: image.png?.title ?? image.png?.alt,
+				alt: image.png?.alt ?? image.png?.title ?? image.png?.filename?.split('©')[1]?.split('.')[0],
+				source: image.png?.source ?? "a.storyblok.com/f"
+			}
+		};
+	});
+
+	return await fetchedImagesAsImagesType;
+};
 
 export const videos: Video[] = [
 	{ videoUrl: 'https://www.youtube-nocookie.com/embed/KpJbtTYWm5Y' },

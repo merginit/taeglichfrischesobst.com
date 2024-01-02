@@ -2,8 +2,7 @@
 	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
 	import { subscribeToMailList, unsubscribeFromMailList } from '$script/api.js';
 	import { videos } from '$script/data';
-	import { images } from '$script/data';
-	import { fetchGigs } from '$script/data';
+	import { fetchGigs, fetchImages } from '$script/data';
 	import type { Gig } from '$script/types';
 	import type { LayoutData } from './$types';
 	import { onMount, onDestroy } from 'svelte';
@@ -25,6 +24,7 @@
 	import HorizontalSlider from '$component/HorizontalSlider.svelte';
 	import Song from '$component/Song.svelte';
 	import Embedded from '$component/Embedded.svelte';
+	import type { Image } from '$script/types';
 
 	/* svelte-ignore unused-export-let */
 	export let data: LayoutData;
@@ -38,6 +38,9 @@
 		);
 	}
 
+	let galleryImages: Image[] = [];
+	let lastImageAuthor: string;
+	let lastImageSrc: string;
 	let totalGigs: Gig[] = [];
 	let displayAllGigs = false;
 
@@ -53,8 +56,10 @@
 	});
 
 	onMount(async () => {
-		const fetchedGigs = await fetchGigs();
-		totalGigs = fetchedGigs;
+		totalGigs = await fetchGigs();
+		galleryImages = await fetchImages();
+		lastImageSrc = galleryImages[galleryImages.length - 1]?.webp?.src ?? galleryImages[galleryImages.length - 1]?.png?.src;
+		lastImageAuthor = galleryImages[galleryImages.length - 1]?.webp?.copyright ?? galleryImages[galleryImages.length - 1]?.png?.copyright;
 
 		if (accordionContent[0] && accordionContent[1] && accordionContent[2]) {
 			accordionContent.forEach((content) => {
@@ -401,7 +406,7 @@
 				style="writing-mode:vertical-lr; transform: rotate(-180deg);">
 				Fotos
 			</h2>
-			<Gallery galleryID="gallery" {images} />
+			<Gallery galleryID="gallery" images={galleryImages} />
 		</div>
 	</section>
 	<section
@@ -450,7 +455,7 @@
 							</p>
 							<img
 								class="self-start flex-grow object-contain overflow-hidden"
-								src="/assets/images/band/Still Musikvideo Auf dem Dach ©Niko Nopp.webp"
+								src={lastImageSrc}
 								alt="Still Musikvideo Auf dem Dach - ©Niko Nopp"
 							/>
 						</span>
@@ -502,7 +507,7 @@
 				<div class="flex gap-2 collapse-content">
 					<Card
 						figure_url={'https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/'}
-						figure_img_src={'/assets/images/band/Josef_Jakob_Vinny_Tobi ©Niko Nopp.webp'}
+						figure_img_src={lastImageSrc}
 						content_title={'„Dolce far Niente“'}
 						content_date={'Dezember 2022'}
 						content_description={`Neue Single von Täglich frisches Obst: „Dolce far Niente“`}
@@ -517,9 +522,9 @@
 							width="40px">spotify</IconLoader
 						>
 						<a
-							href="https://www.instagram.com/niko_nopp/"
+							href="https://www.instagram.com/taeglichfrischesobst?copyright={lastImageAuthor}"
 							target="_blank"
-							class="absolute bottom-0 right-1">© Niko Nopp</a
+							class="absolute bottom-0 capitalize right-1">© {lastImageAuthor}</a
 						>
 					</Card>
 				</div>

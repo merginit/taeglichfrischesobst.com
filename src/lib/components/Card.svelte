@@ -8,11 +8,11 @@
 	export let content_url_label: string;
 
 	let figure_img_alt = figure_img_src
-		.split('/')
-		.pop()
+		?.split('/')
+		?.pop()
 		?.split('.')[0]
-		.replace(/[-_]\w/g, (match) => match.charAt(1).toUpperCase())
-		.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+		?.replace(/[-_]\w/g, (match) => match.charAt(1).toUpperCase())
+		?.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
 </script>
 
 <div class="w-full shadow-xl lg:w-96 card bg-base-100">
