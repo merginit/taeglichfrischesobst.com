@@ -9,6 +9,7 @@ export const POST = (async ({ request }) => {
 	const key = data?.storedKey;
 
 	try {
+		// @ts-ignore
 		await verifyAsync(key, JWT_SECRET);
 		let allKeys: string[];
 		let allValues: any[];

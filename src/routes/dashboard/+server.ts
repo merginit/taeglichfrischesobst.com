@@ -12,6 +12,7 @@ export const POST = (async ({ request }) => {
 		if (key !== 'null' && key !== undefined && key !== null) {
 			return validateKey(key);
 		} else {
+			// @ts-ignore
 			const token = await signAsync({ password: password }, JWT_SECRET, { expiresIn: '1h' });
 
 			return new Response(
@@ -33,6 +34,7 @@ export const POST = (async ({ request }) => {
 
 async function validateKey(key: string) {
 	try {
+		// @ts-ignore
 		await verifyAsync(key, JWT_SECRET);
 
 		return new Response(

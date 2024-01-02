@@ -9,7 +9,7 @@
 	<h3 class="mb-4 text-3xl font-bold text-secondary">Newsletter</h3>
 	<p class="mb-2 text-secondary">
 		Erfahre als einer der Ersten, <br />
-		wann wenn Täglich Frisches Obst wieder auftritt <br />
+		wann Täglich Frisches Obst wieder auftritt <br />
 		oder neue Releases anstehen!
 	</p>
 	<div class="flex flex-col gap-2">

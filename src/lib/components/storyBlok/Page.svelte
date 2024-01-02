@@ -2,11 +2,12 @@
 	import { storyblokEditable, StoryblokComponent, type SbBlokData } from '@storyblok/svelte';
 
 	export let blok: SbBlokData;
+	let body = Array.isArray(blok?.body) ? blok.body : [];
 </script>
 
 {#key blok}
 	<div use:storyblokEditable={blok} class="px-6">
-		{#each blok.body as blok}
+		{#each body as blok}
 			<StoryblokComponent {blok} />
 		{/each}
 	</div>

@@ -8,6 +8,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		const response = await storyblokApi.get(`cdn/stories/${slug}`, {
 			version: 'published',
+			// @ts-ignore
 			cv: 'CURRENT_TIMESTAMP'
 		});
 
@@ -18,7 +19,9 @@ export const GET: RequestHandler = async ({ url }) => {
 		console.error(error);
 
 		return json({
+			// @ts-ignore
 			status: error?.status ?? null,
+			// @ts-ignore
 			response: error?.response ?? null
 		});
 	}

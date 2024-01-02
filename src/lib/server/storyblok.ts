@@ -1,10 +1,8 @@
 import { apiPlugin, storyblokInit, useStoryblokApi } from '@storyblok/svelte';
 import { STORYBLOK_ACCESS_TOKEN } from '$env/static/private';
 import Page from '$component/storyBlok/Page.svelte';
-import Feature from '$component/storyBlok/Feature.svelte';
-import Grid from '$component/storyBlok/Grid.svelte';
-import Teaser from '$component/storyBlok/Teaser.svelte';
-import Gig from '$component/storyBlok/Gig.svelte';
+import Gig from '$component/storyBlok/GigRow.svelte';
+import Image from '$component/storyBlok/ImageFullWidth.svelte';
 
 storyblokInit({
 	accessToken: STORYBLOK_ACCESS_TOKEN,
@@ -18,9 +16,7 @@ storyblokInit({
 	},
 	components: {
 		page: Page,
-		feature: Feature,
-		grid: Grid,
-		teaser: Teaser,
+		image: Image,
 		gig: Gig
 	}
 });

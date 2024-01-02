@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
+	import { videos, fetchGigs, fetchImages } from '$script/data';
 	import { subscribeToMailList, unsubscribeFromMailList } from '$script/api.js';
-	import { videos } from '$script/data';
-	import { fetchGigs, fetchImages } from '$script/data';
-	import type { Gig } from '$script/types';
-	import type { LayoutData } from './$types';
+
+	import { compareDates, isFutureDate, dateOfString } from '$script/utility';
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 	import {
@@ -16,14 +14,18 @@
 		infoSectionHeight as is,
 		contactSectionHeight as cs
 	} from '$store/objectsizes.js';
+
 	import { Toaster, toast } from 'svelte-french-toast';
 	import IconLoader from '$component/IconLoader.svelte';
 	import Gallery from '$component/Gallery.svelte';
 	import Card from '$component/Card.svelte';
 	import CookieConsentConfig from '$component/CookieConsentConfig.svelte';
-	import HorizontalSlider from '$component/HorizontalSlider.svelte';
+	import HorizontalMarquee from '$component/HorizontalMarquee.svelte';
 	import Song from '$component/Song.svelte';
 	import Embedded from '$component/Embedded.svelte';
+
+	import type { Gig } from '$script/types';
+	import type { LayoutData } from './$types';
 	import type { Image } from '$script/types';
 
 	/* svelte-ignore unused-export-let */
@@ -53,21 +55,25 @@
 	let contactSection: HTMLElement;
 
 	onDestroy(() => {
-		resizeObservers?.forEach(observer => observer.disconnect());
+		resizeObservers?.forEach((observer) => observer.disconnect());
 	});
 
 	onMount(async () => {
 		totalGigs = await fetchGigs();
 		galleryImages = await fetchImages();
-		lastImageSrc = galleryImages[galleryImages.length - 1]?.webp?.src ?? galleryImages[galleryImages.length - 1]?.png?.src;
-		lastImageAuthor = galleryImages[galleryImages.length - 1]?.webp?.copyright ?? galleryImages[galleryImages.length - 1]?.png?.copyright;
+		lastImageSrc =
+			galleryImages[galleryImages.length - 1]?.webp?.src ??
+			galleryImages[galleryImages.length - 1]?.png?.src;
+		lastImageAuthor =
+			galleryImages[galleryImages.length - 1]?.webp?.copyright ??
+			galleryImages[galleryImages.length - 1]?.png?.copyright;
 
 		if (accordionContent[0] && accordionContent[1] && accordionContent[2]) {
 			accordionContent.forEach((content) => {
-				const observer = new ResizeObserver(entries => {
+				const observer = new ResizeObserver((entries) => {
 					for (let entry of entries) {
 						if (entry.target === content && !isElementFullyVisible(content) && !initLoad) {
-							content.scrollIntoView({ behavior: 'instant', block: 'start', inline: "start" });
+							content.scrollIntoView({ behavior: 'instant', block: 'start', inline: 'start' });
 						}
 					}
 				});
@@ -75,9 +81,9 @@
 				observer.observe(content);
 				resizeObservers.push(observer);
 				initLoad = false;
-    		});
+			});
 		}
-    });
+	});
 
 	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
@@ -267,7 +273,7 @@
 		class="z-10 flex flex-col mb-16"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
-		<HorizontalSlider>
+		<HorizontalMarquee>
 			<svelte:fragment slot="top">
 				<!-- prettier-ignore -->
 				<h2 class="ml-2 text-4xl font-bold lg:text-5xl xl:text-7xl 2xl:text-9xl slide-content">
@@ -362,7 +368,7 @@
 					width={outerWidth > 1135 ? '100px' : '50px'}>deezer</IconLoader
 				>
 			</svelte:fragment>
-		</HorizontalSlider>
+		</HorizontalMarquee>
 	</section>
 	<section
 		id="videos"
@@ -428,11 +434,7 @@
 				id="accordion-content-1"
 				bind:this={accordionContent[0]}
 			>
-				<input
-					type="radio"
-					name="info-accordion"
-					checked
-				/>
+				<input type="radio" name="info-accordion" checked />
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
@@ -469,10 +471,7 @@
 				id="accordion-content-2"
 				bind:this={accordionContent[1]}
 			>
-				<input
-					type="radio"
-					name="info-accordion"
-				/>
+				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
 					<Card
@@ -501,10 +500,7 @@
 				id="accordion-content-3"
 				bind:this={accordionContent[2]}
 			>
-				<input
-					type="radio"
-					name="info-accordion"
-				/>
+				<input type="radio" name="info-accordion" />
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
 					<Card

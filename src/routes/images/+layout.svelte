@@ -1,7 +1,7 @@
 <script lang="ts">
-	import HistoryBack from "$component/HistoryBack.svelte";
+	import HistoryBack from '$component/HistoryBack.svelte';
 </script>
 
-<HistoryBack></HistoryBack>
+<HistoryBack />
 
 <slot />

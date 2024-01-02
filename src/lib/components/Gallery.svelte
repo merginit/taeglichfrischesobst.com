@@ -28,7 +28,9 @@
 						let captionHTML = '';
 						if (currSlideElement) {
 							const alt = currSlideElement?.querySelector('img')?.getAttribute('data-copyright');
-							captionHTML = 'Fotograf: ' + ((alt === null || alt === undefined || alt?.trim() === "") ? "unbekannt" : alt);						
+							captionHTML =
+								'Fotograf: ' +
+								(alt === null || alt === undefined || alt?.trim() === '' ? 'unbekannt' : alt);
 						}
 						el.innerHTML = captionHTML || '';
 						el.classList.add('pswp__custom-caption');
@@ -43,6 +45,6 @@
 
 <div class="flex flex-wrap items-center gap-2 pswp-gallery" id={galleryID}>
 	{#each images as image}
-		<GalleryImage {image}></GalleryImage>
+		<GalleryImage {image} />
 	{/each}
 </div>

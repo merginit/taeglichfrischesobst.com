@@ -6,9 +6,7 @@ export const load: LayoutServerLoad = async function ({ fetch }) {
 		const data = await response.json();
 		const fetchedGigs = data.data;
 
-		const gigsObject = { gigs: fetchedGigs };
-
-		return gigsObject;
+		return { gigs: fetchedGigs };
 	} catch (error) {
 		console.error(error);
 

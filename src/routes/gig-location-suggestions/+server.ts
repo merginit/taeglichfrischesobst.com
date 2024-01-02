@@ -9,10 +9,11 @@ export const POST = (async ({ request }) => {
 	const key = data?.storedKey;
 
 	try {
+		// @ts-ignore
 		await verifyAsync(key, JWT_SECRET);
 
 		const query = `--sql
-    SELECT message, country, city, email FROM Gig`;
+    	SELECT message, country, city, email FROM Gig`;
 
 		const res = await client.query(query);
 

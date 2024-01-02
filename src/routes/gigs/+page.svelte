@@ -5,6 +5,7 @@
 
 	export let data: PageData;
 
+	// @ts-ignore
 	const handler = new DataHandler(data?.gigs, { rowsPerPage: 50 });
 	const gigs = handler.getRows();
 </script>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import {
 		gigsSectionHeight as gs,
 		musicSectionHeight as ms,
@@ -12,19 +11,9 @@
 
 	export let page = 'home';
 
-	const handleClick = (event: MouseEvent) => {
-		if (browser) {
-			const element = event?.target;
-			if (element instanceof HTMLAnchorElement) {
-				active = element?.href.split('#')[1];
-			}
-		}
-	};
-
-	$: active = '';
 	$: scrollY = 0;
 
-	$: section_01 = $gs - ($nh * 2);
+	$: section_01 = $gs - $nh * 2;
 	$: section_02 = $ms - $nh;
 	$: section_03 = $vs - $nh;
 	$: section_04 = $gas - $nh;
@@ -38,7 +27,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#gigs"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_01 && scrollY < section_02) ? '' : 'link-hover') : "link-hover"}">Gigs
 	</a>
@@ -47,7 +35,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#music"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_02 && scrollY < section_03) ? '' : 'link-hover') : "link-hover"}">Musik
 	</a>
@@ -56,7 +43,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#videos"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_03 && scrollY < section_04) ? '' : 'link-hover') : "link-hover"}">Videos
 	</a>
@@ -65,7 +51,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#gallery"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_04 && scrollY < section_05) ? '' : 'link-hover') : "link-hover"}">Galerie
 	</a>
@@ -74,7 +59,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#info"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_05 && scrollY < section_06) ? '' : 'link-hover') : ""}">Info
 	</a>
@@ -83,7 +67,6 @@
 	<!-- prettier-ignore -->
 	<a
 		href="/home/#contact"
-		on:click={handleClick}
 		class="navigation-link link 
 		{page !== "legal" ? ((scrollY >= section_06) ? '' : 'link-hover') : "link-hover"}">Kontakt
 	</a>

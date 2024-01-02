@@ -5,7 +5,7 @@
 <iframe
 	title="spotify audio player"
 	class="song"
-	style="border-radius:12px"
+	style="border-radius: 12px;"
 	src={url}
 	width="100%"
 	height="152"

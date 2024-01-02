@@ -4,6 +4,6 @@
 </script>
 
 <Toaster position="bottom-right" />
-<HistoryBack color="hsl(var(--a))"></HistoryBack>
+<HistoryBack color="hsl(var(--a))" />
 
 <slot />
