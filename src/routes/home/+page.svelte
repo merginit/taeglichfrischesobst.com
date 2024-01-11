@@ -603,7 +603,7 @@
 				<div id="booking-form" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Booking</h3>
 					<p class="mb-2 text-secondary">
-						<strong>Kontakt</strong>: Livia Eibl & Tobias Fröller <br>
+						<strong>Kontakt</strong>: Josef Brandner & Tobias Fröller <br>
 						<a href="mailto:booking@taeglichfrischesobst.com">booking@taeglichfrischesobst.com</a>
 					</p>
 				</div>
