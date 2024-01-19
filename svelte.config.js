@@ -5,9 +5,17 @@ import { preprocessThrelte } from '@threlte/preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	build: {
+		sourcemap: true
+	},
+	compilerOptions: {
+		enableSourcemap: true
+	},
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: seqPreprocessor([vitePreprocess(), preprocessThrelte()]),
+	preprocess: seqPreprocessor([vitePreprocess({
+		sourceMap: true,
+	}), preprocessThrelte()]),
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.

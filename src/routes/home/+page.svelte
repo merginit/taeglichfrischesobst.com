@@ -79,7 +79,7 @@
 				});
 
 				observer.observe(content);
-				resizeObservers.push(observer);
+				resizeObservers?.push(observer);
 				initLoad = false;
 			});
 		}
