@@ -6,16 +6,14 @@
 	import Footer from '$component/Footer.svelte';
 	import Socials from '$component/Socials.svelte';
 	import Logo from '$component/Logo.svelte';
+	import mobile from 'is-mobile';
+	let isMobile = true;
 
 	onMount(() => {
-		// Theme Changer
+		isMobile = mobile({ tablet: true });
 		themeChange(false);
 	});
-
-	$: outerWidth = 0; // for responsiveness, if media query is not enough
 </script>
-
-<svelte:window bind:outerWidth />
 
 <header class="relative flex flex-col justify-between w-full">
 	<Logo />
@@ -31,7 +29,9 @@
 		Täglich Frisches Obst
 	</h1>
 
-	{#if outerWidth > 1775}
+	{#if isMobile}
+		<!-- 3D objects only load on desktop PCs to decrease load time. -->
+	{:else}
 		<div class="absolute top-0 left-0">
 			<ThreeDimensional />
 		</div>
