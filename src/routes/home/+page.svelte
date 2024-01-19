@@ -67,7 +67,9 @@
 		lastImageAuthor =
 			galleryImages[galleryImages.length - 1]?.webp?.copyright ??
 			galleryImages[galleryImages.length - 1]?.png?.copyright;
+	});
 
+	if (browser) {
 		if (accordionContent[0] && accordionContent[1] && accordionContent[2]) {
 			accordionContent.forEach((content) => {
 				const observer = new ResizeObserver((entries) => {
@@ -80,10 +82,11 @@
 
 				observer.observe(content);
 				resizeObservers?.push(observer);
+
 				initLoad = false;
 			});
 		}
-	});
+	}
 
 	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
