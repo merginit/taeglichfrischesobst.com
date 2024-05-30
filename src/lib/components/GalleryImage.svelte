@@ -4,14 +4,14 @@
 	export let image: Image;
 
 	let webpSrc = image?.webp?.src;
-	let webpCopyright = image?.webp?.copyright;
-	let webpTitle = image?.webp?.title;
-	let webpAltText = image?.webp?.alt;
+	let webpCopyright = image?.webp?.copyright ?? 'täglichfrischesobst';
+	let webpTitle = image?.webp?.title ?? 'täglichfrischesobst';
+	let webpAltText = image?.webp?.alt ?? 'täglichfrischesobst';
 	let webpSource = image?.webp?.source;
 	let pngSrc = image?.png?.src;
-	let pngCopyright = image?.png?.copyright;
-	let pngTitle = image?.png?.title;
-	let pngAltText = image?.png?.alt;
+	let pngCopyright = image?.png?.copyright ?? 'täglichfrischesobst';
+	let pngTitle = image?.png?.title ?? 'täglichfrischesobst';
+	let pngAltText = image?.png?.alt ?? 'täglichfrischesobst';
 	let pngSource = image?.png?.source;
 
 	// https://stackoverflow.com/questions/5573096/detecting-webp-support
