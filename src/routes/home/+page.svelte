@@ -446,7 +446,7 @@
 							<p class="flex-shrink text-lg lg:max-w-[50%]">
 								Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "<a
 									target="_blank"
-									href="https://drive.google.com/drive/folders/1YDHLdJCZMhydcBH3kov8vY82XpznrB3_"
+									href="https://nextcloud.edv-oellinger.eu/s/XgSZQnAQ4jKHmjR"
 									>Täglich frisches Obst</a
 								>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt.
 								Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit
