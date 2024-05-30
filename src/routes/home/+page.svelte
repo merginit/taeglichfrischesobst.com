@@ -428,7 +428,7 @@
 	>
 		<h2 class="text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">Infos</h2>
 		<!-- prettier-ignore -->
-		<a class="btn btn-primary" target="_blank" href="https://drive.google.com/uc?export=download&id=1WJmYZWmbSTjPHaW6mrQ7k83jcfQmK94b" download="tfo-pressekit">
+		<a class="btn btn-primary" target="_blank" href="https://nextcloud.edv-oellinger.eu/s/XgSZQnAQ4jKHmjR/download" download="tfo-pressekit">
 			Pressekit Downloaden
 		</a>
 		<div class="py-5 max-w-full w-[1200px]">
