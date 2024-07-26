@@ -475,22 +475,39 @@
 				bind:this={accordionContent[1]}
 			>
 				<input type="radio" name="info-accordion" />
-				<div class="text-xl font-medium collapse-title">Radiosendungen/Interviews</div>
+				<div class="text-xl font-medium collapse-title">Radiosendungen/Berichte/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
+					<Card
+						figure_url={'https://www.w24.at/Sendungen-A-Z/Wienyl/Alle-Folgen?video=31984'}
+						figure_img_src={'/assets/images/fernsehen/w24_Wienyl_16_K1_TV.jpg'}
+						content_title={'Wienyl - Folge 16 (Auftritt)'}
+						content_date={'12.7.2024'}
+						content_description={`Wir sind heute zu Gast in Wiens legendärer Location - im Gasometer in Simmering, wo es heute richtig rockig wird. Viel Gitarrensound, Drum'n'Bass, live Atmosphäre vom Feinsten, junge Bands und alte Geschichten, legendäre Musikgeschichte aus Wien von Josef "Muff" Sopper. Den Lautsprecher bitte richtig laut aufdrehen!`}
+						content_url={'https://www.w24.at/Sendungen-A-Z/Wienyl/Alle-Folgen?video=31984'}
+						content_url_label={'zur Sendung'}
+					/>
+					<Card
+						figure_url={'https://www.fro.at/ann-and-pat-radioshow-nach-dienstag-gibt-es-heringe-am-dach/'}
+						figure_img_src={'/assets/images/radio/ann_and_pat-Radioshow-NachDienstagGibtEsHeringeAmDach.png'}
+						content_title={'ann and pat Radioshow – Nach Dienstag gibt es Heringe am Dach (Interview)'}
+						content_date={'17.7.2024'}
+						content_description={`Was sich im letzten Jahr bei Täglich frisches Obst alles getan hat, was Neues auf uns zukommt und natürlich gibt es wieder viel Musik von ihnen und anderen tollen Acts aus dem Indie-Bereich. Einschalten und die musikalischen Vitamine genießen!`}
+						content_url={'https://www.fro.at/ann-and-pat-radioshow-nach-dienstag-gibt-es-heringe-am-dach/'}
+						content_url_label={'zur Radioshow'}
+					/>
 					<Card
 						figure_url={'https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/'}
 						figure_img_src={'/assets/images/radio/ann_and_pat-Radioshow–ZeitFuerVitamine.png'}
-						content_title={'ann and pat radioshow - interview'}
+						content_title={'ann and pat radioshow (Interview)'}
 						content_date={'15.3.2023'}
-						content_description={`Der Frühling kann kommen, "täglich frisches Obst" sorgen für den musikalischen
-					Vitamin-Boost!`}
+						content_description={`Der Frühling kann kommen, "täglich frisches Obst" sorgen für den musikalischen Vitamin-Boost!`}
 						content_url={'https://www.fro.at/ann-and-pat-radioshow-zeit-fuer-vitamine/'}
 						content_url_label={'zur Radioshow'}
 					/>
 					<Card
 						figure_url={'https://www.fro.at/ann-and-pat-radioshow-gluehohren/'}
 						figure_img_src={'/assets/images/radio/ann_and_pat-Radioshow–Gluehohren.png'}
-						content_title={'ann and pat radioshow - auftritt'}
+						content_title={'ann and pat radioshow (Auftritt)'}
 						content_date={'21.12.2022'}
 						content_description={`06 TÄGLICH FRISCHES OBST - Dolce far niente (min. 18:12)`}
 						content_url={'https://www.fro.at/ann-and-pat-radioshow-gluehohren/'}
