@@ -623,8 +623,8 @@
 				<div id="booking" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Booking</h3>
 					<p class="mb-2 text-secondary">
-						<strong>Kontaktpersonen</strong>: Josef Brandner & Tobias Fröller <br>
-						<strong>E-Mail</strong>: <a class="hover:underline" href="mailto:booking@taeglichfrischesobst.com">booking@taeglichfrischesobst.com</a>
+						<strong>Kontaktperson</strong>: Tobias Fröller <br>
+						<strong>E-Mail</strong>: <a class="hover:underline" href="mailto:booking@skits.agency">booking@skits.agency</a>
 					</p>
 				</div>
 				<div id="presse" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
