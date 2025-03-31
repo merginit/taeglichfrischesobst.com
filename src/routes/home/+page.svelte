@@ -623,7 +623,7 @@
 				<div id="booking" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-3xl font-bold text-secondary">Booking</h3>
 					<p class="mb-2 text-secondary">
-						<strong>Kontaktperson</strong>: Tobias Fröller <br>
+						<strong>Kontaktperson</strong>: Clemens Erhart <br>
 						<strong>E-Mail</strong>: <a class="hover:underline" href="mailto:booking@skits.agency">booking@skits.agency</a>
 					</p>
 				</div>
