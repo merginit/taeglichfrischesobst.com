@@ -428,7 +428,7 @@
 	>
 		<h2 class="text-4xl lg:text-5xl xl:text-7xl 2xl:text-9xl">Infos</h2>
 		<!-- prettier-ignore -->
-		<a class="btn btn-primary" target="_blank" href="https://nextcloud.edv-oellinger.eu/s/XgSZQnAQ4jKHmjR/download" download="tfo-pressekit">
+		<a class="btn btn-primary" target="_blank" href="https://nextcloud.edv-oellinger.eu/s/JNdizxtLofkoCtF/download" download="tfo-pressekit">
 			Pressekit Downloaden
 		</a>
 		<div class="py-5 max-w-full w-[1200px]">
@@ -446,7 +446,7 @@
 							<p class="flex-shrink text-lg lg:max-w-[50%]">
 								Seit ihrer Gründung im Februar 2022 begeistert die Linzer Indie-Pop-Band "<a
 									target="_blank"
-									href="https://nextcloud.edv-oellinger.eu/s/XgSZQnAQ4jKHmjR"
+									href="https://nextcloud.edv-oellinger.eu/s/JNdizxtLofkoCtF"
 									>Täglich frisches Obst</a
 								>" mit ihrem wiedererkennbaren Stil und einer erfrischenden musikalischen Vielfalt.
 								Abseits etablierter Regelwerke kreieren die Musiker einen einzigartigen Klang mit
