@@ -15,7 +15,7 @@
 		?.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
 </script>
 
-<div class="w-full shadow-xl lg:w-96 card bg-base-100">
+<div class="w-full max-w-sm mx-auto shadow-xl card bg-base-100">
 	<figure>
 		<!-- prettier-ignore -->
 		<a href={figure_url} target="_blank" class="relative">

@@ -56,7 +56,7 @@
 		setTimeout(() => {
 			// Get the actual navigation height from the store and convert rem to px
 			const navHeightPx = $nh * 16; // Convert rem to px (1rem = 16px)
-			const additionalPadding = 80; // Extra breathing room
+			const additionalPadding = 100; // Extra breathing room
 			const totalOffset = navHeightPx + additionalPadding;
 			
 			// Calculate target position manually
@@ -498,8 +498,8 @@
 				bind:this={accordionContent[1]}
 			>
 				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[1])} />
-				<div class="text-xl font-medium collapse-title">Radiosendungen/Berichte/Interviews</div>
-				<div class="flex flex-wrap gap-2 collapse-content">
+				<div class="text-xl font-medium collapse-title">Berichte & Interviews</div>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 collapse-content">
 					<Card
 						figure_url={'https://www.w24.at/Sendungen-A-Z/Wienyl/Alle-Folgen?video=31984'}
 						figure_img_src={'/assets/images/fernsehen/w24_Wienyl_16_K1_TV.jpg'}
@@ -545,7 +545,7 @@
 			>
 				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[2])} />
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
-				<div class="flex gap-2 collapse-content">
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 collapse-content">
 					<Card
 						figure_url={'https://www.musikmagazin.at/news/neue-single-von-taeglich-frisches-obst-dolce-far-niente/'}
 						figure_img_src={lastImageSrc}
