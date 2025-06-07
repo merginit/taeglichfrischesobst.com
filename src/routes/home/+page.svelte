@@ -32,7 +32,7 @@
 	export let data: LayoutData;
 
 	let accordionContent = new Array(3);
-	let resizeObservers: [ResizeObserver];
+	let resizeObservers: ResizeObserver[] = [];
 	function isElementFullyVisible(el: { getBoundingClientRect: () => any }) {
 		const rect = el.getBoundingClientRect();
 		return (
@@ -55,7 +55,7 @@
 	let contactSection: HTMLElement;
 
 	onDestroy(() => {
-		resizeObservers?.forEach((observer) => observer.disconnect());
+		resizeObservers.forEach((observer) => observer.disconnect());
 	});
 
 	onMount(async () => {
@@ -81,7 +81,7 @@
 				});
 
 				observer.observe(content);
-				resizeObservers?.push(observer);
+				resizeObservers.push(observer);
 
 				initLoad = false;
 			});
@@ -100,27 +100,27 @@
 
 	$: {
 		if (gigsSection) {
-			gs.set(gigsSection.getBoundingClientRect().top);
+			gs.set(gigsSection.getBoundingClientRect().top + window.scrollY);
 		}
 
 		if (musicSection) {
-			ms.set(musicSection.getBoundingClientRect().top);
+			ms.set(musicSection.getBoundingClientRect().top + window.scrollY);
 		}
 
 		if (videosSection) {
-			vs.set(videosSection.getBoundingClientRect().top);
+			vs.set(videosSection.getBoundingClientRect().top + window.scrollY);
 		}
 
 		if (gallerySection) {
-			gas.set(gallerySection.getBoundingClientRect().top);
+			gas.set(gallerySection.getBoundingClientRect().top + window.scrollY);
 		}
 
 		if (infoSection) {
-			is.set(infoSection.getBoundingClientRect().top);
+			is.set(infoSection.getBoundingClientRect().top + window.scrollY);
 		}
 
 		if (contactSection) {
-			cs.set(contactSection.getBoundingClientRect().top);
+			cs.set(contactSection.getBoundingClientRect().top + window.scrollY);
 		}
 	}
 
@@ -165,7 +165,7 @@
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
 		<div class="p-6 md:p-10 lg:p-16">
-			<div class="relative overflow-auto max-h-96 bg-neutral rounded-xl text-secondary">
+			<div class="overflow-auto relative max-h-96 rounded-xl bg-neutral text-secondary">
 				<table class="table">
 					<thead class="text-lg font-bold text-secondary">
 						<tr class="sticky top-0 bg-neutral">
@@ -273,7 +273,7 @@
 	<section
 		id="music"
 		bind:this={musicSection}
-		class="z-10 flex flex-col mb-16"
+		class="flex z-10 flex-col mb-16"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
 		<HorizontalMarquee>
@@ -314,7 +314,7 @@
 			<svelte:fragment slot="center">
 				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 				<!-- prettier-ignore -->
-				<div class="p-2 mx-2 overflow-auto overflow-y-hidden bg-neutral rounded-2xl songs"
+				<div class="overflow-auto overflow-y-hidden p-2 mx-2 rounded-2xl bg-neutral songs"
 					on:wheel={(event) => {
 						event.preventDefault();
 						event.currentTarget.scrollLeft += Math.sign(event.deltaY) * 300;
@@ -376,7 +376,7 @@
 	<section
 		id="videos"
 		bind:this={videosSection}
-		class="z-10 flex flex-col mt-2 scroll-mt-0 bg-base-200"
+		class="flex z-10 flex-col mt-2 scroll-mt-0 bg-base-200"
 	>
 		<!-- prettier-ignore -->
 		<div class="w-full h-screen carousel">
@@ -389,7 +389,7 @@
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					allowfullscreen
 					class="w-full h-full"></iframe>
-					<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+					<div class="flex absolute right-5 left-5 top-1/2 justify-between transform -translate-y-1/2">
 					<a href="#video-{index-1 < 0 ? videos.length-1 : index-1}" class="btn btn-circle">❮</a>
 					<a href="#video-{index+1 > videos.length-1 ? 0 : index+1}" class="btn btn-circle">❯</a>
 					</div>
@@ -408,7 +408,7 @@
 	<section
 		id="gallery"
 		bind:this={gallerySection}
-		class="z-10 flex flex-col"
+		class="flex z-10 flex-col"
 		style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;"
 	>
 		<div class="flex mr-2">
@@ -461,7 +461,7 @@
 								die deutschsprachige Musikszene zu erobern.
 							</p>
 							<img
-								class="self-start flex-grow object-contain overflow-hidden"
+								class="object-contain overflow-hidden flex-grow self-start"
 								src={lastImageSrc}
 								alt="Still Musikvideo Auf dem Dach - ©Niko Nopp"
 							/>
@@ -542,7 +542,7 @@
 						<a
 							href="https://www.instagram.com/taeglichfrischesobst?copyright={lastImageAuthor}"
 							target="_blank"
-							class="absolute bottom-0 capitalize right-1">© {lastImageAuthor}</a
+							class="absolute bottom-0 right-1 capitalize">© {lastImageAuthor}</a
 						>
 					</Card>
 				</div>
@@ -555,18 +555,18 @@
 		</div>
 	</section>
 	<!-- prettier-ignore -->
-	<section id="contact" bind:this={contactSection} class="relative z-10 flex flex-col min-h-screen mx-4 overflow-visible h-fit" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
+	<section id="contact" bind:this={contactSection} class="flex overflow-visible relative z-10 flex-col mx-4 min-h-screen h-fit" style="margin-top: {$nh}rem; scroll-margin-top: {$nh}rem;">
 		{#if outerWidth >= 750}
 			<!-- prettier-ignore -->
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000' class="-z-50 pointer-events-none fill-neutral w-[48rem] max-w-full absolute top-0 left-1/2 transform -translate-x-1/2"><path d='M994 112c-703-2-920.47 400.35-904 905 13.35 409 32.03 946.66 977 861 684-62 792-279 835-777 61.67-714.25-288.33-987.24-908-989Z'></path></svg>
 		{/if}
 
-		<div class="relative top-0 z-10 w-full transform -translate-x-1/2 2xl:w-auto left-1/2">
+		<div class="relative top-0 left-1/2 z-10 w-full transform -translate-x-1/2 2xl:w-auto">
 			<!-- prettier-ignore -->
 			<h2 class="px-4 mb-1 text-4xl font-bold text-center bg-base-100 lg:text-5xl xl:text-7xl 2xl:text-9xl text-secondary sm:mb-0">
 				Kontakt
 			</h2>
-			<div class="flex flex-col items-center justify-center gap-4">
+			<div class="flex flex-col gap-4 justify-center items-center">
 				<div id="gig-letter" class="max-w-full w-[65ch] p-2 border-2 bg-neutral border-primary rounded-2xl">
 					<h3 class="mb-4 text-2xl font-bold sm:text-3xl text-secondary">Newsletter</h3>
 					<p class="mb-2 text-secondary">
