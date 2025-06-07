@@ -32,15 +32,6 @@
 	export let data: LayoutData;
 
 	let accordionContent = new Array(3);
-	let resizeObservers: ResizeObserver[] = [];
-	function isElementFullyVisible(el: { getBoundingClientRect: () => any }) {
-		const rect = el.getBoundingClientRect();
-		return (
-			rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-		);
-	}
-
-	let initLoad = true; // DON'T SCROLL ON INIT LOAD!!!
 	let galleryImages: Image[] = [];
 	let lastImageAuthor: string;
 	let lastImageSrc: string;
@@ -54,11 +45,30 @@
 	let infoSection: HTMLElement;
 	let contactSection: HTMLElement;
 
-	onDestroy(() => {
-		resizeObservers.forEach((observer) => observer.disconnect());
-	});
+
 
 	let forceUpdate = 0;
+
+	function scrollToAccordion(accordionElement: HTMLElement) {
+		if (!accordionElement) return;
+		
+		// Small delay to allow accordion to expand first
+		setTimeout(() => {
+			// Get the actual navigation height from the store and convert rem to px
+			const navHeightPx = $nh * 16; // Convert rem to px (1rem = 16px)
+			const additionalPadding = 80; // Extra breathing room
+			const totalOffset = navHeightPx + additionalPadding;
+			
+			// Calculate target position manually
+			const elementTop = accordionElement.getBoundingClientRect().top + window.scrollY;
+			const targetPosition = elementTop - totalOffset;
+			
+			window.scrollTo({
+				top: targetPosition,
+				behavior: 'smooth'
+			});
+		}, 150);
+	}
 
 	onMount(async () => {
 		totalGigs = await fetchGigs();
@@ -88,24 +98,7 @@
 		}
 	});
 
-	if (browser) {
-		if (accordionContent[0] && accordionContent[1] && accordionContent[2]) {
-			accordionContent.forEach((content) => {
-				const observer = new ResizeObserver((entries) => {
-					for (let entry of entries) {
-						if (entry.target === content && !isElementFullyVisible(content) && !initLoad) {
-							content.scrollIntoView({ behavior: 'instant', block: 'start', inline: 'start' });
-						}
-					}
-				});
 
-				observer.observe(content);
-				resizeObservers.push(observer);
-
-				initLoad = false;
-			});
-		}
-	}
 
 	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
@@ -467,7 +460,7 @@
 				id="accordion-content-1"
 				bind:this={accordionContent[0]}
 			>
-				<input type="radio" name="info-accordion" checked />
+				<input type="radio" name="info-accordion" checked on:click={() => scrollToAccordion(accordionContent[0])} />
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
@@ -504,7 +497,7 @@
 				id="accordion-content-2"
 				bind:this={accordionContent[1]}
 			>
-				<input type="radio" name="info-accordion" />
+				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[1])} />
 				<div class="text-xl font-medium collapse-title">Radiosendungen/Berichte/Interviews</div>
 				<div class="flex flex-wrap gap-2 collapse-content">
 					<Card
@@ -550,7 +543,7 @@
 				id="accordion-content-3"
 				bind:this={accordionContent[2]}
 			>
-				<input type="radio" name="info-accordion" />
+				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[2])} />
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="flex gap-2 collapse-content">
 					<Card
