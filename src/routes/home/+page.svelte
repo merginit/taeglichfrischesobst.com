@@ -58,6 +58,8 @@
 		resizeObservers.forEach((observer) => observer.disconnect());
 	});
 
+	let forceUpdate = 0;
+
 	onMount(async () => {
 		totalGigs = await fetchGigs();
 		galleryImages = await fetchImages();
@@ -67,6 +69,23 @@
 		lastImageAuthor =
 			galleryImages[galleryImages.length - 1]?.webp?.copyright ??
 			galleryImages[galleryImages.length - 1]?.png?.copyright;
+
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			let scrollTimeout: NodeJS.Timeout;
+			
+			const updatePositions = () => {
+				clearTimeout(scrollTimeout);
+				scrollTimeout = setTimeout(() => {
+					forceUpdate++;
+				}, 150);
+			};
+
+			window.addEventListener('scroll', updatePositions, { passive: true });
+			window.addEventListener('resize', updatePositions);
+			window.addEventListener('orientationchange', () => {
+				setTimeout(() => forceUpdate++, 300);
+			});
+		}
 	});
 
 	if (browser) {
@@ -99,28 +118,39 @@
 	$: outerWidth = 0; // for responsiveness, if media query is not enough
 
 	$: {
+		forceUpdate;
+		
+		const isMobile = browser && (
+			'ontouchstart' in window || 
+			navigator.maxTouchPoints > 0 || 
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+			window.innerWidth <= 1024
+		);
+		
+		const mobileOffset = isMobile ? -window.innerHeight * 0.15 : 0;
+		
 		if (gigsSection) {
-			gs.set(gigsSection.getBoundingClientRect().top + window.scrollY);
+			gs.set(gigsSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 
 		if (musicSection) {
-			ms.set(musicSection.getBoundingClientRect().top + window.scrollY);
+			ms.set(musicSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 
 		if (videosSection) {
-			vs.set(videosSection.getBoundingClientRect().top + window.scrollY);
+			vs.set(videosSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 
 		if (gallerySection) {
-			gas.set(gallerySection.getBoundingClientRect().top + window.scrollY);
+			gas.set(gallerySection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 
 		if (infoSection) {
-			is.set(infoSection.getBoundingClientRect().top + window.scrollY);
+			is.set(infoSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 
 		if (contactSection) {
-			cs.set(contactSection.getBoundingClientRect().top + window.scrollY);
+			cs.set(contactSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
 	}
 
