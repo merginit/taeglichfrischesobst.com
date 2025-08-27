@@ -13,9 +13,12 @@ const config = {
 	},
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: seqPreprocessor([vitePreprocess({
-		sourceMap: true,
-	}), preprocessThrelte()]),
+	preprocess: seqPreprocessor([
+		vitePreprocess({
+			sourceMap: true
+		}),
+		preprocessThrelte()
+	]),
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.

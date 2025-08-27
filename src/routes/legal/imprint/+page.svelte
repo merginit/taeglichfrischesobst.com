@@ -1,20 +1,32 @@
 <svelte:head>
 	<link rel="canonical" href="https://taeglichfrischesobst.com/legal/imprint" />
 	<title>Impressum | Täglich frisches Obst</title>
-	<meta name="description" content="Impressum von Täglich frisches Obst. Gesetzliche Anbieterkennzeichnung und Kontaktinformationen gemäß österreichischem Recht." />
-	<meta name="keywords" content="Impressum, Anbieterkennzeichnung, Kontakt, Täglich frisches Obst, Band, Linz" />
+	<meta
+		name="description"
+		content="Impressum von Täglich frisches Obst. Gesetzliche Anbieterkennzeichnung und Kontaktinformationen gemäß österreichischem Recht."
+	/>
+	<meta
+		name="keywords"
+		content="Impressum, Anbieterkennzeichnung, Kontakt, Täglich frisches Obst, Band, Linz"
+	/>
 	<meta name="robots" content="index,follow" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="de_DE" />
 	<meta property="og:url" content="https://taeglichfrischesobst.com/legal/imprint" />
 	<meta property="og:title" content="Impressum | Täglich frisches Obst" />
-	<meta property="og:description" content="Gesetzliche Informationen und Kontaktangaben der Band Täglich frisches Obst." />
+	<meta
+		property="og:description"
+		content="Gesetzliche Informationen und Kontaktangaben der Band Täglich frisches Obst."
+	/>
 	<meta property="og:image" content="/assets/images/logo.png" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Impressum | Täglich frisches Obst" />
-	<meta name="twitter:description" content="Impressum und Kontaktinformationen der Band Täglich frisches Obst." />
+	<meta
+		name="twitter:description"
+		content="Impressum und Kontaktinformationen der Band Täglich frisches Obst."
+	/>
 	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 
@@ -158,9 +170,7 @@
 	<p>
 		<strong>Dieses Impressum gilt auch für</strong>
 		<br />
-		<a href="https://ocrmd.com" target="_blank" rel="noopener">
-			https://ocrmd.com
-		</a>
+		<a href="https://ocrmd.com" target="_blank" rel="noopener"> https://ocrmd.com </a>
 		<br />
 		<a href="https://www.neptunai.tech" target="_blank" rel="noopener">
 			https://www.neptunai.tech

@@ -6,20 +6,32 @@
 <svelte:head>
 	<link rel="canonical" href="https://taeglichfrischesobst.com/newsletter" />
 	<title>Newsletter | Täglich frisches Obst</title>
-	<meta name="description" content="Abonniere den Newsletter von Täglich frisches Obst und erfahre als Erste:r von neuen Gigs, Releases und News." />
-	<meta name="keywords" content="Newsletter, Anmeldung, E-Mail, Gigs, Releases, Täglich frisches Obst" />
+	<meta
+		name="description"
+		content="Abonniere den Newsletter von Täglich frisches Obst und erfahre als Erste:r von neuen Gigs, Releases und News."
+	/>
+	<meta
+		name="keywords"
+		content="Newsletter, Anmeldung, E-Mail, Gigs, Releases, Täglich frisches Obst"
+	/>
 	<meta name="robots" content="index,follow" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="de_DE" />
 	<meta property="og:url" content="https://taeglichfrischesobst.com/newsletter" />
 	<meta property="og:title" content="Newsletter | Täglich frisches Obst" />
-	<meta property="og:description" content="Melde dich für den Newsletter an und bleibe über Konzerte, Releases und News auf dem Laufenden." />
+	<meta
+		property="og:description"
+		content="Melde dich für den Newsletter an und bleibe über Konzerte, Releases und News auf dem Laufenden."
+	/>
 	<meta property="og:image" content="/assets/images/logo.png" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Newsletter | Täglich frisches Obst" />
-	<meta name="twitter:description" content="Jetzt abonnieren und keine Neuigkeiten mehr verpassen." />
+	<meta
+		name="twitter:description"
+		content="Jetzt abonnieren und keine Neuigkeiten mehr verpassen."
+	/>
 	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 

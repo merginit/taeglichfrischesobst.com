@@ -32,7 +32,12 @@
 
 	<div class="relative z-30 pb-4 text-center">
 		<p class="text-sm text-base-content/60">
-			Website erstellt von <a href="https://merginit.com" target="_blank" rel="noopener" class="link link-hover">Jonas Fröller / MerginIT e.U.</a>
+			Website erstellt von <a
+				href="https://merginit.com"
+				target="_blank"
+				rel="noopener"
+				class="link link-hover">Jonas Fröller / MerginIT e.U.</a
+			>
 		</p>
 	</div>
 

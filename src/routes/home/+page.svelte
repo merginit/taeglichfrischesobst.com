@@ -45,24 +45,22 @@
 	let infoSection: HTMLElement;
 	let contactSection: HTMLElement;
 
-
-
 	let forceUpdate = 0;
 
 	function scrollToAccordion(accordionElement: HTMLElement) {
 		if (!accordionElement) return;
-		
+
 		// Small delay to allow accordion to expand first
 		setTimeout(() => {
 			// Get the actual navigation height from the store and convert rem to px
 			const navHeightPx = $nh * 16; // Convert rem to px (1rem = 16px)
 			const additionalPadding = 100; // Extra breathing room
 			const totalOffset = navHeightPx + additionalPadding;
-			
+
 			// Calculate target position manually
 			const elementTop = accordionElement.getBoundingClientRect().top + window.scrollY;
 			const targetPosition = elementTop - totalOffset;
-			
+
 			window.scrollTo({
 				top: targetPosition,
 				behavior: 'smooth'
@@ -80,9 +78,11 @@
 			galleryImages[galleryImages.length - 1]?.webp?.copyright ??
 			galleryImages[galleryImages.length - 1]?.png?.copyright;
 
-		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		if (
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+		) {
 			let scrollTimeout: NodeJS.Timeout;
-			
+
 			const updatePositions = () => {
 				clearTimeout(scrollTimeout);
 				scrollTimeout = setTimeout(() => {
@@ -98,8 +98,6 @@
 		}
 	});
 
-
-
 	$: allGigs = totalGigs.sort((eventA, eventB) => compareDates(eventA.date, eventB.date));
 	$: allGigsReversed = [...allGigs].sort((eventA, eventB) =>
 		compareDates(eventB.date, eventA.date)
@@ -112,16 +110,18 @@
 
 	$: {
 		forceUpdate;
-		
-		const isMobile = browser && (
-			'ontouchstart' in window || 
-			navigator.maxTouchPoints > 0 || 
-			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-			window.innerWidth <= 1024
-		);
-		
+
+		const isMobile =
+			browser &&
+			('ontouchstart' in window ||
+				navigator.maxTouchPoints > 0 ||
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					navigator.userAgent
+				) ||
+				window.innerWidth <= 1024);
+
 		const mobileOffset = isMobile ? -window.innerHeight * 0.15 : 0;
-		
+
 		if (gigsSection) {
 			gs.set(gigsSection.getBoundingClientRect().top + window.scrollY + mobileOffset);
 		}
@@ -168,20 +168,32 @@
 <svelte:head>
 	<link rel="canonical" href="https://taeglichfrischesobst.com/home" />
 	<title>Täglich frisches Obst | Indie‑Pop Band aus Linz | Offizielle Website</title>
-	<meta name="description" content="Offizielle Website von Täglich frisches Obst: Indie‑Pop Band aus Linz. Gigs & Termine, Musik, Videos, Fotos, Newsletter, Booking & Pressekit." />
-	<meta name="keywords" content="Täglich frisches Obst, Indie‑Pop, Band, Linz, Konzerte, Gigs, Termine, Musik, Songs, Videos, Fotos, Newsletter, Booking, Presse, Österreich" />
+	<meta
+		name="description"
+		content="Offizielle Website von Täglich frisches Obst: Indie‑Pop Band aus Linz. Gigs & Termine, Musik, Videos, Fotos, Newsletter, Booking & Pressekit."
+	/>
+	<meta
+		name="keywords"
+		content="Täglich frisches Obst, Indie‑Pop, Band, Linz, Konzerte, Gigs, Termine, Musik, Songs, Videos, Fotos, Newsletter, Booking, Presse, Österreich"
+	/>
 	<meta name="robots" content="index,follow" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="de_DE" />
 	<meta property="og:url" content="https://taeglichfrischesobst.com/home" />
 	<meta property="og:title" content="Täglich frisches Obst | Indie‑Pop Band aus Linz" />
-	<meta property="og:description" content="Gigs & Termine, Musik, Videos und Fotos – alle Infos zur Indie‑Pop Band Täglich frisches Obst aus Linz." />
+	<meta
+		property="og:description"
+		content="Gigs & Termine, Musik, Videos und Fotos – alle Infos zur Indie‑Pop Band Täglich frisches Obst aus Linz."
+	/>
 	<meta property="og:image" content="/assets/images/logo.png" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Täglich frisches Obst | Indie‑Pop Band aus Linz" />
-	<meta name="twitter:description" content="Offizielle Website: Gigs, Musik, Videos, Fotos, Newsletter, Booking & Presse." />
+	<meta
+		name="twitter:description"
+		content="Offizielle Website: Gigs, Musik, Videos, Fotos, Newsletter, Booking & Presse."
+	/>
 	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 
@@ -470,7 +482,12 @@
 				id="accordion-content-1"
 				bind:this={accordionContent[0]}
 			>
-				<input type="radio" name="info-accordion" checked on:click={() => scrollToAccordion(accordionContent[0])} />
+				<input
+					type="radio"
+					name="info-accordion"
+					checked
+					on:click={() => scrollToAccordion(accordionContent[0])}
+				/>
 				<div class="text-xl font-medium collapse-title">Über uns</div>
 				<div class="collapse-content">
 					<div class="max-w-full prose">
@@ -507,7 +524,11 @@
 				id="accordion-content-2"
 				bind:this={accordionContent[1]}
 			>
-				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[1])} />
+				<input
+					type="radio"
+					name="info-accordion"
+					on:click={() => scrollToAccordion(accordionContent[1])}
+				/>
 				<div class="text-xl font-medium collapse-title">Berichte & Interviews</div>
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 collapse-content">
 					<Card
@@ -553,7 +574,11 @@
 				id="accordion-content-3"
 				bind:this={accordionContent[2]}
 			>
-				<input type="radio" name="info-accordion" on:click={() => scrollToAccordion(accordionContent[2])} />
+				<input
+					type="radio"
+					name="info-accordion"
+					on:click={() => scrollToAccordion(accordionContent[2])}
+				/>
 				<div class="text-xl font-medium collapse-title">Artikel über Täglich Frisches Obst</div>
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 collapse-content">
 					<Card

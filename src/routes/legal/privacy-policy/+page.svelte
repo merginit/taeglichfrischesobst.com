@@ -5,20 +5,32 @@
 <svelte:head>
 	<link rel="canonical" href="https://taeglichfrischesobst.com/legal/privacy-policy" />
 	<title>Datenschutz & Cookies | Täglich frisches Obst</title>
-	<meta name="description" content="Datenschutzerklärung und Cookie-Richtlinie von Täglich frisches Obst: Informationen zu verarbeiteten Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten." />
-	<meta name="keywords" content="Datenschutz, Cookies, Cookie-Richtlinie, DSGVO, Privacy Policy, Täglich frisches Obst" />
+	<meta
+		name="description"
+		content="Datenschutzerklärung und Cookie-Richtlinie von Täglich frisches Obst: Informationen zu verarbeiteten Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten."
+	/>
+	<meta
+		name="keywords"
+		content="Datenschutz, Cookies, Cookie-Richtlinie, DSGVO, Privacy Policy, Täglich frisches Obst"
+	/>
 	<meta name="robots" content="noindex,follow" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="de_DE" />
 	<meta property="og:url" content="https://taeglichfrischesobst.com/legal/privacy-policy" />
 	<meta property="og:title" content="Datenschutz & Cookies | Täglich frisches Obst" />
-	<meta property="og:description" content="Alles zur Verarbeitung personenbezogener Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten." />
+	<meta
+		property="og:description"
+		content="Alles zur Verarbeitung personenbezogener Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten."
+	/>
 	<meta property="og:image" content="/assets/images/logo.png" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Datenschutz & Cookies | Täglich frisches Obst" />
-	<meta name="twitter:description" content="Datenschutzerklärung und Cookie-Richtlinie der Band Täglich frisches Obst." />
+	<meta
+		name="twitter:description"
+		content="Datenschutzerklärung und Cookie-Richtlinie der Band Täglich frisches Obst."
+	/>
 	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 
@@ -246,9 +258,7 @@
 		Telefon: <a href="tel:+43 6643279885">+43 6643279885</a>
 		<br />
 		Impressum:
-		<a href="https://merginit.com/legal/imprint"
-			>https://merginit.com/legal/imprint</a
-		>
+		<a href="https://merginit.com/legal/imprint">https://merginit.com/legal/imprint</a>
 	</p>
 	<h2 id="speicherdauer" class="adsimple-112580075">Speicherdauer</h2>
 	<p>
