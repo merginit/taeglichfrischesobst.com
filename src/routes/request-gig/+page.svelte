@@ -60,6 +60,26 @@
 	};
 </script>
 
+<svelte:head>
+	<link rel="canonical" href="https://taeglichfrischesobst.com/request-gig" />
+	<title>Gig vorschlagen | Täglich frisches Obst</title>
+	<meta name="description" content="Sag uns, wo wir spielen sollen: Schlage eine Stadt oder Location vor und sende uns eine kurze Nachricht. Booking‑ und Konzertanfragen sind willkommen – wir freuen uns auf deinen Vorschlag!" />
+	<meta name="keywords" content="Gig vorschlagen, Konzertanfrage, Booking, Auftritt buchen, Stadt vorschlagen, Location vorschlagen, Österreich, Schweiz, Deutschland, Indie‑Pop, Band, Täglich frisches Obst, Linz" />
+	<meta name="robots" content="index,follow" />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:url" content="https://taeglichfrischesobst.com/request-gig" />
+	<meta property="og:title" content="Gig vorschlagen | Täglich frisches Obst" />
+	<meta property="og:description" content="Schlage uns eine Stadt oder Location für den nächsten Auftritt vor und schicke uns deine Buchungsanfrage." />
+	<meta property="og:image" content="/assets/images/logo.png" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Gig vorschlagen | Täglich frisches Obst" />
+	<meta name="twitter:description" content="Stadt oder Location vorschlagen und Booking‑Anfrage senden – wir freuen uns auf deinen Input!" />
+	<meta name="twitter:image" content="/assets/images/logo.png" />
+</svelte:head>
+
 <Toaster position="bottom-right" />
 
 <div id="request-gig" class="p-2 border-2 bg-neutral border-primary rounded-2xl">
@@ -198,7 +218,7 @@
 					<option value="Neusiedl am See,Burgenland">Neusiedl am See, Burgenland</option>
 					<option value="Fürstenfeld,Steiermark">Fürstenfeld, Steiermark</option>
 					<option value="Neulengbach,Niederösterreich">Neulengbach, Niederösterreich</option>
-					<option value="Bruck an der Leitha,Niederösterreich"
+					<option value="Bruck an der Leitha,Niederösterreich
 						>Bruck an der Leitha, Niederösterreich</option
 					>
 					<option value="Kitzbühel,Tirol">Kitzbühel, Tirol</option>
@@ -306,7 +326,7 @@
 					<option value="Einsiedeln,Kanton Schwyz">Einsiedeln, Kanton Schwyz</option>
 					<option value="Morges,Kanton Waadt">Morges, Kanton Waadt</option>
 					<option value="Steffisburg,Kanton Bern">Steffisburg, Kanton Bern</option>
-					<option value="Binningen,Kanton Basel-Landschaft"
+					<option value="Binningen,Kanton Basel-Landschaft
 						>Binningen, Kanton Basel-Landschaft</option
 					>
 					<option value="Lyss,Kanton Bern">Lyss, Kanton Bern</option>
@@ -361,10 +381,10 @@
 					<option value="Karlsruhe,Baden-Württemberg">Karlsruhe, Baden-Württemberg</option>
 					<option value="Augsburg,Bayern">Augsburg, Bayern</option>
 					<option value="Wiesbaden,Hessen">Wiesbaden, Hessen</option>
-					<option value="Mönchengladbach,Nordrhein-Westfalen"
+					<option value="Mönchengladbach,Nordrhein-Westfalen
 						>Mönchengladbach, Nordrhein-Westfalen</option
 					>
-					<option value="Gelsenkirchen,Nordrhein-Westfalen"
+					<option value="Gelsenkirchen,Nordrhein-Westfalen
 						>Gelsenkirchen, Nordrhein-Westfalen</option
 					>
 					<option value="Aachen,Nordrhein-Westfalen">Aachen, Nordrhein-Westfalen</option>
@@ -373,7 +393,7 @@
 					<option value="Kiel,Schleswig-Holstein">Kiel, Schleswig-Holstein</option>
 					<option value="Halle (Saale),Sachsen-Anhalt">Halle (Saale), Sachsen-Anhalt</option>
 					<option value="Magdeburg,Sachsen-Anhalt">Magdeburg, Sachsen-Anhalt</option>
-					<option value="Freiburg im Breisgau,Baden-Württemberg"
+					<option value="Freiburg im Breisgau,Baden-Württemberg
 						>Freiburg im Breisgau, Baden-Württemberg</option
 					>
 					<option value="Krefeld,Nordrhein-Westfalen">Krefeld, Nordrhein-Westfalen</option>
@@ -387,11 +407,11 @@
 					<option value="Potsdam,Brandenburg">Potsdam, Brandenburg</option>
 					<option value="Saarbrücken,Saarland">Saarbrücken, Saarland</option>
 					<option value="Hamm,Nordrhein-Westfalen">Hamm, Nordrhein-Westfalen</option>
-					<option value="Ludwigshafen am Rhein,Rheinland-Pfalz"
+					<option value="Ludwigshafen am Rhein,Rheinland-Pfalz
 						>Ludwigshafen am Rhein, Rheinland-Pfalz</option
 					>
 					<option value="Oldenburg,Niedersachsen">Oldenburg, Niedersachsen</option>
-					<option value="Mülheim an der Ruhr,Nordrhein-Westfalen"
+					<option value="Mülheim an der Ruhr,Nordrhein-Westfalen
 						>Mülheim an der Ruhr, Nordrhein-Westfalen</option
 					>
 					<option value="Osnabrück,Niedersachsen">Osnabrück, Niedersachsen</option>
@@ -417,12 +437,12 @@
 					<option value="Erlangen,Bayern">Erlangen, Bayern</option>
 					<option value="Bremerhaven,Bremen">Bremerhaven, Bremen</option>
 					<option value="Koblenz,Rheinland-Pfalz">Koblenz, Rheinland-Pfalz</option>
-					<option value="Bergisch Gladbach,Nordrhein-Westfalen"
+					<option value="Bergisch Gladbach,Nordrhein-Westfalen
 						>Bergisch Gladbach, Nordrhein-Westfalen</option
 					>
 					<option value="Remscheid,Nordrhein-Westfalen">Remscheid, Nordrhein-Westfalen</option>
 					<option value="Trier,Rheinland-Pfalz">Trier, Rheinland-Pfalz</option>
-					<option value="Recklinghausen,Nordrhein-Westfalen"
+					<option value="Recklinghausen,Nordrhein-Westfalen
 						>Recklinghausen, Nordrhein-Westfalen</option
 					>
 					<option value="Jena,Thüringen">Jena, Thüringen</option>
@@ -436,7 +456,7 @@
 					<option value="Cottbus,Brandenburg">Cottbus, Brandenburg</option>
 					<option value="Schwerin,Mecklenburg-Vorpommern">Schwerin, Mecklenburg-Vorpommern</option>
 					<option value="Witten,Nordrhein-Westfalen">Witten, Nordrhein-Westfalen</option>
-					<option value="Esslingen am Neckar,Baden-Württemberg"
+					<option value="Esslingen am Neckar,Baden-Württemberg
 						>Esslingen am Neckar, Baden-Württemberg</option
 					>
 					<option value="Ludwigsburg,Baden-Württemberg">Ludwigsburg, Baden-Württemberg</option>
@@ -446,7 +466,7 @@
 					<option value="Tübingen,Baden-Württemberg">Tübingen, Baden-Württemberg</option>
 					<option value="Flensburg,Schleswig-Holstein">Flensburg, Schleswig-Holstein</option>
 					<option value="Iserlohn,Nordrhein-Westfalen">Iserlohn, Nordrhein-Westfalen</option>
-					<option value="Villingen-Schwenningen,Baden-Württemberg"
+					<option value="Villingen-Schwenningen,Baden-Württemberg
 						>Villingen-Schwenningen, Baden-Württemberg</option
 					>
 					<option value="Ratingen,Nordrhein-Westfalen">Ratingen, Nordrhein-Westfalen</option>

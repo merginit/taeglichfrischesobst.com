@@ -166,13 +166,23 @@
 </script>
 
 <svelte:head>
-	<meta property="og:url" content="https://taeglichfrischesobst.vercel.app/" />
-	<meta property="og:title" content="Home" />
-	<meta property="og:description" content="Home" />
+	<link rel="canonical" href="https://taeglichfrischesobst.com/home" />
+	<title>Täglich frisches Obst | Indie‑Pop Band aus Linz | Offizielle Website</title>
+	<meta name="description" content="Offizielle Website von Täglich frisches Obst: Indie‑Pop Band aus Linz. Gigs & Termine, Musik, Videos, Fotos, Newsletter, Booking & Pressekit." />
+	<meta name="keywords" content="Täglich frisches Obst, Indie‑Pop, Band, Linz, Konzerte, Gigs, Termine, Musik, Songs, Videos, Fotos, Newsletter, Booking, Presse, Österreich" />
+	<meta name="robots" content="index,follow" />
 
-	<meta name="description" content="Home" />
-	<meta name="keywords" content="home,tfo" />
-	<title>Täglich Frisches Obst</title>
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:url" content="https://taeglichfrischesobst.com/home" />
+	<meta property="og:title" content="Täglich frisches Obst | Indie‑Pop Band aus Linz" />
+	<meta property="og:description" content="Gigs & Termine, Musik, Videos und Fotos – alle Infos zur Indie‑Pop Band Täglich frisches Obst aus Linz." />
+	<meta property="og:image" content="/assets/images/logo.png" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Täglich frisches Obst | Indie‑Pop Band aus Linz" />
+	<meta name="twitter:description" content="Offizielle Website: Gigs, Musik, Videos, Fotos, Newsletter, Booking & Presse." />
+	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 
 <svelte:window bind:outerWidth />

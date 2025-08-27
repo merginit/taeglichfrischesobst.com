@@ -3,13 +3,23 @@
 </script>
 
 <svelte:head>
-	<meta property="og:url" content="https://taeglichfrischesobst.vercel.app/legal/privacy-policy" />
-	<meta property="og:title" content="Datenschutz & Cookies" />
-	<meta property="og:description" content="Datenschutz & Cookies" />
+	<link rel="canonical" href="https://taeglichfrischesobst.com/legal/privacy-policy" />
+	<title>Datenschutz & Cookies | Täglich frisches Obst</title>
+	<meta name="description" content="Datenschutzerklärung und Cookie-Richtlinie von Täglich frisches Obst: Informationen zu verarbeiteten Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten." />
+	<meta name="keywords" content="Datenschutz, Cookies, Cookie-Richtlinie, DSGVO, Privacy Policy, Täglich frisches Obst" />
+	<meta name="robots" content="noindex,follow" />
 
-	<meta name="description" content="Datenschutz & Cookies" />
-	<meta name="keywords" content="cookies,privacy,policy" />
-	<title>Datenschutz & Cookies</title>
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:url" content="https://taeglichfrischesobst.com/legal/privacy-policy" />
+	<meta property="og:title" content="Datenschutz & Cookies | Täglich frisches Obst" />
+	<meta property="og:description" content="Alles zur Verarbeitung personenbezogener Daten, Rechtsgrundlagen, Speicherdauer, Cookies, Drittanbietern und Ihren Rechten." />
+	<meta property="og:image" content="/assets/images/logo.png" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Datenschutz & Cookies | Täglich frisches Obst" />
+	<meta name="twitter:description" content="Datenschutzerklärung und Cookie-Richtlinie der Band Täglich frisches Obst." />
+	<meta name="twitter:image" content="/assets/images/logo.png" />
 </svelte:head>
 
 <CookieConsentConfig />
