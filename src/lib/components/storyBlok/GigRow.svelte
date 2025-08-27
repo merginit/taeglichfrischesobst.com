@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { storyblokEditable, type SbBlokData } from '@storyblok/svelte';
+	import type { Gig } from '$script/types';
 
-	export let blok: SbBlokData;
+	export let blok: SbBlokData | Gig;
+
+	const storyblokBlok = blok as SbBlokData;
 </script>
 
-<tr use:storyblokEditable={blok}>
+<tr use:storyblokEditable={storyblokBlok}>
 	<td>{blok?.event ?? ''}</td>
 	<td>{blok?.location ?? ''}</td>
 	<td>{blok?.date ?? ''}</td>
